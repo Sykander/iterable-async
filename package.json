@@ -1,0 +1,26 @@
+{
+  "name": "patterns",
+  "version": "1.0.0",
+  "description": "A Collection of useful patterns.",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "mocha test",
+    "lint:fix": "eslint src --fix && prettier --write 'src/**/*.{js,ts,css,html}' --write 'test/**/*.{js,ts,css,html}'",
+    "lint:check": "eslint src test",
+    "lint": "npm run lint:fix && npm run lint:check"
+  },
+  "author": {
+    "name": "Sykander Gul",
+    "email": "scanda@live.co.uk"
+  },
+  "license": "ISC",
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "chai-as-promised": "^7.1.1",
+    "eslint": "^6.6.0",
+    "eslint-config-prettier": "^6.5.0",
+    "eslint-plugin-prettier": "^3.1.1",
+    "mocha": "^6.2.2",
+    "prettier": "^1.19.1"
+  }
+}
