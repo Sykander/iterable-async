@@ -38,5 +38,5 @@ module.exports = async function asyncMap(callback, thisArg = this) {
 			({ done, value } = iterable.next());
 	}
 
-	return await Promise.all(promises);
+	return Promise.all(promises);
 };

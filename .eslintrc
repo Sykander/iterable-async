@@ -13,7 +13,6 @@
         "no-await-in-loop": "error",
         "no-console": "error",
         "array-callback-return": "error",
-        "require-await": "error",
         "complexity": ["error", 20],
         "prettier/prettier": "error"
     }
