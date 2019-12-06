@@ -3,4 +3,7 @@ const chai = require('chai'),
 
 chai.use(chaiAsPromised);
 
+/**
+ * @var {chai}
+ */
 module.exports = chai;

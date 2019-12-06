@@ -5,7 +5,7 @@ const { noParamPassed } = require('./constants');
  * Map an array asynchronously and resolve when all are resolved
  * Will map independently from order when callbacks are async
  * @async
- * @param {Function} callback
+ * @param {Function} callback - callback(currentValue, index, array)
  * @param {Object} [arr] - must be iterable
  * @return {Array}
  * @throws {TypeError}
