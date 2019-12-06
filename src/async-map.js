@@ -1,32 +1,26 @@
-const { noParamPassed } = require('./constants');
-
 /**
  * Async Map
- * Map an array asynchronously and resolve when all are resolved
+ * Map an array asynchronously and resolve when all callbacks are resolved
  * Will map independently from order when callbacks are async
  * @async
  * @param {Function} callback - callback(currentValue, index, array)
- * @param {Object} [arr] - must be iterable
+ * @param {Object} [thisArg=this] - must be iterable
  * @return {Array}
  * @throws {TypeError}
  */
-module.exports = async function asyncMap(callback, arr = noParamPassed) {
-	if (arr === noParamPassed) {
-		arr = this;
+module.exports = async function asyncMap(callback, thisArg = this) {
+	if (typeof thisArg !== 'object') {
+		throw TypeError(`${thisArg} is not an object`);
 	}
 
-	if (typeof arr !== 'object') {
-		throw TypeError(`${arr} is not an object`);
+	if (!thisArg) {
+		throw TypeError(`${thisArg} is not iterable`);
 	}
 
-	if (!arr) {
-		throw TypeError(`${arr} is not iterable`);
-	}
-
-	const iterator = arr[Symbol.iterator];
+	const iterator = thisArg[Symbol.iterator];
 
 	if (!iterator) {
-		throw TypeError(`${arr} is not iterable`);
+		throw TypeError(`${thisArg} is not iterable`);
 	}
 
 	if (typeof callback !== 'function') {
@@ -34,14 +28,14 @@ module.exports = async function asyncMap(callback, arr = noParamPassed) {
 	}
 
 	const promises = [],
-		iterable = iterator.call(arr);
+		iterable = iterator.call(thisArg);
 
 	let { done, value } = iterable.next(),
 		index = 0;
 
 	while (!done) {
-		promises.push(callback(value, index++, arr));
-		({ done, value } = iterable.next());
+		promises.push(callback(value, index++, thisArg)),
+			({ done, value } = iterable.next());
 	}
 
 	return await Promise.all(promises);

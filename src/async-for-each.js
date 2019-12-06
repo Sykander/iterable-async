@@ -1,20 +1,15 @@
-const noParamPassed = require('./constants'),
-	asyncMap = require('./async-map');
+const asyncMap = require('./async-map');
 
 /**
  * Async For Each
- * Loop over an array asynchronously and resolve when all are resolved
+ * Loop over an array asynchronously and resolve when all callbacks are resolved
  * Will loop independently from order when callbacks are async
  * @async
- * @param {Function} callback
- * @param {Object} [arr] - must be iterable
+ * @param {Function} callback - callback(currentValue, index, array)
+ * @param {Object} [thisArg=this] - must be iterable
  * @return {Array}
  * @throws {TypeError}
  */
-module.exports = async function asyncForEach(callback, arr = noParamPassed) {
-	if (arr === noParamPassed) {
-		await asyncMap.call(this, callback);
-	} else {
-		await asyncMap.call(this, callback, arr);
-	}
+module.exports = async function asyncForEach(callback, thisArg = this) {
+	await asyncMap.call(this, callback, thisArg);
 };

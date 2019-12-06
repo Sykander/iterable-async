@@ -53,7 +53,7 @@ context('Async For Each', function() {
 		});
 	});
 
-	describe('Given a async callback', function() {
+	describe('Given an async callback', function() {
 		let result, callback;
 
 		before(() => {
@@ -73,7 +73,7 @@ context('Async For Each', function() {
 		});
 	});
 
-	describe('Given a async callback and array', function() {
+	describe('Given an async callback and array', function() {
 		let result, callback;
 
 		before(() => {
