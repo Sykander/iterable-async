@@ -1,12 +1,12 @@
 const { expect } = require('./support/chai'),
+	{ getArray, getString } = require('./support/helpers'),
 	asyncForEachFunction = require('../src/async-for-each');
 
 context('Async For Each', function() {
 	let array, asyncForEach;
 
 	beforeEach(() => {
-		(array = [1, 2, 3, 4, 5]),
-			(asyncForEach = asyncForEachFunction.bind(array));
+		(array = getArray()), (asyncForEach = asyncForEachFunction.bind(array));
 	});
 
 	describe('Given no arguments', function() {
@@ -25,7 +25,7 @@ context('Async For Each', function() {
 		});
 
 		it('Should run each callback in order', async function() {
-			const expectedResult = [1, 2, 3, 4, 5];
+			const expectedResult = array.slice();
 
 			await asyncForEach(callback);
 
@@ -43,7 +43,7 @@ context('Async For Each', function() {
 		});
 
 		it('Should run each callback in order', async function() {
-			const expectedResult = [1, 2, 3, 4, 5];
+			const expectedResult = array.slice();
 
 			await asyncForEach(callback, array);
 
@@ -65,7 +65,7 @@ context('Async For Each', function() {
 		});
 
 		it('Should run each callback independently of order', async function() {
-			const expectedResult = [1, 2, 3, 4, 5];
+			const expectedResult = array.slice();
 
 			await asyncForEach(callback);
 
@@ -85,7 +85,7 @@ context('Async For Each', function() {
 		});
 
 		it('Should run each callback independently of order', async function() {
-			const expectedResult = [1, 2, 3, 4, 5];
+			const expectedResult = array.slice();
 
 			await asyncForEach(callback, array);
 
@@ -94,24 +94,26 @@ context('Async For Each', function() {
 	});
 
 	describe('Given a callback that throws an error', function() {
-		const callback = () => {
-			throw new Error('test string');
-		};
+		const string = getString(),
+			error = new Error(string),
+			callback = () => {
+				throw error;
+			};
 
 		it('Should reject with that error', async function() {
-			await expect(asyncForEach(callback)).to.rejectedWith('test string');
+			await expect(asyncForEach(callback)).to.rejectedWith(string);
 		});
 	});
 
 	describe('Given a callback that throws an error and an array', function() {
-		const callback = () => {
-			throw new Error('test string');
-		};
+		const string = getString(),
+			error = new Error(string),
+			callback = () => {
+				throw error;
+			};
 
 		it('Should reject with that error', async function() {
-			await expect(asyncForEach(callback, array)).to.rejectedWith(
-				'test string'
-			);
+			await expect(asyncForEach(callback, array)).to.rejectedWith(string);
 		});
 	});
 });
