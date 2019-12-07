@@ -1,4 +1,6 @@
-const asyncMap = require('./async-map');
+const { mapCollection } = require('./helpers'),
+	{ noParam } = require('./constants'),
+	{ validateIsIterable, validateIsFunction } = require('./validation');
 
 /**
  * Async For Each
@@ -10,6 +12,11 @@ const asyncMap = require('./async-map');
  * @return {Array}
  * @throws {TypeError}
  */
-module.exports = async function asyncForEach(callback, thisArg = this) {
-	await asyncMap.call(this, callback, thisArg);
+module.exports = async function asyncForEach(callback, thisArg = noParam) {
+	const collection = thisArg !== noParam ? thisArg : this;
+
+	validateIsFunction(callback);
+	validateIsIterable(collection);
+
+	await Promise.all(mapCollection(collection, callback));
 };
