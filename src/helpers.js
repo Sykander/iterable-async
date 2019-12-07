@@ -8,24 +8,13 @@ module.exports.isIterable = function isIterable(item) {
 };
 
 /**
- * Get Iterator
- * @param {Object} collection
- * @return {Object} Array Iterator
- */
-const getIterator = (module.exports.getIterator = function getIterator(
-	collection
-) {
-	return collection[Symbol.iterator].call(collection);
-});
-
-/**
  * Map Collection
  * @param {Object} collection
  * @param {Function} callback
  * @return {Array}
  */
 module.exports.mapCollection = function mapCollection(collection, callback) {
-	const iterator = getIterator(collection),
+	const iterator = collection[Symbol.iterator](),
 		tasks = [];
 
 	let { done, value } = iterator.next();

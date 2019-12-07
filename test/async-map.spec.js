@@ -17,7 +17,7 @@ context('Async Map', function() {
 		});
 	});
 
-	describe('Given a non-async callback', function() {
+	describe('Given a sychronous callback', function() {
 		let result, callback;
 
 		beforeEach(() => {
@@ -58,7 +58,7 @@ context('Async Map', function() {
 		});
 	});
 
-	describe('Given a non-async callback and array', function() {
+	describe('Given a sychronous callback and array', function() {
 		let result, callback;
 
 		beforeEach(() => {
@@ -200,6 +200,50 @@ context('Async Map', function() {
 
 		it('Should reject with that error', async function() {
 			await expect(asyncMap(callback, array)).to.rejectedWith(string);
+		});
+	});
+
+	describe('Given a callback that uses additional parameters', function() {
+		let result, callback;
+
+		beforeEach(() => {
+			(result = []),
+				(callback = (item, index, array) =>
+					result.push({
+						item,
+						index,
+						array
+					}));
+		});
+
+		it('Should have the correct element', async function() {
+			await asyncMap(callback);
+
+			array.every((expectedItem, expectedIndex) => {
+				const { item: actualItem } = result[expectedIndex];
+
+				return expect(actualItem).to.equal(expectedItem);
+			});
+		});
+
+		it('Should have correct index for each callback', async function() {
+			await asyncMap(callback);
+
+			array.every((item, expectedIndex) => {
+				const { index: actualIndex } = result[expectedIndex];
+
+				return expect(actualIndex).to.equal(expectedIndex);
+			});
+		});
+
+		it('Should have access to the source array', async function() {
+			await asyncMap(callback);
+
+			array.every((item, index, expectedArray) => {
+				const { array: actualArray } = result[index];
+
+				return expect(actualArray).to.equal(expectedArray);
+			});
 		});
 	});
 });

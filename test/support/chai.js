@@ -4,6 +4,7 @@ const chai = require('chai'),
 chai.use(chaiAsPromised);
 
 /**
- * @var {chai}
+ * Chai with additional configuration
+ * @type {chai} chai
  */
 module.exports = chai;

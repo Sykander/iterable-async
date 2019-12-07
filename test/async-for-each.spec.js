@@ -17,10 +17,10 @@ context('Async For Each', function() {
 		});
 	});
 
-	describe('Given a non-async callback', function() {
+	describe('Given a synchronous callback', function() {
 		let result, callback;
 
-		before(() => {
+		beforeEach(() => {
 			(result = []), (callback = item => result.push(item));
 		});
 
@@ -35,10 +35,10 @@ context('Async For Each', function() {
 		});
 	});
 
-	describe('Given a non-async callback and array', function() {
+	describe('Given a sychronous callback and array', function() {
 		let result, callback;
 
-		before(() => {
+		beforeEach(() => {
 			(result = []), (callback = item => result.push(item));
 		});
 
@@ -56,7 +56,7 @@ context('Async For Each', function() {
 	describe('Given an async callback', function() {
 		let result, callback;
 
-		before(() => {
+		beforeEach(() => {
 			(result = []),
 				(callback = item =>
 					new Promise(resolve =>
@@ -76,7 +76,7 @@ context('Async For Each', function() {
 	describe('Given an async callback and array', function() {
 		let result, callback;
 
-		before(() => {
+		beforeEach(() => {
 			(result = []),
 				(callback = item =>
 					new Promise(resolve =>
@@ -114,6 +114,50 @@ context('Async For Each', function() {
 
 		it('Should reject with that error', async function() {
 			await expect(asyncForEach(callback, array)).to.rejectedWith(string);
+		});
+	});
+
+	describe('Given a callback that uses additional parameters', function() {
+		let result, callback;
+
+		beforeEach(() => {
+			(result = []),
+				(callback = (item, index, array) =>
+					result.push({
+						item,
+						index,
+						array
+					}));
+		});
+
+		it('Should have the correct element', async function() {
+			await asyncForEach(callback);
+
+			array.every((expectedItem, expectedIndex) => {
+				const { item: actualItem } = result[expectedIndex];
+
+				return expect(actualItem).to.equal(expectedItem);
+			});
+		});
+
+		it('Should have correct index for each callback', async function() {
+			await asyncForEach(callback);
+
+			array.every((item, expectedIndex) => {
+				const { index: actualIndex } = result[expectedIndex];
+
+				return expect(actualIndex).to.equal(expectedIndex);
+			});
+		});
+
+		it('Should have access to the source array', async function() {
+			await asyncForEach(callback);
+
+			array.every((item, index, expectedArray) => {
+				const { array: actualArray } = result[index];
+
+				return expect(actualArray).to.equal(expectedArray);
+			});
 		});
 	});
 });
