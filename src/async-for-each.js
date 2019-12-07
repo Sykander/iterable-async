@@ -8,7 +8,7 @@ const { mapCollection } = require('./helpers'),
  * Will loop independently from order when callbacks are async
  * @async
  * @param {Function} callback - callback(currentValue, index, array)
- * @param {Object} [thisArg=this] - must be iterable
+ * @param {Object} [thisArg] - must be iterable
  * @return {Array}
  * @throws {TypeError}
  */

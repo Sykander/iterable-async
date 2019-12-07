@@ -13,11 +13,11 @@ A Collection of useful patterns.
  * Will map independently from order when callbacks are async
  * @async
  * @param {Function} callback - callback(currentValue, index, array)
- * @param {Object} [thisArg=this] - must be iterable
+ * @param {Object} [thisArg] - must be iterable
  * @return {Array}
  * @throws {TypeError}
  */
-function asyncMap(callback, [thisArg = this]) {...}
+function asyncMap(callback, [thisArg]) {...}
 ```
 
 ### Async For Each
@@ -29,8 +29,8 @@ function asyncMap(callback, [thisArg = this]) {...}
  * Will loop independently from order when callbacks are async
  * @async
  * @param {Function} callback - callback(currentValue, index, array)
- * @param {Object} [thisArg=this] - must be iterable
+ * @param {Object} [thisArg] - must be iterable
  * @return {Array}
  * @throws {TypeError}
  */
-function asyncForEach(callback, [thisArg = this]) {...}
+function asyncForEach(callback, [thisArg]) {...}
