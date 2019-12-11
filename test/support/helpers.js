@@ -20,7 +20,7 @@ const getInt = (module.exports.getInt = function getInt({
  * @param {Number} [options.length] - random size if none provided
  * @return {any[]}
  */
-module.exports.getArray = function({ length = getInt({ min: 0 }) } = {}) {
+module.exports.getArray = function({ length = getInt({ min: 0, max: 100 }) } = {}) {
 	const arr = [];
 
 	for (let i = 0; i < length; i++) {

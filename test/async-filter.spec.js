@@ -84,6 +84,42 @@ context('Async Filter', function() {
 			(result = []), (callback = item => result.push(item));
 		});
 
+		it('Should filter each item based on callback result', async function() {
+			const allTrueArr = await asyncFilter(() => true, array);
+
+			array.every((item, index) =>
+				expect(item).to.equal(allTrueArr[index])
+			);
+
+			const allFalseArr = await asyncFilter(() => false, array);
+
+			expect(allFalseArr).to.have.property('length', 0);
+
+			const expectedResult = [];
+			const randomResultArr = await asyncFilter(() => {
+				const randomBool = Math.random() > 0.5;
+
+				expectedResult.push(randomBool);
+
+				return randomBool;
+			}, array);
+
+			array.every((item, index) => {
+				const shouldRemain = expectedResult[index];
+
+				if (shouldRemain) {
+					return expect(randomResultArr).to.contain(item);
+				}
+
+				// item cannot be tested further
+				return true;
+			});
+
+			expect(randomResultArr)
+				.to.have.property('length')
+				.which.equals(expectedResult.filter(item => item).length);
+		});
+
 		it('Should run each callback in order', async function() {
 			const expectedResult = array.slice();
 
@@ -113,6 +149,48 @@ context('Async Filter', function() {
 
 			expectedResult.every(item => expect(result).to.contain(item));
 		});
+
+		it('Should filter each item based on callback result', async function() {
+			const allTrueArr = await asyncFilter(async () => true);
+
+			array.every((item, index) =>
+				expect(item).to.equal(allTrueArr[index])
+			);
+
+			const allFalseArr = await asyncFilter(async () => false);
+
+			expect(allFalseArr).to.have.property('length', 0);
+
+			const expectedResult = [];
+			const randomResultArr = await asyncFilter(async () => {
+				const randomBool = Math.random() > 0.5;
+
+				expectedResult.push(randomBool);
+
+				return randomBool;
+			});
+
+			array.every((item, index) => {
+				const shouldRemain = expectedResult[index];
+
+				if (shouldRemain) {
+					return expect(randomResultArr).to.contain(item);
+				}
+
+				// item cannot be tested further
+				return true;
+			});
+
+			expect(randomResultArr)
+				.to.have.property('length')
+				.which.equals(expectedResult.filter(item => item).length);
+		});
+
+		it('Should resolve to a new array', async function() {
+			const filteredArray = await asyncFilter(callback);
+
+			expect(filteredArray).to.not.equal(array);
+		});
 	});
 
 	describe('Given an async callback and array', function() {
@@ -132,6 +210,48 @@ context('Async Filter', function() {
 			await asyncFilter(callback, array);
 
 			expectedResult.every(item => expect(result).to.contain(item));
+		});
+
+		it('Should filter each item based on callback result', async function() {
+			const allTrueArr = await asyncFilter(async () => true, array);
+
+			array.every((item, index) =>
+				expect(item).to.equal(allTrueArr[index])
+			);
+
+			const allFalseArr = await asyncFilter(async () => false, array);
+
+			expect(allFalseArr).to.have.property('length', 0);
+
+			const expectedResult = [];
+			const randomResultArr = await asyncFilter(async () => {
+				const randomBool = Math.random() > 0.5;
+
+				expectedResult.push(randomBool);
+
+				return randomBool;
+			}, array);
+
+			array.every((item, index) => {
+				const shouldRemain = expectedResult[index];
+
+				if (shouldRemain) {
+					return expect(randomResultArr).to.contain(item);
+				}
+
+				// item cannot be tested further
+				return true;
+			});
+
+			expect(randomResultArr)
+				.to.have.property('length')
+				.which.equals(expectedResult.filter(item => item).length);
+		});
+
+		it('Should resolve to a new array', async function() {
+			const filteredArray = await asyncFilter(callback, array);
+
+			expect(filteredArray).to.not.equal(array);
 		});
 	});
 
