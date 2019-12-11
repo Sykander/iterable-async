@@ -136,10 +136,7 @@ context('Async Filter', function() {
 
 		beforeEach(() => {
 			(result = []),
-				(callback = item =>
-					new Promise(resolve =>
-						setTimeout(() => resolve(result.push(item)), 0)
-					));
+				(callback = item => Promise.resolve(result.push(item)));
 		});
 
 		it('Should run each callback independently of order', async function() {
@@ -198,10 +195,7 @@ context('Async Filter', function() {
 
 		beforeEach(() => {
 			(result = []),
-				(callback = item =>
-					new Promise(resolve =>
-						setTimeout(() => resolve(result.push(item)), 0)
-					));
+				(callback = item => Promise.resolve(result.push(item)));
 		});
 
 		it('Should run each callback independently of order', async function() {
