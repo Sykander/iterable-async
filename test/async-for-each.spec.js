@@ -38,23 +38,7 @@ context('Async For Each', function() {
 		});
 	});
 
-	describe('Given a sychronous callback and array', function() {
-		let result, callback;
-
-		beforeEach(async () => {
-			({ result, callback } = getSyncCallback());
-
-			await asyncForEach(callback, array);
-		});
-
-		it('Should run each callback in order', async function() {
-			result.every(({ index: expectedIndex }, actualIndex) =>
-				expect(actualIndex).to.equal(expectedIndex)
-			);
-		});
-	});
-
-	describe('Given an async callback', function() {
+	describe('Given an asynchronous callback', function() {
 		let result, callback;
 
 		beforeEach(async () => {
@@ -70,35 +54,13 @@ context('Async For Each', function() {
 		});
 	});
 
-	describe('Given an async callback and array', function() {
-		let result, callback;
-
-		beforeEach(async () => {
-			({ result, callback } = getAsyncCallback());
-
-			await asyncForEach(callback, array);
-		});
-
-		it('Should run each callback in order', async function() {
-			result.every(({ index: expectedIndex }, actualIndex) =>
-				expect(actualIndex).to.equal(expectedIndex)
-			);
-		});
-	});
-
 	describe('Given a callback that throws an error', function() {
-		const { callback, string } = getErrorCallback();
+		let callback, string;
+
+		beforeEach(() => ({ callback, string } = getErrorCallback()));
 
 		it('Should reject with that error', async function() {
 			await expect(asyncForEach(callback)).to.rejectedWith(string);
-		});
-	});
-
-	describe('Given a callback that throws an error and an array', function() {
-		const { callback, string } = getErrorCallback();
-
-		it('Should reject with that error', async function() {
-			await expect(asyncForEach(callback, array)).to.rejectedWith(string);
 		});
 	});
 
@@ -111,21 +73,39 @@ context('Async For Each', function() {
 			await asyncForEach(callback);
 		});
 
-		it('Should have the correct element', async function() {
+		it('Should have access to the correct element', async function() {
 			return array.every((item, index) =>
 				expect(item).to.equal(result[index].item)
 			);
 		});
 
-		it('Should have correct index for each callback', async function() {
+		it('Should have the correct index for each callback', async function() {
 			return array.every((item, index) =>
 				expect(index).to.equal(result[index].index)
 			);
 		});
 
-		it('Should have access to the source array', async function() {
+		it('Should have access to the source iterable object', async function() {
 			return array.every((item, index) =>
 				expect(array).to.equal(result[index].array)
+			);
+		});
+	});
+
+	describe('Given the optional thisArg parameter', function() {
+		let result, callback, newArray;
+
+		beforeEach(async () => {
+			newArray = getArray();
+
+			({ result, callback } = getSyncCallback());
+
+			await asyncForEach(callback, newArray);
+		});
+
+		it('Should loop over the given thisArg', function() {
+			return result.every(({ array }) =>
+				expect(array).to.equal(newArray)
 			);
 		});
 	});

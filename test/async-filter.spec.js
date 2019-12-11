@@ -52,37 +52,7 @@ context('Async Filter', function() {
 		});
 	});
 
-	describe('Given a sychronous callback and array', function() {
-		let result, callback, filteredArray;
-
-		beforeEach(async () => {
-			({ result, callback } = getSyncCallback());
-
-			filteredArray = await asyncFilter(callback, array);
-		});
-
-		it('Should filter each item based on callback result', async function() {
-			return array.every(item => {
-				if (item) {
-					return expect(filteredArray).to.contain(item);
-				} else {
-					return expect(filteredArray).to.not.contain(item);
-				}
-			});
-		});
-
-		it('Should run each callback in order', async function() {
-			result.every(({ index: expectedIndex }, actualIndex) =>
-				expect(actualIndex).to.equal(expectedIndex)
-			);
-		});
-
-		it('Should resolve to a new array', async function() {
-			expect(filteredArray).to.not.equal(array);
-		});
-	});
-
-	describe('Given an async callback', function() {
+	describe('Given an asynchronous callback', function() {
 		let result, callback, filteredArray;
 
 		beforeEach(async () => {
@@ -91,34 +61,10 @@ context('Async Filter', function() {
 			filteredArray = await asyncFilter(callback, array);
 		});
 
-		it('Should filter each item based on callback result', async function() {
-			return array.every(item => {
-				if (item) {
-					return expect(filteredArray).to.contain(item);
-				} else {
-					return expect(filteredArray).to.not.contain(item);
-				}
-			});
-		});
-
 		it('Should run each callback in order', async function() {
 			result.every(({ index: expectedIndex }, actualIndex) =>
 				expect(actualIndex).to.equal(expectedIndex)
 			);
-		});
-
-		it('Should resolve to a new array', async function() {
-			expect(filteredArray).to.not.equal(array);
-		});
-	});
-
-	describe('Given an async callback and array', function() {
-		let result, callback, filteredArray;
-
-		beforeEach(async () => {
-			({ result, callback } = getAsyncCallback());
-
-			filteredArray = await asyncFilter(callback, array);
 		});
 
 		it('Should filter each item based on callback result', async function() {
@@ -129,12 +75,6 @@ context('Async Filter', function() {
 					return expect(filteredArray).to.not.contain(item);
 				}
 			});
-		});
-
-		it('Should run each callback in order', async function() {
-			result.every(({ index: expectedIndex }, actualIndex) =>
-				expect(actualIndex).to.equal(expectedIndex)
-			);
 		});
 
 		it('Should resolve to a new array', async function() {
@@ -143,18 +83,12 @@ context('Async Filter', function() {
 	});
 
 	describe('Given a callback that throws an error', function() {
-		const { callback, string } = getErrorCallback();
+		let callback, string;
+
+		beforeEach(() => ({ callback, string } = getErrorCallback()));
 
 		it('Should reject with that error', async function() {
 			await expect(asyncFilter(callback)).to.rejectedWith(string);
-		});
-	});
-
-	describe('Given a callback that throws an error and an array', function() {
-		const { callback, string } = getErrorCallback();
-
-		it('Should reject with that error', async function() {
-			await expect(asyncFilter(callback, array)).to.rejectedWith(string);
 		});
 	});
 
@@ -167,21 +101,39 @@ context('Async Filter', function() {
 			await asyncFilter(callback);
 		});
 
-		it('Should have the correct element', async function() {
+		it('Should have access to the correct element', async function() {
 			return array.every((item, index) =>
 				expect(item).to.equal(result[index].item)
 			);
 		});
 
-		it('Should have correct index for each callback', async function() {
+		it('Should have the correct index for each callback', async function() {
 			return array.every((item, index) =>
 				expect(index).to.equal(result[index].index)
 			);
 		});
 
-		it('Should have access to the source array', async function() {
+		it('Should have access to the source iterable object', async function() {
 			return array.every((item, index) =>
 				expect(array).to.equal(result[index].array)
+			);
+		});
+	});
+
+	describe('Given the optional thisArg parameter', function() {
+		let result, callback, newArray;
+
+		beforeEach(async () => {
+			newArray = getArray();
+
+			({ result, callback } = getSyncCallback());
+
+			await asyncFilter(callback, newArray);
+		});
+
+		it('Should loop over the given thisArg', function() {
+			return result.every(({ array }) =>
+				expect(array).to.equal(newArray)
 			);
 		});
 	});
