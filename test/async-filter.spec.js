@@ -1,5 +1,10 @@
 const { expect } = require('./support/chai'),
-	{ getArray, getString } = require('./support/helpers'),
+	{ getArray } = require('./support/data-factory'),
+	{
+		getSyncCallback,
+		getAsyncCallback,
+		getErrorCallback
+	} = require('./support/helpers'),
 	asyncFilterFunction = require('../src/async-filter');
 
 context('Async Filter', function() {
@@ -18,243 +23,127 @@ context('Async Filter', function() {
 	});
 
 	describe('Given a synchronous callback', function() {
-		let result, callback;
+		let result, callback, filteredArray;
 
-		beforeEach(() => {
-			(result = []), (callback = (item, index) => result.push(index));
+		beforeEach(async () => {
+			({ result, callback } = getSyncCallback());
+
+			filteredArray = await asyncFilter(callback);
 		});
 
 		it('Should run each callback in order', async function() {
-			const expectedResult = Array.from(Array(array.length).keys());
-
-			await asyncFilter(callback);
-
-			expectedResult.every((expectedItem, index) =>
-				expect(expectedItem).to.equal(result[index])
+			result.every(({ index: expectedIndex }, actualIndex) =>
+				expect(actualIndex).to.equal(expectedIndex)
 			);
 		});
 
 		it('Should filter each item based on callback result', async function() {
-			const allTrueArr = await asyncFilter(() => true);
-
-			array.every((item, index) =>
-				expect(item).to.equal(allTrueArr[index])
-			);
-
-			const allFalseArr = await asyncFilter(() => false);
-
-			expect(allFalseArr).to.have.property('length', 0);
-
-			const expectedResult = [];
-			const randomResultArr = await asyncFilter(() => {
-				const randomBool = Math.random() > 0.5;
-
-				expectedResult.push(randomBool);
-
-				return randomBool;
-			});
-
-			array.every((item, index) => {
-				const shouldRemain = expectedResult[index];
-
-				if (shouldRemain) {
-					return expect(randomResultArr).to.contain(item);
+			return array.every(item => {
+				if (item) {
+					return expect(filteredArray).to.contain(item);
+				} else {
+					return expect(filteredArray).to.not.contain(item);
 				}
-
-				// item cannot be tested further
-				return true;
 			});
-
-			expect(randomResultArr)
-				.to.have.property('length')
-				.which.equals(expectedResult.filter(item => item).length);
 		});
 
 		it('Should resolve to a new array', async function() {
-			const filteredArray = await asyncFilter(callback);
-
 			expect(filteredArray).to.not.equal(array);
 		});
 	});
 
 	describe('Given a sychronous callback and array', function() {
-		let result, callback;
+		let result, callback, filteredArray;
 
-		beforeEach(() => {
-			(result = []), (callback = item => result.push(item));
+		beforeEach(async () => {
+			({ result, callback } = getSyncCallback());
+
+			filteredArray = await asyncFilter(callback, array);
 		});
 
 		it('Should filter each item based on callback result', async function() {
-			const allTrueArr = await asyncFilter(() => true, array);
-
-			array.every((item, index) =>
-				expect(item).to.equal(allTrueArr[index])
-			);
-
-			const allFalseArr = await asyncFilter(() => false, array);
-
-			expect(allFalseArr).to.have.property('length', 0);
-
-			const expectedResult = [];
-			const randomResultArr = await asyncFilter(() => {
-				const randomBool = Math.random() > 0.5;
-
-				expectedResult.push(randomBool);
-
-				return randomBool;
-			}, array);
-
-			array.every((item, index) => {
-				const shouldRemain = expectedResult[index];
-
-				if (shouldRemain) {
-					return expect(randomResultArr).to.contain(item);
+			return array.every(item => {
+				if (item) {
+					return expect(filteredArray).to.contain(item);
+				} else {
+					return expect(filteredArray).to.not.contain(item);
 				}
-
-				// item cannot be tested further
-				return true;
 			});
-
-			expect(randomResultArr)
-				.to.have.property('length')
-				.which.equals(expectedResult.filter(item => item).length);
 		});
 
 		it('Should run each callback in order', async function() {
-			const expectedResult = array.slice();
-
-			await asyncFilter(callback, array);
-
-			expectedResult.every((expectedItem, index) =>
-				expect(expectedItem).to.equal(result[index])
+			result.every(({ index: expectedIndex }, actualIndex) =>
+				expect(actualIndex).to.equal(expectedIndex)
 			);
+		});
+
+		it('Should resolve to a new array', async function() {
+			expect(filteredArray).to.not.equal(array);
 		});
 	});
 
 	describe('Given an async callback', function() {
-		let result, callback;
+		let result, callback, filteredArray;
 
-		beforeEach(() => {
-			(result = []),
-				(callback = item => Promise.resolve(result.push(item)));
-		});
+		beforeEach(async () => {
+			({ result, callback } = getAsyncCallback());
 
-		it('Should run each callback independently of order', async function() {
-			const expectedResult = array.slice();
-
-			await asyncFilter(callback);
-
-			expectedResult.every(item => expect(result).to.contain(item));
+			filteredArray = await asyncFilter(callback, array);
 		});
 
 		it('Should filter each item based on callback result', async function() {
-			const allTrueArr = await asyncFilter(async () => true);
-
-			array.every((item, index) =>
-				expect(item).to.equal(allTrueArr[index])
-			);
-
-			const allFalseArr = await asyncFilter(async () => false);
-
-			expect(allFalseArr).to.have.property('length', 0);
-
-			const expectedResult = [];
-			const randomResultArr = await asyncFilter(async () => {
-				const randomBool = Math.random() > 0.5;
-
-				expectedResult.push(randomBool);
-
-				return randomBool;
-			});
-
-			array.every((item, index) => {
-				const shouldRemain = expectedResult[index];
-
-				if (shouldRemain) {
-					return expect(randomResultArr).to.contain(item);
+			return array.every(item => {
+				if (item) {
+					return expect(filteredArray).to.contain(item);
+				} else {
+					return expect(filteredArray).to.not.contain(item);
 				}
-
-				// item cannot be tested further
-				return true;
 			});
+		});
 
-			expect(randomResultArr)
-				.to.have.property('length')
-				.which.equals(expectedResult.filter(item => item).length);
+		it('Should run each callback in order', async function() {
+			result.every(({ index: expectedIndex }, actualIndex) =>
+				expect(actualIndex).to.equal(expectedIndex)
+			);
 		});
 
 		it('Should resolve to a new array', async function() {
-			const filteredArray = await asyncFilter(callback);
-
 			expect(filteredArray).to.not.equal(array);
 		});
 	});
 
 	describe('Given an async callback and array', function() {
-		let result, callback;
+		let result, callback, filteredArray;
 
-		beforeEach(() => {
-			(result = []),
-				(callback = item => Promise.resolve(result.push(item)));
-		});
+		beforeEach(async () => {
+			({ result, callback } = getAsyncCallback());
 
-		it('Should run each callback independently of order', async function() {
-			const expectedResult = array.slice();
-
-			await asyncFilter(callback, array);
-
-			expectedResult.every(item => expect(result).to.contain(item));
+			filteredArray = await asyncFilter(callback, array);
 		});
 
 		it('Should filter each item based on callback result', async function() {
-			const allTrueArr = await asyncFilter(async () => true, array);
-
-			array.every((item, index) =>
-				expect(item).to.equal(allTrueArr[index])
-			);
-
-			const allFalseArr = await asyncFilter(async () => false, array);
-
-			expect(allFalseArr).to.have.property('length', 0);
-
-			const expectedResult = [];
-			const randomResultArr = await asyncFilter(async () => {
-				const randomBool = Math.random() > 0.5;
-
-				expectedResult.push(randomBool);
-
-				return randomBool;
-			}, array);
-
-			array.every((item, index) => {
-				const shouldRemain = expectedResult[index];
-
-				if (shouldRemain) {
-					return expect(randomResultArr).to.contain(item);
+			return array.every(item => {
+				if (item) {
+					return expect(filteredArray).to.contain(item);
+				} else {
+					return expect(filteredArray).to.not.contain(item);
 				}
-
-				// item cannot be tested further
-				return true;
 			});
+		});
 
-			expect(randomResultArr)
-				.to.have.property('length')
-				.which.equals(expectedResult.filter(item => item).length);
+		it('Should run each callback in order', async function() {
+			result.every(({ index: expectedIndex }, actualIndex) =>
+				expect(actualIndex).to.equal(expectedIndex)
+			);
 		});
 
 		it('Should resolve to a new array', async function() {
-			const filteredArray = await asyncFilter(callback, array);
-
 			expect(filteredArray).to.not.equal(array);
 		});
 	});
 
 	describe('Given a callback that throws an error', function() {
-		const string = getString(),
-			error = new Error(string),
-			callback = () => {
-				throw error;
-			};
+		const { callback, string } = getErrorCallback();
 
 		it('Should reject with that error', async function() {
 			await expect(asyncFilter(callback)).to.rejectedWith(string);
@@ -262,11 +151,7 @@ context('Async Filter', function() {
 	});
 
 	describe('Given a callback that throws an error and an array', function() {
-		const string = getString(),
-			error = new Error(string),
-			callback = () => {
-				throw error;
-			};
+		const { callback, string } = getErrorCallback();
 
 		it('Should reject with that error', async function() {
 			await expect(asyncFilter(callback, array)).to.rejectedWith(string);
@@ -276,44 +161,28 @@ context('Async Filter', function() {
 	describe('Given a callback that uses additional parameters', function() {
 		let result, callback;
 
-		beforeEach(() => {
-			(result = []),
-				(callback = (item, index, array) =>
-					result.push({
-						item,
-						index,
-						array
-					}));
+		beforeEach(async () => {
+			({ result, callback } = getSyncCallback());
+
+			await asyncFilter(callback);
 		});
 
 		it('Should have the correct element', async function() {
-			await asyncFilter(callback);
-
-			array.every((expectedItem, expectedIndex) => {
-				const { item: actualItem } = result[expectedIndex];
-
-				return expect(actualItem).to.equal(expectedItem);
-			});
+			return array.every((item, index) =>
+				expect(item).to.equal(result[index].item)
+			);
 		});
 
 		it('Should have correct index for each callback', async function() {
-			await asyncFilter(callback);
-
-			array.every((item, expectedIndex) => {
-				const { index: actualIndex } = result[expectedIndex];
-
-				return expect(actualIndex).to.equal(expectedIndex);
-			});
+			return array.every((item, index) =>
+				expect(index).to.equal(result[index].index)
+			);
 		});
 
 		it('Should have access to the source array', async function() {
-			await asyncFilter(callback);
-
-			array.every((item, index, expectedArray) => {
-				const { array: actualArray } = result[index];
-
-				return expect(actualArray).to.equal(expectedArray);
-			});
+			return array.every((item, index) =>
+				expect(array).to.equal(result[index].array)
+			);
 		});
 	});
 });

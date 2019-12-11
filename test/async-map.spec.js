@@ -1,5 +1,10 @@
 const { expect } = require('./support/chai'),
-	{ getArray, getString } = require('./support/helpers'),
+	{ getArray } = require('./support/data-factory'),
+	{
+		getSyncCallback,
+		getAsyncCallback,
+		getErrorCallback
+	} = require('./support/helpers'),
 	asyncMapFunction = require('../src/async-map');
 
 context('Async Map', function() {
@@ -17,174 +22,112 @@ context('Async Map', function() {
 		});
 	});
 
-	describe('Given a sychronous callback', function() {
-		let result, callback;
+	describe('Given a synchronous callback', function() {
+		let result, callback, mappedArray;
 
-		beforeEach(() => {
-			(result = []),
-				(callback = item => {
-					result.push(item);
+		beforeEach(async () => {
+			({ result, callback } = getSyncCallback());
 
-					return item;
-				});
+			mappedArray = await asyncMap(callback);
 		});
 
 		it('Should run each callback in order', async function() {
-			const expectedResult = array.slice();
-
-			await asyncMap(callback);
-
-			expectedResult.every((expectedItem, index) =>
-				expect(expectedItem).to.equal(result[index])
+			result.every(({ index: expectedIndex }, actualIndex) =>
+				expect(actualIndex).to.equal(expectedIndex)
 			);
 		});
 
 		it('Should map each item in order', async function() {
-			const expectedResult = array.slice();
-
-			const mappedArray = await asyncMap(callback);
-
-			expectedResult.every(
-				(expectedItem, index) =>
-					expect(expectedItem).to.equal(mappedArray[index]) &&
-					expect(expectedItem).to.equal(result[index])
+			mappedArray.every((item, index) =>
+				expect(item).to.equal(array[index])
 			);
 		});
 
 		it('Should resolve to a new array', async function() {
-			const mappedArray = await asyncMap(callback);
-
 			expect(mappedArray).to.not.equal(array);
 		});
 	});
 
 	describe('Given a sychronous callback and array', function() {
-		let result, callback;
+		let result, callback, mappedArray;
 
-		beforeEach(() => {
-			(result = []),
-				(callback = item => {
-					result.push(item);
+		beforeEach(async () => {
+			({ result, callback } = getSyncCallback());
 
-					return item;
-				});
-		});
-
-		it('Should run each callback in order', async function() {
-			const expectedResult = array.slice();
-
-			await asyncMap(callback, array);
-
-			expectedResult.every((expectedItem, index) =>
-				expect(expectedItem).to.equal(result[index])
-			);
+			mappedArray = await asyncMap(callback, array);
 		});
 
 		it('Should map each item in order', async function() {
-			const expectedResult = array.slice();
+			mappedArray.every((item, index) =>
+				expect(item).to.equal(array[index])
+			);
+		});
 
-			const mappedArray = await asyncMap(callback, array);
-
-			expectedResult.every(
-				(expectedItem, index) =>
-					expect(expectedItem).to.equal(mappedArray[index]) &&
-					expect(expectedItem).to.equal(result[index])
+		it('Should run each callback in order', async function() {
+			result.every(({ index: expectedIndex }, actualIndex) =>
+				expect(actualIndex).to.equal(expectedIndex)
 			);
 		});
 
 		it('Should resolve to a new array', async function() {
-			const mappedArray = await asyncMap(callback, array);
-
 			expect(mappedArray).to.not.equal(array);
 		});
 	});
 
 	describe('Given an async callback', function() {
-		let result, callback;
+		let result, callback, mappedArray;
 
-		beforeEach(() => {
-			(result = []),
-				(callback = item =>
-					new Promise(resolve => {
-						result.push(item);
+		beforeEach(async () => {
+			({ result, callback } = getAsyncCallback());
 
-						return resolve(item);
-					}));
+			mappedArray = await asyncMap(callback, array);
 		});
 
-		it('Should run each callback independently of order', async function() {
-			const expectedResult = array.slice();
-
-			await asyncMap(callback);
-
-			expectedResult.every(item => expect(result).to.contain(item));
+		it('Should map each item in order', async function() {
+			mappedArray.every((item, index) =>
+				expect(item).to.equal(array[index])
+			);
 		});
 
-		it('Should map each item independently of order', async function() {
-			const expectedResult = array.slice();
-
-			const mappedArray = await asyncMap(callback);
-
-			expectedResult.every(
-				expectedItem =>
-					expect(result).to.contain(expectedItem) &&
-					expect(mappedArray).to.contain(expectedItem)
+		it('Should run each callback in order', async function() {
+			result.every(({ index: expectedIndex }, actualIndex) =>
+				expect(actualIndex).to.equal(expectedIndex)
 			);
 		});
 
 		it('Should resolve to a new array', async function() {
-			const mappedArray = await asyncMap(callback);
-
 			expect(mappedArray).to.not.equal(array);
 		});
 	});
 
 	describe('Given an async callback and array', function() {
-		let result, callback;
+		let result, callback, mappedArray;
 
-		beforeEach(() => {
-			(result = []),
-				(callback = item =>
-					new Promise(resolve => {
-						result.push(item);
+		beforeEach(async () => {
+			({ result, callback } = getAsyncCallback());
 
-						return resolve(item);
-					}));
+			mappedArray = await asyncMap(callback, array);
 		});
 
-		it('Should run each callback independently of order', async function() {
-			const expectedResult = array.slice();
-
-			await asyncMap(callback, array);
-
-			expectedResult.every(item => expect(result).to.contain(item));
+		it('Should map each item in order', async function() {
+			mappedArray.every((item, index) =>
+				expect(item).to.equal(array[index])
+			);
 		});
 
-		it('Should map each item independently of order', async function() {
-			const expectedResult = array.slice();
-
-			const mappedArray = await asyncMap(callback, array);
-
-			expectedResult.every(
-				expectedItem =>
-					expect(result).to.contain(expectedItem) &&
-					expect(mappedArray).to.contain(expectedItem)
+		it('Should run each callback in order', async function() {
+			result.every(({ index: expectedIndex }, actualIndex) =>
+				expect(actualIndex).to.equal(expectedIndex)
 			);
 		});
 
 		it('Should resolve to a new array', async function() {
-			const mappedArray = await asyncMap(callback, array);
-
 			expect(mappedArray).to.not.equal(array);
 		});
 	});
 
 	describe('Given a callback that throws an error', function() {
-		const string = getString(),
-			error = new Error(string),
-			callback = () => {
-				throw error;
-			};
+		const { callback, string } = getErrorCallback();
 
 		it('Should reject with that error', async function() {
 			await expect(asyncMap(callback)).to.rejectedWith(string);
@@ -192,11 +135,7 @@ context('Async Map', function() {
 	});
 
 	describe('Given a callback that throws an error and an array', function() {
-		const string = getString(),
-			error = new Error(string),
-			callback = () => {
-				throw error;
-			};
+		const { callback, string } = getErrorCallback();
 
 		it('Should reject with that error', async function() {
 			await expect(asyncMap(callback, array)).to.rejectedWith(string);
@@ -206,44 +145,28 @@ context('Async Map', function() {
 	describe('Given a callback that uses additional parameters', function() {
 		let result, callback;
 
-		beforeEach(() => {
-			(result = []),
-				(callback = (item, index, array) =>
-					result.push({
-						item,
-						index,
-						array
-					}));
+		beforeEach(async () => {
+			({ result, callback } = getSyncCallback());
+
+			await asyncMap(callback);
 		});
 
 		it('Should have the correct element', async function() {
-			await asyncMap(callback);
-
-			array.every((expectedItem, expectedIndex) => {
-				const { item: actualItem } = result[expectedIndex];
-
-				return expect(actualItem).to.equal(expectedItem);
-			});
+			return array.every((item, index) =>
+				expect(item).to.equal(result[index].item)
+			);
 		});
 
 		it('Should have correct index for each callback', async function() {
-			await asyncMap(callback);
-
-			array.every((item, expectedIndex) => {
-				const { index: actualIndex } = result[expectedIndex];
-
-				return expect(actualIndex).to.equal(expectedIndex);
-			});
+			return array.every((item, index) =>
+				expect(index).to.equal(result[index].index)
+			);
 		});
 
 		it('Should have access to the source array', async function() {
-			await asyncMap(callback);
-
-			array.every((item, index, expectedArray) => {
-				const { array: actualArray } = result[index];
-
-				return expect(actualArray).to.equal(expectedArray);
-			});
+			return array.every((item, index) =>
+				expect(array).to.equal(result[index].array)
+			);
 		});
 	});
 });

@@ -1,5 +1,10 @@
 const { expect } = require('./support/chai'),
-	{ getArray, getString } = require('./support/helpers'),
+	{ getArray } = require('./support/data-factory'),
+	{
+		getSyncCallback,
+		getAsyncCallback,
+		getErrorCallback
+	} = require('./support/helpers'),
 	asyncForEachFunction = require('../src/async-for-each');
 
 context('Async For Each', function() {
@@ -20,17 +25,15 @@ context('Async For Each', function() {
 	describe('Given a synchronous callback', function() {
 		let result, callback;
 
-		beforeEach(() => {
-			(result = []), (callback = item => result.push(item));
+		beforeEach(async () => {
+			({ result, callback } = getSyncCallback());
+
+			await asyncForEach(callback);
 		});
 
 		it('Should run each callback in order', async function() {
-			const expectedResult = array.slice();
-
-			await asyncForEach(callback);
-
-			expectedResult.every((expectedItem, index) =>
-				expect(expectedItem).to.equal(result[index])
+			result.every(({ index: expectedIndex }, actualIndex) =>
+				expect(actualIndex).to.equal(expectedIndex)
 			);
 		});
 	});
@@ -38,17 +41,15 @@ context('Async For Each', function() {
 	describe('Given a sychronous callback and array', function() {
 		let result, callback;
 
-		beforeEach(() => {
-			(result = []), (callback = item => result.push(item));
+		beforeEach(async () => {
+			({ result, callback } = getSyncCallback());
+
+			await asyncForEach(callback, array);
 		});
 
 		it('Should run each callback in order', async function() {
-			const expectedResult = array.slice();
-
-			await asyncForEach(callback, array);
-
-			expectedResult.every((expectedItem, index) =>
-				expect(expectedItem).to.equal(result[index])
+			result.every(({ index: expectedIndex }, actualIndex) =>
+				expect(actualIndex).to.equal(expectedIndex)
 			);
 		});
 	});
@@ -56,43 +57,37 @@ context('Async For Each', function() {
 	describe('Given an async callback', function() {
 		let result, callback;
 
-		beforeEach(() => {
-			(result = []),
-				(callback = item => Promise.resolve(result.push(item)));
-		});
-
-		it('Should run each callback independently of order', async function() {
-			const expectedResult = array.slice();
+		beforeEach(async () => {
+			({ result, callback } = getAsyncCallback());
 
 			await asyncForEach(callback);
+		});
 
-			expectedResult.every(item => expect(result).to.contain(item));
+		it('Should run each callback in order', async function() {
+			result.every(({ index: expectedIndex }, actualIndex) =>
+				expect(actualIndex).to.equal(expectedIndex)
+			);
 		});
 	});
 
 	describe('Given an async callback and array', function() {
 		let result, callback;
 
-		beforeEach(() => {
-			(result = []),
-				(callback = item => Promise.resolve(result.push(item)));
-		});
-
-		it('Should run each callback independently of order', async function() {
-			const expectedResult = array.slice();
+		beforeEach(async () => {
+			({ result, callback } = getAsyncCallback());
 
 			await asyncForEach(callback, array);
+		});
 
-			expectedResult.every(item => expect(result).to.contain(item));
+		it('Should run each callback in order', async function() {
+			result.every(({ index: expectedIndex }, actualIndex) =>
+				expect(actualIndex).to.equal(expectedIndex)
+			);
 		});
 	});
 
 	describe('Given a callback that throws an error', function() {
-		const string = getString(),
-			error = new Error(string),
-			callback = () => {
-				throw error;
-			};
+		const { callback, string } = getErrorCallback();
 
 		it('Should reject with that error', async function() {
 			await expect(asyncForEach(callback)).to.rejectedWith(string);
@@ -100,11 +95,7 @@ context('Async For Each', function() {
 	});
 
 	describe('Given a callback that throws an error and an array', function() {
-		const string = getString(),
-			error = new Error(string),
-			callback = () => {
-				throw error;
-			};
+		const { callback, string } = getErrorCallback();
 
 		it('Should reject with that error', async function() {
 			await expect(asyncForEach(callback, array)).to.rejectedWith(string);
@@ -114,44 +105,28 @@ context('Async For Each', function() {
 	describe('Given a callback that uses additional parameters', function() {
 		let result, callback;
 
-		beforeEach(() => {
-			(result = []),
-				(callback = (item, index, array) =>
-					result.push({
-						item,
-						index,
-						array
-					}));
+		beforeEach(async () => {
+			({ result, callback } = getSyncCallback());
+
+			await asyncForEach(callback);
 		});
 
 		it('Should have the correct element', async function() {
-			await asyncForEach(callback);
-
-			array.every((expectedItem, expectedIndex) => {
-				const { item: actualItem } = result[expectedIndex];
-
-				return expect(actualItem).to.equal(expectedItem);
-			});
+			return array.every((item, index) =>
+				expect(item).to.equal(result[index].item)
+			);
 		});
 
 		it('Should have correct index for each callback', async function() {
-			await asyncForEach(callback);
-
-			array.every((item, expectedIndex) => {
-				const { index: actualIndex } = result[expectedIndex];
-
-				return expect(actualIndex).to.equal(expectedIndex);
-			});
+			return array.every((item, index) =>
+				expect(index).to.equal(result[index].index)
+			);
 		});
 
 		it('Should have access to the source array', async function() {
-			await asyncForEach(callback);
-
-			array.every((item, index, expectedArray) => {
-				const { array: actualArray } = result[index];
-
-				return expect(actualArray).to.equal(expectedArray);
-			});
+			return array.every((item, index) =>
+				expect(array).to.equal(result[index].array)
+			);
 		});
 	});
 });
