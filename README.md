@@ -34,3 +34,20 @@ function asyncMap(callback, [thisArg]) {...}
  * @throws {TypeError}
  */
 function asyncForEach(callback, [thisArg]) {...}
+```
+
+### Async Filter 
+
+```
+/**
+ * Async Filter
+ * Filter an iterable object asynchronously and resolve when all callbacks are resolved
+ * @async
+ * @param {Function} callback - callback(currentValue, index, array)
+ * @param {Object} [thisArg] - must be iterable
+ * @return {Array}
+ * @throws {TypeError}
+ */
+ function asyncFilter(callback, [thisArg]) {...}
+ ```
+ 

@@ -4,7 +4,7 @@ const { mapCollection } = require('./helpers'),
 
 /**
  * Async Map
- * Map an array asynchronously and resolve when all callbacks are resolved
+ * Map an iterable object asynchronously and resolve when all callbacks are resolved
  * Will map independently from order when callbacks are async
  * @async
  * @param {Function} callback - callback(currentValue, index, array)
