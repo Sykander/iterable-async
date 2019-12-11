@@ -5,24 +5,29 @@ const { expect } = require('./support/chai'),
 		getAsyncCallback,
 		getErrorCallback
 	} = require('./support/helpers'),
+	{
+		rejectsWithError,
+		ranCallbacksInOrder,
+		hasAccessToCorrectArgumentsOnCallback
+	} = require('./support/spec-helpers'),
 	asyncFindFunction = () => undefined; // TODO: Implement Async Find
 
-context('Async Find', function() {
+context('Async Find', () => {
 	let array, asyncFind;
 
 	beforeEach(() => {
 		(array = getArray()), (asyncFind = asyncFindFunction.bind(array));
 	});
 
-	describe('Given no arguments', function() {
-		it('Should reject with "TypeError: undefined is not a function"', async function() {
-			await expect(asyncFind()).to.rejectedWith(
-				'undefined is not a function'
-			);
-		});
+	describe('Given no arguments', () => {
+		it('Should reject with "TypeError: undefined is not a function"', () =>
+			rejectsWithError(
+				asyncFind(),
+				new TypeError('undefined is not a function')
+			));
 	});
 
-	describe('Given a synchronous callback', function() {
+	describe('Given a synchronous callback', () => {
 		let result, callback, findIndex, foundElement;
 
 		beforeEach(async () => {
@@ -36,18 +41,15 @@ context('Async Find', function() {
 			foundElement = await asyncFind(callback);
 		});
 
-		it('Should run each callback in order', async function() {
-			result.every(({ index: expectedIndex }, actualIndex) =>
-				expect(actualIndex).to.equal(expectedIndex)
-			);
-		});
+		it('Should run each callback in order', () =>
+			ranCallbacksInOrder(result));
 
-		it('Should find the correct element', async function() {
-			expect(foundElement).to.equal(array[findIndex]);
-		});
+		it('Should find the correct element', () =>
+			expect(foundElement).to.equal(array[findIndex])
+		);
 	});
 
-	describe('Given an asynchronous callback', function() {
+	describe('Given an asynchronous callback', () => {
 		let result, callback, findIndex, foundElement;
 
 		beforeEach(async () => {
@@ -61,28 +63,25 @@ context('Async Find', function() {
 			foundElement = await asyncFind(callback);
 		});
 
-		it('Should run each callback in order', async function() {
-			result.every(({ index: expectedIndex }, actualIndex) =>
-				expect(actualIndex).to.equal(expectedIndex)
-			);
-		});
+		it('Should run each callback in order', () =>
+			ranCallbacksInOrder(result));
 
-		it('Should find the correct element', async function() {
+		it('Should find the correct element', async () => {
 			expect(foundElement).to.equal(array[findIndex]);
 		});
 	});
 
-	describe('Given a callback that throws an error', function() {
+	describe('Given a callback that throws an error', () => {
 		let callback, string;
 
 		beforeEach(() => ({ callback, string } = getErrorCallback()));
 
-		it('Should reject with that error', async function() {
+		it('Should reject with that error', async () => {
 			await expect(asyncFind(callback)).to.rejectedWith(string);
 		});
 	});
 
-	describe('Given a callback that uses additional parameters', function() {
+	describe('Given a callback that uses additional parameters', () => {
 		let result, callback;
 
 		beforeEach(async () => {
@@ -91,26 +90,11 @@ context('Async Find', function() {
 			await asyncFind(callback);
 		});
 
-		it('Should have access to the correct element', async function() {
-			return array.every((item, index) =>
-				expect(item).to.equal(result[index].item)
-			);
-		});
-
-		it('Should have the correct index for each callback', async function() {
-			return array.every((item, index) =>
-				expect(index).to.equal(result[index].index)
-			);
-		});
-
-		it('Should have access to the source iterable object', async function() {
-			return array.every((item, index) =>
-				expect(array).to.equal(result[index].array)
-			);
-		});
+		it('Should have access to currentValue, index and array on the callback', () =>
+			hasAccessToCorrectArgumentsOnCallback(array, result));
 	});
 
-	describe('Given the optional thisArg parameter', function() {
+	describe('Given the optional thisArg parameter', () => {
 		let result, callback, newArray;
 
 		beforeEach(async () => {
@@ -121,7 +105,7 @@ context('Async Find', function() {
 			await asyncFind(callback, newArray);
 		});
 
-		it('Should loop over the given thisArg', function() {
+		it('Should loop over the given thisArg', () => {
 			return result.every(({ array }) =>
 				expect(array).to.equal(newArray)
 			);
