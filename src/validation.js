@@ -1,12 +1,10 @@
-const { isIterable } = require('./helpers');
-
 /**
  * Validate an item's iterability
  * @param {any} item
  * @throws {TypeError}
  */
 module.exports.validateIsIterable = function validateIsIterable(item) {
-	if (!isIterable(item)) {
+	if (typeof item !== 'object' || !item || !item[Symbol.iterator]) {
 		throw TypeError(`${item} is not iterable`);
 	}
 };

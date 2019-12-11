@@ -1,27 +1,17 @@
 /**
- * Is iterable?
- * @param {any} item
- * @return {Boolean}
- */
-module.exports.isIterable = function isIterable(item) {
-	return Boolean(typeof item === 'object' && item && item[Symbol.iterator]);
-};
-
-/**
- * Map Collection
+ * Map Iterable
+ * ==============
+ * Allows any iterable object to be mapped with correct callback parameters
+ * eg. callback(currentValue, index, sourceIterable)
  * @param {Object} collection
  * @param {Function} callback
  * @return {Array}
  */
-module.exports.mapCollection = function mapCollection(collection, callback) {
-	const iterator = collection[Symbol.iterator](),
-		tasks = [];
+module.exports.mapIterable = function mapIterable(collection, callback) {
+	const tasks = [];
 
-	let { done, value } = iterator.next();
-
-	while (!done) {
-		tasks.push(callback(value, tasks.length, collection)),
-			({ done, value } = iterator.next());
+	for (let currentValue of collection) {
+		tasks.push(callback(currentValue, tasks.length, collection));
 	}
 
 	return tasks;

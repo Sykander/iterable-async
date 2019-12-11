@@ -1,4 +1,4 @@
-const { mapCollection } = require('./helpers'),
+const { mapIterable } = require('./helpers'),
 	{ noParam } = require('./constants'),
 	{ validateIsIterable, validateIsFunction } = require('./validation');
 
@@ -18,5 +18,5 @@ module.exports = async function asyncForEach(callback, thisArg = noParam) {
 	validateIsFunction(callback);
 	validateIsIterable(collection);
 
-	await Promise.all(mapCollection(collection, callback));
+	await Promise.all(mapIterable(collection, callback));
 };

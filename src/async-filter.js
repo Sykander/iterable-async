@@ -1,4 +1,4 @@
-const { mapCollection } = require('./helpers'),
+const { mapIterable } = require('./helpers'),
 	{ noParam } = require('./constants'),
 	{ validateIsIterable, validateIsFunction } = require('./validation');
 
@@ -17,7 +17,7 @@ module.exports = async function asyncFilter(callback, thisArg = noParam) {
 	validateIsFunction(callback);
 	validateIsIterable(collection);
 
-	const checks = await Promise.all(mapCollection(collection, callback));
+	const checks = await Promise.all(mapIterable(collection, callback));
 
 	return [...collection].filter((item, index) => checks[index]);
 };
