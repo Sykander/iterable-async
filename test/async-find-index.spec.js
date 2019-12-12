@@ -29,7 +29,7 @@ context('Async Find Index', () => {
 	});
 
 	describe('Given a synchronous callback', () => {
-		let result, callback, findIndex, foundElement;
+		let result, callback, findIndex, foundIndex;
 
 		beforeEach(async () => {
 			findIndex = getInt({ min: -1, max: array.length });
@@ -39,21 +39,24 @@ context('Async Find Index', () => {
 				findIndex
 			}));
 
-			foundElement = await asyncFindIndex(callback);
+			foundIndex = await asyncFindIndex(callback);
 		});
 
 		it('Should run each callback in order', () =>
 			ranCallbacksInOrder(result));
 
 		it('Should find the correct index', () =>
-			expect(foundElement).to.equal(findIndex));
+			expect(foundIndex).to.equal(findIndex));
 
 		it('Should always resolve to an integer', () =>
-			expect(foundElement).to.be('number'));
+			expect(
+				typeof foundIndex === 'number' &&
+					foundIndex === Math.floor(foundIndex)
+			).to.equal(true));
 	});
 
 	describe('Given an asynchronous callback', () => {
-		let result, callback, findIndex, foundElement;
+		let result, callback, findIndex, foundIndex;
 
 		beforeEach(async () => {
 			findIndex = getInt({ min: 0, max: array.length });
@@ -63,17 +66,20 @@ context('Async Find Index', () => {
 				findIndex
 			}));
 
-			foundElement = await asyncFindIndex(callback);
+			foundIndex = await asyncFindIndex(callback);
 		});
 
 		it('Should run each callback in order', () =>
 			ranCallbacksInOrder(result));
 
 		it('Should find the correct index', () =>
-			expect(foundElement).to.equal(findIndex));
+			expect(foundIndex).to.equal(findIndex));
 
 		it('Should always resolve to an integer', () =>
-			expect(foundElement).to.be('number'));
+			expect(
+				typeof foundIndex === 'number' &&
+					foundIndex === Math.floor(foundIndex)
+			).to.equal(true));
 	});
 
 	describe('Given a callback that throws an error', () => {
