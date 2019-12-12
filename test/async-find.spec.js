@@ -10,7 +10,7 @@ const { expect } = require('./support/chai'),
 		ranCallbacksInOrder,
 		hasAccessToCorrectArgumentsOnCallback
 	} = require('./support/spec-helpers'),
-	asyncFindFunction = () => undefined; // TODO: Implement Async Find
+	{ asyncFind: asyncFindFunction } = require('../src');
 
 context('Async Find', () => {
 	let array, asyncFind;
@@ -45,8 +45,7 @@ context('Async Find', () => {
 			ranCallbacksInOrder(result));
 
 		it('Should find the correct element', () =>
-			expect(foundElement).to.equal(array[findIndex])
-		);
+			expect(foundElement).to.equal(array[findIndex]));
 	});
 
 	describe('Given an asynchronous callback', () => {

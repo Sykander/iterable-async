@@ -30,7 +30,6 @@ function asyncMap(callback, [thisArg]) {...}
  * @async
  * @param {Function} callback - callback(currentValue, index, array)
  * @param {Object} [thisArg] - must be iterable
- * @return {Array}
  * @throws {TypeError}
  */
 function asyncForEach(callback, [thisArg]) {...}
@@ -50,4 +49,17 @@ function asyncForEach(callback, [thisArg]) {...}
  */
  function asyncFilter(callback, [thisArg]) {...}
  ```
- 
+
+ ### Async Find
+
+ ```
+ /**
+ * Async Find
+ * Find an item in an iterable object asynchronously and resolve when found or all callbacks resolve
+ * @async
+ * @param {Function} callback - callback(currentValue, index, array)
+ * @param {Object} [thisArg] - must be iterable
+ * @return {any}
+ * @throws {TypeError}
+ */
+ ```

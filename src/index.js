@@ -4,5 +4,6 @@
 module.exports = {
 	asyncMap: require('./async-map'),
 	asyncForEach: require('./async-for-each'),
-	asyncFilter: require('./async-filter')
+	asyncFilter: require('./async-filter'),
+	asyncFind: require('./async-find')
 };
