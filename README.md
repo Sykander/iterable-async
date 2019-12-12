@@ -1,82 +1,63 @@
-# Iterable Async Methods
+# Iterable Async Methods 
+[![Try iterable-async on RunKit](https://badge.runkitcdn.com/iterable-async.svg)](https://npm.runkit.com/iterable-async)
 
-## Async Map
+A collection of methods for looping iterable objects asynchronously using something similar to the Array api.
 
-```
-/**
-* Async Map
-* Map an array asynchronously and resolve when all callbacks are resolved
-* Will map independently from order when callbacks are async
-* @async
-* @param {Function} callback - callback(currentValue, index, array)
-* @param {Object} [thisArg] - must be iterable
-* @return {Array}
-* @throws {TypeError}
-*/
-function asyncMap(callback, [thisArg]) {...}
-```
-
-## Async For Each
+## Installation
 
 ```
-/**
-* Async For Each
-* Loop over an array asynchronously and resolve when all callbacks are resolved
-* Will loop independently from order when callbacks are async
-* @async
-* @param {Function} callback - callback(currentValue, index, array)
-* @param {Object} [thisArg] - must be iterable
-* @throws {TypeError}
-*/
-function asyncForEach(callback, [thisArg]) {...}
+$ npm install iterable-async
 ```
 
-## Async Filter 
+## Methods
 
-```
-/**
 * Async Filter
-* Filter an iterable object asynchronously and resolve when all callbacks are resolved
-* @async
-* @param {Function} callback - callback(currentValue, index, array)
-* @param {Object} [thisArg] - must be iterable
-* @return {Array}
-* @throws {TypeError}
-*/
+* Async Find
+* Async Find Index
+* Async For Each
+* Async Map
+
+### Async Filter 
+
+Filter an iterable object asynchronously
+```
 function asyncFilter(callback, [thisArg]) {...}
 ```
 
-## Async Find
+### Async Find
 
+Find an item in an iterable object asynchronously
 ```
-/**
-* Async Find
-* Find an item in an iterable object asynchronously and resolve when found or all callbacks resolve
-* @async
-* @param {Function} callback - callback(currentValue, index, array)
-* @param {Object} [thisArg] - must be iterable
-* @return {any}
-* @throws {TypeError}
-*/
+function asyncFind(callback, [thisArg]) {...}
 ```
 
-## Async Find Index
+### Async Find Index
 
+Find an item's index in an iterable object asynchronously
 ```
-/**
-* Async Find Index
-* Find an item's index in an iterable object asynchronously and resolve when found or all callbacks resolve
-* @async
-* @param {Function} callback - callback(currentValue, index, array)
-* @param {Object} [thisArg] - must be iterable
-* @return {Number} - an integer index, -1 if not found
-* @throws {TypeError}
-*/
+async function asyncFindIndex(callback, [thisArg]) {...}
 ```
 
-# Development
+### [Async For Each](https://github.com/Sykander/iterable-async/wiki/Async-For-Each)
 
-## Scripts
+Loop over an iterable object asynchronously
+```
+function asyncForEach(callback, [thisArg]) {...}
+```
+
+### Async Map
+
+Map an iterable object asynchronously
+```
+function asyncMap(callback, [thisArg]) {...}
+```
+
+
+## Development
+
+Development is open to contribution, check the project board "Development" for tickets.
+
+### Scripts
 
 ```
 npm run lint
@@ -92,6 +73,6 @@ npm test
 # Runs all tests
 ```
 
-## Commit Rules
+### Commit Rules
 
-* All commits should pass the lint check commandS
+* All commits should pass the lint check commands
