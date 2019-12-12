@@ -6,7 +6,7 @@
   "scripts": {
     "test": "./node_modules/.bin/mocha test",
     "lint:fix": "./node_modules/.bin/prettier --write 'src/**/*.{js,ts,css,html}' --write 'test/**/*.{js,ts,css,html}' --write 'docs/**/*.{js,ts,css,html}'",
-    "lint:check": "./node_modules/.bin/eslint src test",
+    "lint:check": "./node_modules/.bin/eslint src test && ./node_modules/.bin/eslint --no-eslintrc --env es6,node --rule 'no-unused-var: off' docs",
     "lint": "npm run lint:fix && npm run lint:check",
     "prepublishOnly": "npm run lint:check && npm test"
   },
