@@ -7,15 +7,16 @@
     "test": "./node_modules/.bin/mocha test",
     "lint:fix": "./node_modules/.bin/eslint src test --fix && ./node_modules/.bin/prettier --write 'src/**/*.{js,ts,css,html}' --write 'test/**/*.{js,ts,css,html}'",
     "lint:check": "./node_modules/.bin/eslint src test",
-    "lint": "npm run lint:fix && npm run lint:check"
+    "lint": "npm run lint:fix && npm run lint:check",
+    "prepublishOnly": "npm run lint:check && npm test"
   },
   "author": {
     "name": "Sykander Gul",
     "email": "scanda@live.co.uk"
   },
   "repository": {
-    "type" : "git",
-    "url" : "https://github.com/Sykander/iterable-async.git"
+    "type": "git",
+    "url": "https://github.com/Sykander/iterable-async.git"
   },
   "license": "MIT",
   "devDependencies": {
