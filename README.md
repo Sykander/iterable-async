@@ -72,6 +72,7 @@ function asyncFilter(callback, [thisArg]) {...}
 * @return {Number} - an integer index, -1 if not found
 * @throws {TypeError}
 */
+```
 
 # Development
 
