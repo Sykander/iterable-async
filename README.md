@@ -4,15 +4,15 @@
 
 ```
 /**
- * Async Map
- * Map an array asynchronously and resolve when all callbacks are resolved
- * Will map independently from order when callbacks are async
- * @async
- * @param {Function} callback - callback(currentValue, index, array)
- * @param {Object} [thisArg] - must be iterable
- * @return {Array}
- * @throws {TypeError}
- */
+* Async Map
+* Map an array asynchronously and resolve when all callbacks are resolved
+* Will map independently from order when callbacks are async
+* @async
+* @param {Function} callback - callback(currentValue, index, array)
+* @param {Object} [thisArg] - must be iterable
+* @return {Array}
+* @throws {TypeError}
+*/
 function asyncMap(callback, [thisArg]) {...}
 ```
 
@@ -20,14 +20,14 @@ function asyncMap(callback, [thisArg]) {...}
 
 ```
 /**
- * Async For Each
- * Loop over an array asynchronously and resolve when all callbacks are resolved
- * Will loop independently from order when callbacks are async
- * @async
- * @param {Function} callback - callback(currentValue, index, array)
- * @param {Object} [thisArg] - must be iterable
- * @throws {TypeError}
- */
+* Async For Each
+* Loop over an array asynchronously and resolve when all callbacks are resolved
+* Will loop independently from order when callbacks are async
+* @async
+* @param {Function} callback - callback(currentValue, index, array)
+* @param {Object} [thisArg] - must be iterable
+* @throws {TypeError}
+*/
 function asyncForEach(callback, [thisArg]) {...}
 ```
 
@@ -35,32 +35,45 @@ function asyncForEach(callback, [thisArg]) {...}
 
 ```
 /**
- * Async Filter
- * Filter an iterable object asynchronously and resolve when all callbacks are resolved
- * @async
- * @param {Function} callback - callback(currentValue, index, array)
- * @param {Object} [thisArg] - must be iterable
- * @return {Array}
- * @throws {TypeError}
- */
- function asyncFilter(callback, [thisArg]) {...}
- ```
+* Async Filter
+* Filter an iterable object asynchronously and resolve when all callbacks are resolved
+* @async
+* @param {Function} callback - callback(currentValue, index, array)
+* @param {Object} [thisArg] - must be iterable
+* @return {Array}
+* @throws {TypeError}
+*/
+function asyncFilter(callback, [thisArg]) {...}
+```
 
- ## Async Find
+## Async Find
 
- ```
- /**
- * Async Find
- * Find an item in an iterable object asynchronously and resolve when found or all callbacks resolve
- * @async
- * @param {Function} callback - callback(currentValue, index, array)
- * @param {Object} [thisArg] - must be iterable
- * @return {any}
- * @throws {TypeError}
- */
- ```
+```
+/**
+* Async Find
+* Find an item in an iterable object asynchronously and resolve when found or all callbacks resolve
+* @async
+* @param {Function} callback - callback(currentValue, index, array)
+* @param {Object} [thisArg] - must be iterable
+* @return {any}
+* @throws {TypeError}
+*/
+```
 
- # Development
+## Async Find Index
+
+```
+/**
+* Async Find
+* Find an item in an iterable object asynchronously and resolve when found or all callbacks resolve
+* @async
+* @param {Function} callback - callback(currentValue, index, array)
+* @param {Object} [thisArg] - must be iterable
+* @return {Number} - an integer index, -1 if not found
+* @throws {TypeError}
+*/
+
+# Development
 
 ## Scripts
 
@@ -77,3 +90,7 @@ npm run lint:fix
 npm test
 # Runs all tests
 ```
+
+## Commit Rules
+
+* All commits should pass the lint check commandS
