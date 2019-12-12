@@ -13,7 +13,7 @@
     "name": "Sykander Gul",
     "email": "scanda@live.co.uk"
   },
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
