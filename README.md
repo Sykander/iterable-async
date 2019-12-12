@@ -1,28 +1,21 @@
-# Iterable Async Methods
+# Iterable Async Methods 
+[![Try iterable-async on RunKit](https://badge.runkitcdn.com/iterable-async.svg)](https://npm.runkit.com/iterable-async)
 
 A collection of methods for looping iterable objects asynchronously using something similar to the Array api.
 
+## Installation
+
+```
+$ npm install iterable-async
+```
+
 ## Methods
 
-* Async Map
-* Async For Each
 * Async Filter
 * Async Find
 * Async Find Index
-
-### Async Map
-
-Map an iterable object asynchronously
-```
-function asyncMap(callback, [thisArg]) {...}
-```
-
-### Async For Each
-
-Loop over an iterable object asynchronously
-```
-function asyncForEach(callback, [thisArg]) {...}
-```
+* Async For Each
+* Async Map
 
 ### Async Filter 
 
@@ -42,8 +35,23 @@ function asyncFind(callback, [thisArg]) {...}
 
 Find an item's index in an iterable object asynchronously
 ```
-function asyncFindIndex(callback, [thisArg]) {...}
+async function asyncFindIndex(callback, [thisArg]) {...}
 ```
+
+### [Async For Each](https://github.com/Sykander/iterable-async/wiki/Async-For-Each)
+
+Loop over an iterable object asynchronously
+```
+function asyncForEach(callback, [thisArg]) {...}
+```
+
+### Async Map
+
+Map an iterable object asynchronously
+```
+function asyncMap(callback, [thisArg]) {...}
+```
+
 
 ## Development
 
