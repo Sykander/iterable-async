@@ -15,7 +15,7 @@
   },
   "repository": {
     "type" : "git",
-    "url" : "https://github.com/Sykander/patterns.git"
+    "url" : "https://github.com/Sykander/iterable-async.git"
   },
   "license": "MIT",
   "devDependencies": {
