@@ -10,7 +10,7 @@ const { expect } = require('./support/chai'),
 		ranCallbacksInOrder,
 		hasAccessToCorrectArgumentsOnCallback
 	} = require('./support/spec-helpers'),
-	asyncFilterFunction = require('../src/async-filter');
+	{ asyncFilter: asyncFilterFunction } = require('../src');
 
 context('Async Filter', () => {
 	let array, asyncFilter;

@@ -10,7 +10,7 @@ const { expect } = require('./support/chai'),
 		ranCallbacksInOrder,
 		hasAccessToCorrectArgumentsOnCallback
 	} = require('./support/spec-helpers'),
-	asyncForEachFunction = require('../src/async-for-each');
+	{ asyncForEach: asyncForEachFunction } = require('../src');
 
 context('Async For Each', () => {
 	let array, asyncForEach;
