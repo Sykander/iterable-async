@@ -10,7 +10,7 @@ const { expect } = require('./support/chai'),
 		ranCallbacksInOrder,
 		hasAccessToCorrectArgumentsOnCallback
 	} = require('./support/spec-helpers'),
-	asyncMapFunction = require('../src/async-map');
+	{ asyncMap: asyncMapFunction } = require('../src');
 
 context('Async Map', () => {
 	let array, asyncMap;

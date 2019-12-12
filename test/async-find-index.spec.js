@@ -1,5 +1,5 @@
 const { expect } = require('./support/chai'),
-	{ getArray } = require('./support/data-factory'),
+	{ getArray, getInt } = require('./support/data-factory'),
 	{
 		getSyncCallback,
 		getAsyncCallback,
@@ -10,47 +10,76 @@ const { expect } = require('./support/chai'),
 		ranCallbacksInOrder,
 		hasAccessToCorrectArgumentsOnCallback
 	} = require('./support/spec-helpers'),
-	{ asyncForEach: asyncForEachFunction } = require('../src');
+	{ asyncFindIndex: asyncFindIndexFunction } = require('../src');
 
-context('Async For Each', () => {
-	let array, asyncForEach;
+context('Async Find Index', () => {
+	let array, asyncFindIndex;
 
 	beforeEach(() => {
-		(array = getArray()), (asyncForEach = asyncForEachFunction.bind(array));
+		(array = getArray()),
+			(asyncFindIndex = asyncFindIndexFunction.bind(array));
 	});
 
 	describe('Given no arguments', () => {
 		it('Should reject with "TypeError: undefined is not a function"', () =>
 			rejectsWithError(
-				asyncForEach(),
+				asyncFindIndex(),
 				new TypeError('undefined is not a function')
 			));
 	});
 
 	describe('Given a synchronous callback', () => {
-		let result, callback;
+		let result, callback, findIndex, foundIndex;
 
 		beforeEach(async () => {
-			({ result, callback } = getSyncCallback());
+			findIndex = getInt({ min: -1, max: array.length });
 
-			await asyncForEach(callback);
+			({ result, callback } = getSyncCallback({
+				isFind: true,
+				findIndex
+			}));
+
+			foundIndex = await asyncFindIndex(callback);
 		});
 
 		it('Should run each callback in order', () =>
 			ranCallbacksInOrder(result));
+
+		it('Should find the correct index', () =>
+			expect(foundIndex).to.equal(findIndex));
+
+		it('Should always resolve to an integer', () =>
+			expect(
+				typeof foundIndex === 'number' &&
+					foundIndex === Math.floor(foundIndex)
+			).to.equal(true));
 	});
 
 	describe('Given an asynchronous callback', () => {
-		let result, callback;
+		let result, callback, findIndex, foundIndex;
 
 		beforeEach(async () => {
-			({ result, callback } = getAsyncCallback());
+			findIndex = getInt({ min: 0, max: array.length });
 
-			await asyncForEach(callback);
+			({ result, callback } = getAsyncCallback({
+				isFind: true,
+				findIndex
+			}));
+
+			foundIndex = await asyncFindIndex(callback);
 		});
 
 		it('Should run each callback in order', () =>
 			ranCallbacksInOrder(result));
+
+		it('Should find the correct index', () =>
+			expect(foundIndex).to.equal(findIndex));
+
+		it('Should always resolve to an integer', () =>
+			expect(
+				typeof foundIndex === 'number' &&
+					foundIndex === Math.floor(foundIndex)
+			).to.equal(true));
 	});
 
 	describe('Given a callback that throws an error', () => {
@@ -59,7 +88,7 @@ context('Async For Each', () => {
 		beforeEach(() => ({ callback, string } = getErrorCallback()));
 
 		it('Should reject with that error', async () => {
-			await expect(asyncForEach(callback)).to.rejectedWith(string);
+			await expect(asyncFindIndex(callback)).to.rejectedWith(string);
 		});
 	});
 
@@ -69,7 +98,7 @@ context('Async For Each', () => {
 		beforeEach(async () => {
 			({ result, callback } = getSyncCallback());
 
-			await asyncForEach(callback);
+			await asyncFindIndex(callback);
 		});
 
 		it('Should have access to currentValue, index and array on the callback', () =>
@@ -84,7 +113,7 @@ context('Async For Each', () => {
 
 			({ result, callback } = getSyncCallback());
 
-			await asyncForEach(callback, newArray);
+			await asyncFindIndex(callback, newArray);
 		});
 
 		it('Should loop over the given thisArg', () => {

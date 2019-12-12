@@ -9,7 +9,6 @@ const { mapIterable } = require('./helpers'),
  * @async
  * @param {Function} callback - callback(currentValue, index, array)
  * @param {Object} [thisArg] - must be iterable
- * @return {Array}
  * @throws {TypeError}
  */
 module.exports = async function asyncForEach(callback, thisArg = noParam) {
