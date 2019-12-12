@@ -1,82 +1,55 @@
 # Iterable Async Methods
 
-## Async Map
+A collection of methods for looping iterable objects asynchronously using something similar to the Array api.
 
-```
-/**
+## Methods
+
 * Async Map
-* Map an array asynchronously and resolve when all callbacks are resolved
-* Will map independently from order when callbacks are async
-* @async
-* @param {Function} callback - callback(currentValue, index, array)
-* @param {Object} [thisArg] - must be iterable
-* @return {Array}
-* @throws {TypeError}
-*/
+* Async For Each
+* Async Filter
+* Async Find
+* Async Find Index
+
+### Async Map
+
+Map an iterable object asynchronously
+```
 function asyncMap(callback, [thisArg]) {...}
 ```
 
-## Async For Each
+### Async For Each
 
+Loop over an iterable object asynchronously
 ```
-/**
-* Async For Each
-* Loop over an array asynchronously and resolve when all callbacks are resolved
-* Will loop independently from order when callbacks are async
-* @async
-* @param {Function} callback - callback(currentValue, index, array)
-* @param {Object} [thisArg] - must be iterable
-* @throws {TypeError}
-*/
 function asyncForEach(callback, [thisArg]) {...}
 ```
 
-## Async Filter 
+### Async Filter 
 
+Filter an iterable object asynchronously
 ```
-/**
-* Async Filter
-* Filter an iterable object asynchronously and resolve when all callbacks are resolved
-* @async
-* @param {Function} callback - callback(currentValue, index, array)
-* @param {Object} [thisArg] - must be iterable
-* @return {Array}
-* @throws {TypeError}
-*/
 function asyncFilter(callback, [thisArg]) {...}
 ```
 
-## Async Find
+### Async Find
 
+Find an item in an iterable object asynchronously
 ```
-/**
-* Async Find
-* Find an item in an iterable object asynchronously and resolve when found or all callbacks resolve
-* @async
-* @param {Function} callback - callback(currentValue, index, array)
-* @param {Object} [thisArg] - must be iterable
-* @return {any}
-* @throws {TypeError}
-*/
+function asyncFind(callback, [thisArg]) {...}
 ```
 
-## Async Find Index
+### Async Find Index
 
+Find an item's index in an iterable object asynchronously
 ```
-/**
-* Async Find Index
-* Find an item's index in an iterable object asynchronously and resolve when found or all callbacks resolve
-* @async
-* @param {Function} callback - callback(currentValue, index, array)
-* @param {Object} [thisArg] - must be iterable
-* @return {Number} - an integer index, -1 if not found
-* @throws {TypeError}
-*/
+function asyncFindIndex(callback, [thisArg]) {...}
 ```
 
-# Development
+## Development
 
-## Scripts
+Development is open to contribution, check the project board "Development" for tickets.
+
+### Scripts
 
 ```
 npm run lint
@@ -92,6 +65,6 @@ npm test
 # Runs all tests
 ```
 
-## Commit Rules
+### Commit Rules
 
-* All commits should pass the lint check commandS
+* All commits should pass the lint check commands
