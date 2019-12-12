@@ -59,3 +59,21 @@ function asyncForEach(callback, [thisArg]) {...}
  * @throws {TypeError}
  */
  ```
+
+ # Development
+
+## Scripts
+
+```
+npm run lint
+# Lints the project and returns a report
+
+npm run lint:check
+# Returns a report on lint issues in the project
+
+npm run lint:fix
+# Fixes lint issues in the project and returns a report on the ones which couldn't be fixed
+
+npm test
+# Runs all tests
+```
