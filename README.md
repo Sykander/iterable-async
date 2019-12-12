@@ -1,10 +1,6 @@
-# Patterns
+# Iterable Async Methods
 
-A Collection of useful patterns.
-
-## Array Methods
-
-### Async Map
+## Async Map
 
 ```
 /**
@@ -20,7 +16,7 @@ A Collection of useful patterns.
 function asyncMap(callback, [thisArg]) {...}
 ```
 
-### Async For Each
+## Async For Each
 
 ```
 /**
@@ -35,7 +31,7 @@ function asyncMap(callback, [thisArg]) {...}
 function asyncForEach(callback, [thisArg]) {...}
 ```
 
-### Async Filter 
+## Async Filter 
 
 ```
 /**
@@ -50,7 +46,7 @@ function asyncForEach(callback, [thisArg]) {...}
  function asyncFilter(callback, [thisArg]) {...}
  ```
 
- ### Async Find
+ ## Async Find
 
  ```
  /**
