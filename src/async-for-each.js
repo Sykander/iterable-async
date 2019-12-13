@@ -5,7 +5,6 @@ const { mapIterable } = require('./helpers'),
 /**
  * Async For Each
  * Loop over an iterable object asynchronously and resolve when all callbacks are resolved
- * Will loop independently from order when callbacks are async
  * @async
  * @param {Function} callback - callback(currentValue, index, array)
  * @param {Object} [thisArg] - must be iterable
