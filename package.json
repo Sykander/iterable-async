@@ -1,6 +1,6 @@
 {
   "name": "iterable-async",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A Collection of useful patterns.",
   "main": "src",
   "scripts": {

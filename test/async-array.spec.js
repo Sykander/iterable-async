@@ -3,23 +3,19 @@ const { expect } = require('./support/chai'),
 
 context('Async Array', () => {
 	describe('Class attributes and properties', () => {
-		let asyncArray;
-
-		beforeEach(() => (asyncArray = new AsyncArray()));
-
 		it('Should inherit from Array', () =>
-			expect(asyncArray).to.be.instanceOf(Array));
+			expect(AsyncArray.prototype).to.be.instanceOf(Array));
 
 		it('Should have access asyncFilter method', () =>
-			expect(asyncArray.asyncFilter).to.be.a('function'));
+			expect(AsyncArray.prototype.asyncFilter).to.be.a('function'));
 
 		it('Should have access asyncFind method', () =>
-			expect(asyncArray.asyncFind).to.be.a('function'));
+			expect(AsyncArray.prototype.asyncFind).to.be.a('function'));
 
 		it('Should have access asyncFindIndex method', () =>
-			expect(asyncArray.asyncFindIndex).to.be.a('function'));
+			expect(AsyncArray.prototype.asyncFindIndex).to.be.a('function'));
 
 		it('Should have access asyncMap method', () =>
-			expect(asyncArray.asyncMap).to.be.a('function'));
+			expect(AsyncArray.prototype.asyncMap).to.be.a('function'));
 	});
 });
