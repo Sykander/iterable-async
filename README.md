@@ -9,6 +9,17 @@ A collection of methods for looping iterable objects asynchronously using someth
 $ npm install iterable-async
 ```
 
+## Objects
+
+* Async Array
+
+### Async Array
+
+An Array class with additional async array methods.
+```
+class AsyncArray extends Array {...}
+```
+
 ## Methods
 
 * Async Filter
@@ -21,14 +32,14 @@ $ npm install iterable-async
 
 Filter an iterable object asynchronously
 ```
-function asyncFilter(callback, [thisArg]) {...}
+async function asyncFilter(callback, [thisArg]) {...}
 ```
 
 ### Async Find
 
 Find an item in an iterable object asynchronously
 ```
-function asyncFind(callback, [thisArg]) {...}
+async function asyncFind(callback, [thisArg]) {...}
 ```
 
 ### Async Find Index
@@ -42,14 +53,14 @@ async function asyncFindIndex(callback, [thisArg]) {...}
 
 Loop over an iterable object asynchronously
 ```
-function asyncForEach(callback, [thisArg]) {...}
+async function asyncForEach(callback, [thisArg]) {...}
 ```
 
 ### Async Map
 
 Map an iterable object asynchronously
 ```
-function asyncMap(callback, [thisArg]) {...}
+async function asyncMap(callback, [thisArg]) {...}
 ```
 
 
