@@ -2,6 +2,7 @@
  * Complete collection of patterns
  */
 module.exports = {
+	AsyncArray: require('./async-array'),
 	asyncMap: require('./async-map'),
 	asyncForEach: require('./async-for-each'),
 	asyncFilter: require('./async-filter'),
