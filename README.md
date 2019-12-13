@@ -9,6 +9,17 @@ A collection of methods for looping iterable objects asynchronously using someth
 $ npm install iterable-async
 ```
 
+## Objects
+
+* Async Array
+
+### Async Array
+
+An Array class with additional async array methods.
+```
+class AsyncArray extends Array {...}
+```
+
 ## Methods
 
 * Async Filter
