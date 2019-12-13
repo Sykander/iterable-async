@@ -1,4 +1,5 @@
 const {
+	AsyncArray,
 	asyncFind,
 	asyncFindIndex,
 	asyncFilter,
