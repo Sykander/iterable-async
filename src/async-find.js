@@ -19,18 +19,20 @@ module.exports = async function asyncFind(callback, thisArg = noParam) {
 
 	const tasks = mapIterable(collection, callback);
 
-	const index = await Promise.race([
-		Promise.race(
-			tasks.map(async (task, index) => {
-				const checkIsFound = await task;
+	return collection[
+		await Promise.race([
+			Promise.race(
+				tasks.map(async (task, index) => {
+					const checkIsFound = await task;
 
-				return new Promise(resolve => checkIsFound && resolve(index));
-			})
-		),
-		Promise.all(tasks).then(taskResults =>
-			taskResults.findIndex(result => result)
-		)
-	]);
-
-	return collection[index];
+					return new Promise(
+						resolve => checkIsFound && resolve(index)
+					);
+				})
+			),
+			Promise.all(tasks).then(taskResults =>
+				taskResults.findIndex(result => result)
+			)
+		])
+	];
 };
