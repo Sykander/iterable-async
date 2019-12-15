@@ -35,5 +35,12 @@
       "pre-commit": "npm run lint:check"
     }
   },
+  "keywords": [
+    "promise",
+    "iterable",
+    "async",
+    "array",
+    "methods"
+  ],
   "runkitExampleFilename": "docs/playground.js"
 }
