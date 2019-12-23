@@ -28,21 +28,21 @@ class AsyncArray extends Array {...}
 * Async For Each
 * Async Map
 
-### Async Filter 
+### [Async Filter](https://github.com/Sykander/iterable-async/wiki/Async-Filter) 
 
 Filter an iterable object asynchronously
 ```
 async function asyncFilter(callback, [thisArg]) {...}
 ```
 
-### Async Find
+### [Async Find](https://github.com/Sykander/iterable-async/wiki/Async-Find)
 
 Find an item in an iterable object asynchronously
 ```
 async function asyncFind(callback, [thisArg]) {...}
 ```
 
-### Async Find Index
+### [Async Find Index](https://github.com/Sykander/iterable-async/wiki/Async-Find-Index)
 
 Find an item's index in an iterable object asynchronously
 ```
@@ -56,7 +56,7 @@ Loop over an iterable object asynchronously
 async function asyncForEach(callback, [thisArg]) {...}
 ```
 
-### Async Map
+### [Async Map](https://github.com/Sykander/iterable-async/wiki/Async-Map)
 
 Map an iterable object asynchronously
 ```
