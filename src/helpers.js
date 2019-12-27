@@ -55,14 +55,14 @@ const swapItems = (module.exports.swapItems = function swapItems(
 });
 
 /**
- * perform
+ * Async partition an array for quick sort
  * @async
  * @param {Object} items
  * @param {Number} leftIndex
  * @param {Number} rightIndex
  * @param {Function} compare
  */
-module.exports.asyncPartition = async function partition(
+module.exports.asyncPartition = async function asyncPartition(
 	items,
 	leftIndex,
 	rightIndex,
