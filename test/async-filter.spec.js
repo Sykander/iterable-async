@@ -1,10 +1,6 @@
 const { expect } = require('./support/chai'),
 	{ getArray } = require('./support/data-factory'),
-	{
-		getSyncCallback,
-		getAsyncCallback,
-		getErrorCallback
-	} = require('./support/helpers'),
+	{ getCallback } = require('./support/helpers'),
 	{
 		rejectsWithError,
 		ranCallbacksInOrder,
@@ -31,7 +27,7 @@ context('Async Filter', () => {
 		let result, callback, filteredArray;
 
 		beforeEach(async () => {
-			({ result, callback } = getSyncCallback());
+			({ result, callback } = getCallback());
 
 			filteredArray = await asyncFilter(callback);
 		});
@@ -57,7 +53,7 @@ context('Async Filter', () => {
 		let result, callback, filteredArray;
 
 		beforeEach(async () => {
-			({ result, callback } = getAsyncCallback());
+			({ result, callback } = getCallback({ isAsync: true }));
 
 			filteredArray = await asyncFilter(callback, array);
 		});
@@ -82,17 +78,23 @@ context('Async Filter', () => {
 	describe('Given a callback that throws an error', () => {
 		let callback, error;
 
-		beforeEach(() => ({ callback, error } = getErrorCallback()));
+		beforeEach(
+			() =>
+				({
+					callback,
+					meta: { error }
+				} = getCallback({ isError: true }))
+		);
 
 		it('Should reject with that error', async () =>
 			rejectsWithError(asyncFilter(callback), error));
 	});
 
-	describe('Given a callback that uses additional parameters', () => {
+	describe('Given a callback that uses all arguments', () => {
 		let result, callback;
 
 		beforeEach(async () => {
-			({ result, callback } = getSyncCallback());
+			({ result, callback } = getCallback());
 
 			await asyncFilter(callback);
 		});
@@ -107,7 +109,7 @@ context('Async Filter', () => {
 		beforeEach(async () => {
 			newArray = getArray();
 
-			({ result, callback } = getSyncCallback());
+			({ result, callback } = getCallback());
 
 			await asyncFilter(callback, newArray);
 		});

@@ -1,83 +1,82 @@
 const { getString } = require('./data-factory');
 
 /**
- * Get Sync callback and result
+ * Get callback and result
  * @param {Object} [options]
  * @param {Boolean} [options.isFind=false]
  * @param {Number} [options.findIndex=0]
- * @return {Object}
+ * @param {Boolean} [options.isSort=false]
+ * @param {Function} [options.sortRule=()=>0]
+ * @param {Boolean} [options.isAsync=false]
+ * @param {Boolean} [options.isError=false]
+ * @return {Object} { result, callback, meta }
  */
-module.exports.getSyncCallback = function getSyncCallback(options = {}) {
-	const result = [],
-		{ isFind = false, findIndex = 0 } = options;
+module.exports.getCallback = function getCallback(options = {}) {
+	const {
+			isFind = false,
+			findIndex = 0,
+			isSort = false,
+			sortRule = () => 0,
+			isAsync = false,
+			isError = false
+		} = options,
+		result = [],
+		meta = { options };
 
-	return {
-		result,
-		callback: (item, index, array) => {
-			let callbackResult = item;
+	let callback = (item, index, array) => {
+		let callbackResult = item;
 
-			if (isFind) {
-				callbackResult = index === findIndex;
-			}
+		if (isFind) {
+			callbackResult = index === findIndex;
+		}
+
+		result.push({
+			item,
+			index,
+			array,
+			options,
+			result: callbackResult
+		});
+
+		return callbackResult;
+	};
+
+	if (isSort) {
+		callback = (firstEl, secondEl) => {
+			const sortResult = sortRule(firstEl, secondEl);
 
 			result.push({
-				item,
-				index,
-				array,
+				firstEl,
+				secondEl,
 				options,
-				result: callbackResult
+				result: sortResult
 			});
 
-			return callbackResult;
-		}
-	};
-};
+			return sortResult;
+		};
+	}
 
-/**
- * Get Async callback and result
- * @param {Boolean} [options.isFind=false]
- * @param {Number} [options.findIndex=0]
- * @return {Object}
- */
-module.exports.getAsyncCallback = function getAsyncCallback(options = {}) {
-	const result = [],
-		{ isFind = false, findIndex = 0 } = options;
+	if (isError) {
+		const string = getString(),
+			error = new Error(string);
 
-	return {
-		result,
-		callback: async (item, index, array) => {
-			let callbackResult = item;
-
-			if (isFind) {
-				callbackResult = index === findIndex;
-			}
-
-			result.push({
-				item,
-				index,
-				array,
-				options,
-				result: callbackResult
-			});
-
-			return callbackResult;
-		}
-	};
-};
-
-/**
- * Get callback that throws error
- * @return {Object}
- */
-module.exports.getErrorCallback = function getErrorCallback() {
-	const string = getString(),
-		error = new Error(string);
-
-	return {
-		string,
-		error,
-		callback: () => {
+		callback = () => {
 			throw error;
-		}
+		};
+
+		meta.errorString = string;
+		meta.error = error;
+	}
+
+	if (isAsync) {
+		const innerCallback = callback;
+
+		callback = async (...args) => innerCallback(...args);
+	}
+
+	return {
+		result,
+		callback,
+		meta
 	};
 };

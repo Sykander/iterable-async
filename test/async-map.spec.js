@@ -1,10 +1,6 @@
 const { expect } = require('./support/chai'),
 	{ getArray } = require('./support/data-factory'),
-	{
-		getSyncCallback,
-		getAsyncCallback,
-		getErrorCallback
-	} = require('./support/helpers'),
+	{ getCallback } = require('./support/helpers'),
 	{
 		rejectsWithError,
 		ranCallbacksInOrder,
@@ -31,7 +27,7 @@ context('Async Map', () => {
 		let result, callback, mappedArray;
 
 		beforeEach(async () => {
-			({ result, callback } = getSyncCallback());
+			({ result, callback } = getCallback());
 
 			mappedArray = await asyncMap(callback);
 		});
@@ -54,7 +50,7 @@ context('Async Map', () => {
 		let result, callback, mappedArray;
 
 		beforeEach(async () => {
-			({ result, callback } = getAsyncCallback());
+			({ result, callback } = getCallback({ isAsync: true }));
 
 			mappedArray = await asyncMap(callback, array);
 		});
@@ -74,20 +70,25 @@ context('Async Map', () => {
 	});
 
 	describe('Given a callback that throws an error', () => {
-		let callback, string;
+		let callback, error;
 
-		beforeEach(() => ({ callback, string } = getErrorCallback()));
+		beforeEach(
+			() =>
+				({
+					callback,
+					meta: { error }
+				} = getCallback({ isError: true }))
+		);
 
-		it('Should reject with that error', async () => {
-			await expect(asyncMap(callback)).to.rejectedWith(string);
-		});
+		it('Should reject with that error', async () =>
+			rejectsWithError(asyncMap(callback), error));
 	});
 
-	describe('Given a callback that uses additional parameters', () => {
+	describe('Given a callback that uses all arguments', () => {
 		let result, callback;
 
 		beforeEach(async () => {
-			({ result, callback } = getSyncCallback());
+			({ result, callback } = getCallback());
 
 			await asyncMap(callback);
 		});
@@ -102,7 +103,7 @@ context('Async Map', () => {
 		beforeEach(async () => {
 			newArray = getArray();
 
-			({ result, callback } = getSyncCallback());
+			({ result, callback } = getCallback());
 
 			await asyncMap(callback, newArray);
 		});

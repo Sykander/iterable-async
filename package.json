@@ -1,6 +1,6 @@
 {
   "name": "iterable-async",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A Collection of useful patterns.",
   "main": "src",
   "scripts": {
@@ -35,5 +35,12 @@
       "pre-commit": "npm run lint:check"
     }
   },
+  "keywords": [
+    "promise",
+    "iterable",
+    "async",
+    "array",
+    "methods"
+  ],
   "runkitExampleFilename": "docs/playground.js"
 }
