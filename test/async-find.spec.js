@@ -71,13 +71,18 @@ context('Async Find', () => {
 	});
 
 	describe('Given a callback that throws an error', () => {
-		let callback, string;
+		let callback, error;
 
-		beforeEach(() => ({ callback, string } = getErrorCallback()));
+		beforeEach(
+			() =>
+				({
+					callback,
+					meta: { error }
+				} = getErrorCallback())
+		);
 
-		it('Should reject with that error', async () => {
-			await expect(asyncFind(callback)).to.rejectedWith(string);
-		});
+		it('Should reject with that error', async () =>
+			rejectsWithError(asyncFind(callback), error));
 	});
 
 	describe('Given a callback that uses additional parameters', () => {

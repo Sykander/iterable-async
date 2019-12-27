@@ -7,7 +7,8 @@ const { expect } = require('./support/chai'),
 	} = require('./support/helpers'),
 	{
 		ranCallbacksInOrder,
-		hasAccessToCorrectArgumentsOnCallback
+		hasAccessToCorrectArgumentsOnCallback,
+		rejectsWithError
 	} = require('./support/spec-helpers'),
 	{ asyncSort: asyncSortFunction } = require('../src');
 
@@ -19,12 +20,19 @@ context('Async Sort', () => {
 	});
 
 	describe('Given no arguments', () => {
-		// let sortedArray;
-		// beforeEach(async () => {
-		// 	sortedArray = await asyncSort();
-		// });
-		// // FIXME: Finish writing async sort spec from here
-		// it('Should sort elements by unicode value', () => expect(sortedArray));
+		let sortedArray;
+
+		beforeEach(async () => {
+			sortedArray = await asyncSort();
+		});
+
+		it('Should sort elements by unicode value', () => {
+			const expectedResult = array.slice().sort();
+
+			expectedResult.every((item, index) =>
+				expect(item).to.equal(sortedArray[index])
+			);
+		});
 	});
 
 	describe('Given a synchronous callback', () => {
@@ -39,7 +47,7 @@ context('Async Sort', () => {
 		it('Should run each callback in order', () =>
 			ranCallbacksInOrder(result));
 
-		it('Should map each item in order', async () => {
+		it('Should sort each item by the callback result', async () => {
 			sortedArray.every((item, index) =>
 				expect(item).to.equal(array[index])
 			);
@@ -72,13 +80,18 @@ context('Async Sort', () => {
 	});
 
 	describe('Given a callback that throws an error', () => {
-		let callback, string;
+		let callback, error;
 
-		beforeEach(() => ({ callback, string } = getErrorCallback()));
+		beforeEach(
+			() =>
+				({
+					callback,
+					meta: { error }
+				} = getErrorCallback())
+		);
 
-		it('Should reject with that error', async () => {
-			await expect(asyncSort(callback)).to.rejectedWith(string);
-		});
+		it('Should reject with that error', async () =>
+			rejectsWithError(asyncSort(callback), error));
 	});
 
 	describe('Given a callback that uses additional parameters', () => {

@@ -82,7 +82,13 @@ context('Async Filter', () => {
 	describe('Given a callback that throws an error', () => {
 		let callback, error;
 
-		beforeEach(() => ({ callback, error } = getErrorCallback()));
+		beforeEach(
+			() =>
+				({
+					callback,
+					meta: { error }
+				} = getErrorCallback())
+		);
 
 		it('Should reject with that error', async () =>
 			rejectsWithError(asyncFilter(callback), error));
