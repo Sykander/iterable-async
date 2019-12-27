@@ -71,7 +71,6 @@ Sort an iterable object asynchronously
 async function asyncSort(callback) {...}
 ```
 
-
 ## Development
 
 Development is open to contribution, check the project board "Development" for tickets.

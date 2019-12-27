@@ -11,13 +11,13 @@ const { noParam } = require('./constants'),
  * @async
  * @param {Function} [compareFunc] - default is sort by item's unicode value
  * @return {Object}
+ * @throws {TypeError}
  */
 module.exports = async function asyncSort(compareFunc = noParam) {
-	validateIsIterable(this);
-
 	const compare = compareFunc !== noParam ? compareFunc : compareByUnicode;
 
 	validateIsFunction(compare);
+	validateIsIterable(this);
 
 	await asyncQuickSort(this, 0, this.length - 1, compare);
 
