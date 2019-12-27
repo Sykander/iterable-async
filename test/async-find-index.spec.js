@@ -1,10 +1,6 @@
 const { expect } = require('./support/chai'),
 	{ getArray, getInt } = require('./support/data-factory'),
-	{
-		getSyncCallback,
-		getAsyncCallback,
-		getErrorCallback
-	} = require('./support/helpers'),
+	{ getCallback } = require('./support/helpers'),
 	{
 		rejectsWithError,
 		ranCallbacksInOrder,
@@ -34,7 +30,7 @@ context('Async Find Index', () => {
 		beforeEach(async () => {
 			findIndex = getInt({ min: -1, max: array.length });
 
-			({ result, callback } = getSyncCallback({
+			({ result, callback } = getCallback({
 				isFind: true,
 				findIndex
 			}));
@@ -61,8 +57,9 @@ context('Async Find Index', () => {
 		beforeEach(async () => {
 			findIndex = getInt({ min: 0, max: array.length });
 
-			({ result, callback } = getAsyncCallback({
+			({ result, callback } = getCallback({
 				isFind: true,
+				isAsync: true,
 				findIndex
 			}));
 
@@ -90,18 +87,18 @@ context('Async Find Index', () => {
 				({
 					callback,
 					meta: { error }
-				} = getErrorCallback())
+				} = getCallback({ isError: true }))
 		);
 
 		it('Should reject with that error', async () =>
 			rejectsWithError(asyncFindIndex(callback), error));
 	});
 
-	describe('Given a callback that uses additional parameters', () => {
+	describe('Given a callback that uses all arguments', () => {
 		let result, callback;
 
 		beforeEach(async () => {
-			({ result, callback } = getSyncCallback());
+			({ result, callback } = getCallback());
 
 			await asyncFindIndex(callback);
 		});
@@ -116,7 +113,7 @@ context('Async Find Index', () => {
 		beforeEach(async () => {
 			newArray = getArray();
 
-			({ result, callback } = getSyncCallback());
+			({ result, callback } = getCallback());
 
 			await asyncFindIndex(callback, newArray);
 		});

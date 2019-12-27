@@ -1,13 +1,8 @@
 const { expect } = require('./support/chai'),
 	{ getArray } = require('./support/data-factory'),
-	{
-		getSyncCallback,
-		getAsyncCallback,
-		getErrorCallback
-	} = require('./support/helpers'),
+	{ getCallback } = require('./support/helpers'),
 	{
 		ranCallbacksInOrder,
-		hasAccessToCorrectArgumentsOnCallback,
 		rejectsWithError
 	} = require('./support/spec-helpers'),
 	{ asyncSort: asyncSortFunction } = require('../src');
@@ -39,7 +34,7 @@ context('Async Sort', () => {
 		let result, callback, sortedArray;
 
 		beforeEach(async () => {
-			({ result, callback } = getSyncCallback());
+			({ result, callback } = getCallback({ isSort: true }));
 
 			sortedArray = await asyncSort(callback);
 		});
@@ -61,7 +56,7 @@ context('Async Sort', () => {
 		let result, callback, sortedArray;
 
 		beforeEach(async () => {
-			({ result, callback } = getAsyncCallback());
+			({ result, callback } = getCallback({ isSort: true }));
 
 			sortedArray = await asyncSort(callback, array);
 		});
@@ -69,7 +64,7 @@ context('Async Sort', () => {
 		it('Should run each callback in order', () =>
 			ranCallbacksInOrder(result));
 
-		it('Should map each item in order', async () => {
+		it('Should sort each item by the callback result', async () => {
 			sortedArray.every((item, index) =>
 				expect(item).to.equal(array[index])
 			);
@@ -87,24 +82,28 @@ context('Async Sort', () => {
 				({
 					callback,
 					meta: { error }
-				} = getErrorCallback())
+				} = getCallback({ isSort: true }))
 		);
 
 		it('Should reject with that error', async () =>
 			rejectsWithError(asyncSort(callback), error));
 	});
 
-	describe('Given a callback that uses additional parameters', () => {
-		let result, callback;
+	describe('Given a callback that uses all arguments', () => {
+		let callback, result;
 
 		beforeEach(async () => {
-			({ result, callback } = getSyncCallback());
+			({ result, callback } = getCallback({ isSort: true }));
 
 			await asyncSort(callback);
 		});
 
-		it('Should have access to currentValue, index and array on the callback', () =>
-			hasAccessToCorrectArgumentsOnCallback(array, result));
+		it('Should have access to first and second elements', () =>
+			result.every(({ firstEl, secondEl }) =>
+				expect(array)
+					.to.contain(firstEl)
+					.and.contain(secondEl)
+			));
 	});
 
 	describe('Given the optional thisArg parameter', () => {
@@ -113,7 +112,7 @@ context('Async Sort', () => {
 		beforeEach(async () => {
 			newArray = getArray();
 
-			({ result, callback } = getSyncCallback());
+			({ result, callback } = getCallback({ isSort: true }));
 
 			await asyncSort(callback, newArray);
 		});
