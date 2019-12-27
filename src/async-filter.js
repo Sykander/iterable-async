@@ -4,6 +4,7 @@ const { mapIterable, filterIterable } = require('./helpers'),
 
 /**
  * Async Filter
+ * ============
  * Filter an iterable object asynchronously and resolve when all callbacks are resolved
  * @async
  * @param {Function} callback - callback(currentValue, index, array)

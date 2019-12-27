@@ -6,7 +6,9 @@ const asyncMap = require('./async-map'),
 	asyncSort = require('./async-sort');
 
 /**
- * Create new constructor for Async Array
+ * Async Array
+ * ===========
+ * Array like object with access to async array methods
  * @type {AsyncArray}
  */
 class AsyncArray extends Array {}
