@@ -4,6 +4,7 @@ const { mapIterable } = require('./helpers'),
 
 /**
  * Async Find Index
+ * ================
  * Find an item's index in an iterable object asynchronously and resolve when found or all callbacks resolve
  * @async
  * @param {Function} callback - callback(currentValue, index, array)

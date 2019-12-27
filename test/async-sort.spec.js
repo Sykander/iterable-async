@@ -1,10 +1,7 @@
 const { expect } = require('./support/chai'),
 	{ getArray } = require('./support/data-factory'),
 	{ getCallback } = require('./support/helpers'),
-	{
-		ranCallbacksInOrder,
-		rejectsWithError
-	} = require('./support/spec-helpers'),
+	{ rejectsWithError } = require('./support/spec-helpers'),
 	{ asyncSort: asyncSortFunction } = require('../src');
 
 context('Async Sort', () => {
@@ -30,19 +27,16 @@ context('Async Sort', () => {
 		});
 	});
 
-	describe('Given a synchronous callback', () => {
-		let result, callback, sortedArray;
+	describe('Given a synchronous compareFunc', () => {
+		let compareFunc, sortedArray;
 
 		beforeEach(async () => {
-			({ result, callback } = getCallback({ isSort: true }));
+			({ compareFunc } = getCallback({ isSort: true }));
 
-			sortedArray = await asyncSort(callback);
+			sortedArray = await asyncSort(compareFunc);
 		});
 
-		it('Should run each callback in order', () =>
-			ranCallbacksInOrder(result));
-
-		it('Should sort each item by the callback result', async () => {
+		it('Should sort each item by the compareFunc result', async () => {
 			sortedArray.every((item, index) =>
 				expect(item).to.equal(array[index])
 			);
@@ -52,19 +46,16 @@ context('Async Sort', () => {
 			expect(sortedArray).to.equal(array));
 	});
 
-	describe('Given an asynchronous callback', () => {
-		let result, callback, sortedArray;
+	describe('Given an asynchronous compareFunc', () => {
+		let compareFunc, sortedArray;
 
 		beforeEach(async () => {
-			({ result, callback } = getCallback({ isSort: true }));
+			({ compareFunc } = getCallback({ isSort: true }));
 
-			sortedArray = await asyncSort(callback, array);
+			sortedArray = await asyncSort(compareFunc, array);
 		});
 
-		it('Should run each callback in order', () =>
-			ranCallbacksInOrder(result));
-
-		it('Should sort each item by the callback result', async () => {
+		it('Should sort each item by the compareFunc result', async () => {
 			sortedArray.every((item, index) =>
 				expect(item).to.equal(array[index])
 			);
@@ -74,28 +65,28 @@ context('Async Sort', () => {
 			expect(sortedArray).to.equal(array));
 	});
 
-	describe('Given a callback that throws an error', () => {
-		let callback, error;
+	describe('Given a compareFunc that throws an error', () => {
+		let compareFunc, error;
 
 		beforeEach(
 			() =>
 				({
-					callback,
+					callback: compareFunc,
 					meta: { error }
-				} = getCallback({ isSort: true }))
+				} = getCallback({ isError: true }))
 		);
 
 		it('Should reject with that error', async () =>
-			rejectsWithError(asyncSort(callback), error));
+			rejectsWithError(asyncSort(compareFunc), error));
 	});
 
-	describe('Given a callback that uses all arguments', () => {
-		let callback, result;
+	describe('Given a compareFunc that uses all arguments', () => {
+		let compareFunc, result;
 
 		beforeEach(async () => {
-			({ result, callback } = getCallback({ isSort: true }));
+			({ result, compareFunc } = getCallback({ isSort: true }));
 
-			await asyncSort(callback);
+			await asyncSort(compareFunc);
 		});
 
 		it('Should have access to first and second elements', () =>
@@ -104,23 +95,5 @@ context('Async Sort', () => {
 					.to.contain(firstEl)
 					.and.contain(secondEl)
 			));
-	});
-
-	describe('Given the optional thisArg parameter', () => {
-		let result, callback, newArray;
-
-		beforeEach(async () => {
-			newArray = getArray();
-
-			({ result, callback } = getCallback({ isSort: true }));
-
-			await asyncSort(callback, newArray);
-		});
-
-		it('Should loop over the given thisArg', () => {
-			return result.every(({ array }) =>
-				expect(array).to.equal(newArray)
-			);
-		});
 	});
 });
