@@ -4,5 +4,6 @@ const {
 	asyncFindIndex,
 	asyncFilter,
 	asyncForEach,
-	asyncMap
+	asyncMap,
+	asyncSort
 } = require('iterable-async');

@@ -27,6 +27,7 @@ class AsyncArray extends Array {...}
 * Async Find Index
 * Async For Each
 * Async Map
+* Async Sort
 
 ### [Async Filter](https://github.com/Sykander/iterable-async/wiki/Async-Filter) 
 
@@ -61,6 +62,13 @@ async function asyncForEach(callback, [thisArg]) {...}
 Map an iterable object asynchronously
 ```
 async function asyncMap(callback, [thisArg]) {...}
+```
+
+### [Async Sort](https://github.com/Sykander/iterable-async/wiki/Async-Sort) 
+
+Sort an iterable object asynchronously
+```
+async function asyncSort(callback) {...}
 ```
 
 
