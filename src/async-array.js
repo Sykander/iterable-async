@@ -2,7 +2,8 @@ const asyncMap = require('./async-map'),
 	asyncForEach = require('./async-for-each'),
 	asyncFilter = require('./async-filter'),
 	asyncFind = require('./async-find'),
-	asyncFindIndex = require('./async-find-index');
+	asyncFindIndex = require('./async-find-index'),
+	asyncSort = require('./async-sort');
 
 /**
  * Create new constructor for Async Array
@@ -15,6 +16,7 @@ class AsyncArray extends Array {}
 	(AsyncArray.prototype.asyncFindIndex = asyncFindIndex),
 	(AsyncArray.prototype.asyncFilter = asyncFilter),
 	(AsyncArray.prototype.asyncForEach = asyncForEach),
-	(AsyncArray.prototype.asyncMap = asyncMap);
+	(AsyncArray.prototype.asyncMap = asyncMap),
+	(AsyncArray.prototype.asyncSort = asyncSort);
 
 module.exports = AsyncArray;

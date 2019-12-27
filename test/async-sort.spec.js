@@ -1,10 +1,7 @@
 const { expect } = require('./support/chai'),
 	{ getArray } = require('./support/data-factory'),
 	{ getCallback } = require('./support/helpers'),
-	{
-		ranCallbacksInOrder,
-		rejectsWithError
-	} = require('./support/spec-helpers'),
+	{ rejectsWithError } = require('./support/spec-helpers'),
 	{ asyncSort: asyncSortFunction } = require('../src');
 
 context('Async Sort', () => {
@@ -31,16 +28,13 @@ context('Async Sort', () => {
 	});
 
 	describe('Given a synchronous callback', () => {
-		let result, callback, sortedArray;
+		let callback, sortedArray;
 
 		beforeEach(async () => {
-			({ result, callback } = getCallback({ isSort: true }));
+			({ callback } = getCallback({ isSort: true }));
 
 			sortedArray = await asyncSort(callback);
 		});
-
-		it('Should run each callback in order', () =>
-			ranCallbacksInOrder(result));
 
 		it('Should sort each item by the callback result', async () => {
 			sortedArray.every((item, index) =>
@@ -53,16 +47,13 @@ context('Async Sort', () => {
 	});
 
 	describe('Given an asynchronous callback', () => {
-		let result, callback, sortedArray;
+		let callback, sortedArray;
 
 		beforeEach(async () => {
-			({ result, callback } = getCallback({ isSort: true }));
+			({ callback } = getCallback({ isSort: true }));
 
 			sortedArray = await asyncSort(callback, array);
 		});
-
-		it('Should run each callback in order', () =>
-			ranCallbacksInOrder(result));
 
 		it('Should sort each item by the callback result', async () => {
 			sortedArray.every((item, index) =>
@@ -82,7 +73,7 @@ context('Async Sort', () => {
 				({
 					callback,
 					meta: { error }
-				} = getCallback({ isSort: true }))
+				} = getCallback({ isSort: true, isError: true }))
 		);
 
 		it('Should reject with that error', async () =>
@@ -104,23 +95,5 @@ context('Async Sort', () => {
 					.to.contain(firstEl)
 					.and.contain(secondEl)
 			));
-	});
-
-	describe('Given the optional thisArg parameter', () => {
-		let result, callback, newArray;
-
-		beforeEach(async () => {
-			newArray = getArray();
-
-			({ result, callback } = getCallback({ isSort: true }));
-
-			await asyncSort(callback, newArray);
-		});
-
-		it('Should loop over the given thisArg', () => {
-			return result.every(({ array }) =>
-				expect(array).to.equal(newArray)
-			);
-		});
 	});
 });
