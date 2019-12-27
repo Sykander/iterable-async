@@ -71,9 +71,9 @@ context('Async Sort', () => {
 		beforeEach(
 			() =>
 				({
-					compareFunc,
+					callback: compareFunc,
 					meta: { error }
-				} = getCallback({ isSort: true, isError: true }))
+				} = getCallback({ isError: true }))
 		);
 
 		it('Should reject with that error', async () =>

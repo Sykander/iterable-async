@@ -99,13 +99,22 @@ module.exports.compareByUnicode = (a, b) => {
 	const strA = String(a),
 		strB = String(b);
 
-	if (strA < strB) {
-		return -1;
+	if (strA === strB) {
+		return 0;
 	}
 
-	if (strA > strB) {
-		return 1;
+	let aCode, bCode;
+
+	for (let i = 0; i < strA.length; i++) {
+		aCode = strA.charCodeAt(i);
+		bCode = strB.charCodeAt(i);
+
+		if (aCode === bCode) {
+			continue;
+		}
+
+		return isNaN(bCode) || aCode > bCode ? 1 : -1;
 	}
 
-	return 0;
+	return strA.length < strB.length ? -1 : 1;
 };
