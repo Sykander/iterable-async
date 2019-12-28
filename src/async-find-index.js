@@ -8,17 +8,18 @@ const { mapIterable } = require('./helpers'),
  * Find an item's index in an iterable object asynchronously and resolve when found or all callbacks resolve
  * @async
  * @param {Function} callback - callback(currentValue, index, array)
- * @param {Object} [thisArg] - must be iterable
+ * @param {Object} [thisArg]
  * @return {Number} - an integer index, -1 if not found
  * @throws {TypeError}
  */
 module.exports = async function asyncFindIndex(callback, thisArg = noParam) {
-	const collection = thisArg !== noParam ? thisArg : this;
-
+	validateIsIterable(this);
 	validateIsFunction(callback);
-	validateIsIterable(collection);
 
-	const tasks = mapIterable(collection, callback);
+	const tasks = mapIterable(
+		this,
+		callback.bind(thisArg !== noParam ? thisArg : undefined)
+	);
 
 	return Promise.race([
 		Promise.race(
