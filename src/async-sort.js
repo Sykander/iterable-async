@@ -14,10 +14,11 @@ const { noParam } = require('./constants'),
  * @throws {TypeError}
  */
 module.exports = async function asyncSort(compareFunc = noParam) {
+	validateIsIterable(this);
+
 	const compare = compareFunc !== noParam ? compareFunc : compareByUnicode;
 
 	validateIsFunction(compare);
-	validateIsIterable(this);
 
 	await asyncQuickSort(this, 0, this.length - 1, compare);
 

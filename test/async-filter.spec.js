@@ -6,6 +6,7 @@ const { expect } = require('./support/chai'),
 		ranCallbacksInOrder,
 		hasAccessToCorrectArgumentsOnCallback
 	} = require('./support/spec-helpers'),
+	{ providedThisArg } = require('./support/constants'),
 	{ asyncFilter: asyncFilterFunction } = require('../src');
 
 context('Async Filter', () => {
@@ -104,20 +105,17 @@ context('Async Filter', () => {
 	});
 
 	describe('Given the optional thisArg parameter', () => {
-		let result, callback, newArray;
+		let result, callback;
 
 		beforeEach(async () => {
-			newArray = getArray();
-
 			({ result, callback } = getCallback());
 
-			await asyncFilter(callback, newArray);
+			await asyncFilter(callback, providedThisArg);
 		});
 
-		it('Should loop over the given thisArg', () => {
-			return result.every(({ array }) =>
-				expect(array).to.equal(newArray)
-			);
-		});
+		it('Should have accesss to thisArg on callback', () =>
+			result.every(({ thisArg }) =>
+				expect(thisArg.toString()).to.equal(providedThisArg.toString())
+			));
 	});
 });

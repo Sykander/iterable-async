@@ -6,6 +6,7 @@ const { expect } = require('./support/chai'),
 		ranCallbacksInOrder,
 		hasAccessToCorrectArgumentsOnCallback
 	} = require('./support/spec-helpers'),
+	{ providedThisArg } = require('./support/constants'),
 	{ asyncFind: asyncFindFunction } = require('../src');
 
 context('Async Find', () => {
@@ -96,20 +97,17 @@ context('Async Find', () => {
 	});
 
 	describe('Given the optional thisArg parameter', () => {
-		let result, callback, newArray;
+		let result, callback;
 
 		beforeEach(async () => {
-			newArray = getArray();
-
 			({ result, callback } = getCallback());
 
-			await asyncFind(callback, newArray);
+			await asyncFind(callback, providedThisArg);
 		});
 
-		it('Should loop over the given thisArg', () => {
-			return result.every(({ array }) =>
-				expect(array).to.equal(newArray)
-			);
-		});
+		it('Should have accesss to thisArg on callback', () =>
+			result.every(({ thisArg }) =>
+				expect(thisArg.toString()).to.equal(providedThisArg.toString())
+			));
 	});
 });

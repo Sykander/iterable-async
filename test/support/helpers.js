@@ -23,7 +23,7 @@ module.exports.getCallback = function getCallback(options = {}) {
 		result = [],
 		meta = { options };
 
-	let callback = (item, index, array) => {
+	let callback = function(item, index, array) {
 		let callbackResult = item;
 
 		if (isFind) {
@@ -35,6 +35,7 @@ module.exports.getCallback = function getCallback(options = {}) {
 			index,
 			array,
 			options,
+			thisArg: this,
 			result: callbackResult
 		});
 
@@ -42,13 +43,14 @@ module.exports.getCallback = function getCallback(options = {}) {
 	};
 
 	if (isSort) {
-		callback = (firstEl, secondEl) => {
+		callback = function(firstEl, secondEl) {
 			const sortResult = sortRule(firstEl, secondEl);
 
 			result.push({
 				firstEl,
 				secondEl,
 				options,
+				thisArg: this,
 				result: sortResult
 			});
 
@@ -60,7 +62,7 @@ module.exports.getCallback = function getCallback(options = {}) {
 		const string = getString(),
 			error = new Error(string);
 
-		callback = () => {
+		callback = function() {
 			throw error;
 		};
 
@@ -71,7 +73,9 @@ module.exports.getCallback = function getCallback(options = {}) {
 	if (isAsync) {
 		const innerCallback = callback;
 
-		callback = async (...args) => innerCallback(...args);
+		callback = async function(...args) {
+			return innerCallback.call(this, ...args);
+		};
 	}
 
 	return {

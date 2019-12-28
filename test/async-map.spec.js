@@ -6,6 +6,7 @@ const { expect } = require('./support/chai'),
 		ranCallbacksInOrder,
 		hasAccessToCorrectArgumentsOnCallback
 	} = require('./support/spec-helpers'),
+	{ providedThisArg } = require('./support/constants'),
 	{ asyncMap: asyncMapFunction } = require('../src');
 
 context('Async Map', () => {
@@ -98,20 +99,17 @@ context('Async Map', () => {
 	});
 
 	describe('Given the optional thisArg parameter', () => {
-		let result, callback, newArray;
+		let result, callback;
 
 		beforeEach(async () => {
-			newArray = getArray();
-
 			({ result, callback } = getCallback());
 
-			await asyncMap(callback, newArray);
+			await asyncMap(callback, providedThisArg);
 		});
 
-		it('Should loop over the given thisArg', () => {
-			return result.every(({ array }) =>
-				expect(array).to.equal(newArray)
-			);
-		});
+		it('Should have accesss to thisArg on callback', () =>
+			result.every(({ thisArg }) =>
+				expect(thisArg.toString()).to.equal(providedThisArg.toString())
+			));
 	});
 });
