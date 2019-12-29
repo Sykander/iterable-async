@@ -6,7 +6,7 @@
  * @param {Object} iterable
  * @param {Function} callback
  * @param {Object} [options]
- * @param {Boolean} [options.useEmptyElements=false] - use empty elements of the array ?
+ * @param {Boolean} [options.useEmptyElements=true] - use empty elements of the array ?
  * @return {Array}
  */
 module.exports.mapIterable = function mapIterable(
