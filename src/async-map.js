@@ -19,7 +19,8 @@ module.exports = async function asyncMap(callback, thisArg = noParam) {
 	return Promise.all(
 		mapIterable(
 			this,
-			callback.bind(thisArg !== noParam ? thisArg : undefined)
+			callback.bind(thisArg !== noParam ? thisArg : undefined),
+			{ useEmptyElements: false }
 		)
 	);
 };

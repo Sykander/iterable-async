@@ -5,13 +5,23 @@
  * eg. callback(currentValue, index, sourceIterable)
  * @param {Object} iterable
  * @param {Function} callback
+ * @param {Object} [options]
+ * @param {Boolean} [options.useEmptyElements=false] - use empty elements of the array ?
  * @return {Array}
  */
-module.exports.mapIterable = function mapIterable(iterable, callback) {
+module.exports.mapIterable = function mapIterable(
+	iterable,
+	callback,
+	{ useEmptyElements = true } = {}
+) {
 	const tasks = [];
 
-	for (let currentValue of iterable) {
-		tasks.push(callback(currentValue, tasks.length, iterable));
+	for (let index = 0; index < iterable.length; index++) {
+		if (!useEmptyElements && !(index in iterable)) {
+			continue;
+		}
+
+		tasks.push(callback(iterable[index], index, iterable));
 	}
 
 	return tasks;
@@ -61,6 +71,7 @@ const swapItems = (module.exports.swapItems = function swapItems(
  * @param {Number} leftIndex
  * @param {Number} rightIndex
  * @param {Function} compare
+ * @return {Number} leftIndex after partition
  */
 module.exports.asyncPartition = async function asyncPartition(
 	items,
@@ -103,11 +114,9 @@ module.exports.compareByUnicode = (a, b) => {
 		return 0;
 	}
 
-	let aCode, bCode;
-
 	for (let i = 0; i < strA.length; i++) {
-		aCode = strA.charCodeAt(i);
-		bCode = strB.charCodeAt(i);
+		const aCode = strA.charCodeAt(i),
+			bCode = strB.charCodeAt(i);
 
 		if (aCode === bCode) {
 			continue;

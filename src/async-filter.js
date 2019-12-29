@@ -21,7 +21,8 @@ module.exports = async function asyncFilter(callback, thisArg = noParam) {
 		await Promise.all(
 			mapIterable(
 				this,
-				callback.bind(thisArg !== noParam ? thisArg : undefined)
+				callback.bind(thisArg !== noParam ? thisArg : undefined),
+				{ useEmptyElements: false }
 			)
 		)
 	);
