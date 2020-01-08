@@ -20,5 +20,8 @@ context('Async Array', () => {
 
 		it('Should have access to the asyncSort method', () =>
 			expect(AsyncArray.prototype.asyncSort).to.be.a('function'));
+
+		it('Should have access to the asyncReduce method', () =>
+			expect(AsyncArray.prototype.asyncReduce).to.be.a('function'));
 	});
 });

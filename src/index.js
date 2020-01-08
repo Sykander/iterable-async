@@ -8,5 +8,6 @@ module.exports = {
 	asyncFilter: require('./async-filter'),
 	asyncFind: require('./async-find'),
 	asyncFindIndex: require('./async-find-index'),
-	asyncSort: require('./async-sort')
+	asyncSort: require('./async-sort'),
+	asyncReduce: require('./async-reduce')
 };

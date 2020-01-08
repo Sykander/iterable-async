@@ -3,7 +3,8 @@ const asyncMap = require('./async-map'),
 	asyncFilter = require('./async-filter'),
 	asyncFind = require('./async-find'),
 	asyncFindIndex = require('./async-find-index'),
-	asyncSort = require('./async-sort');
+	asyncSort = require('./async-sort'),
+	asyncReduce = require('./async-reduce');
 
 /**
  * Async Array
@@ -19,6 +20,7 @@ class AsyncArray extends Array {}
 	(AsyncArray.prototype.asyncFilter = asyncFilter),
 	(AsyncArray.prototype.asyncForEach = asyncForEach),
 	(AsyncArray.prototype.asyncMap = asyncMap),
-	(AsyncArray.prototype.asyncSort = asyncSort);
+	(AsyncArray.prototype.asyncSort = asyncSort),
+	(AsyncArray.prototype.asyncReduce = asyncReduce);
 
 module.exports = AsyncArray;
