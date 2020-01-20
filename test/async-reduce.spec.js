@@ -1,12 +1,10 @@
-const { expect } = require('./support/chai'),
-	{ getArray } = require('./support/data-factory'),
+const { getArray } = require('./support/data-factory'),
 	{ getCallback } = require('./support/helpers'),
 	{
 		rejectsWithError,
 		ranCallbacksInOrder,
 		hasAccessToCorrectArgumentsOnCallback
 	} = require('./support/spec-helpers'),
-	{ providedThisArg } = require('./support/constants'),
 	{ asyncReduce: asyncReduceFunction } = require('../src');
 
 context('Async Reduce', () => {
@@ -26,11 +24,10 @@ context('Async Reduce', () => {
 
 	describe('Given a synchronous callback', () => {
 		// eslint-disable-next-line no-unused-vars
-		let result, accumulator, callback, reducedAccumulator;
+		let result, callback, reducedAccumulator;
 
 		beforeEach(async () => {
 			({ result, callback } = getCallback({
-				accumulator,
 				isReduce: true
 			}));
 
@@ -51,7 +48,10 @@ context('Async Reduce', () => {
 		let result, callback, reducedAccumulator;
 
 		beforeEach(async () => {
-			({ result, callback } = getCallback({ isAsync: true }));
+			({ result, callback } = getCallback({
+				isAsync: true,
+				isReduce: true
+			}));
 
 			reducedAccumulator = await asyncReduce(callback, array);
 		});
@@ -93,18 +93,17 @@ context('Async Reduce', () => {
 			hasAccessToCorrectArgumentsOnCallback(array, result));
 	});
 
-	describe('Given the optional thisArg parameter', () => {
-		let result, callback;
+	describe('Given the optional accumulator parameter', () => {
+		// eslint-disable-next-line no-unused-vars
+		let result, callback, accumulator;
 
 		beforeEach(async () => {
-			({ result, callback } = getCallback());
+			({ result, callback } = getCallback()), (accumulator = {});
 
-			await asyncReduce(callback, providedThisArg);
+			await asyncReduce(callback, accumulator);
 		});
 
-		it('Should have accesss to thisArg on callback', () =>
-			result.every(({ thisArg }) =>
-				expect(thisArg.toString()).to.equal(providedThisArg.toString())
-			));
+		it('Should have accesss to accumulator on all callback iterations', () =>
+			'pending');
 	});
 });
