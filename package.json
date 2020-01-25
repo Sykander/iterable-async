@@ -1,7 +1,7 @@
 {
   "name": "iterable-async",
   "version": "1.0.3",
-  "description": "A Collection of useful patterns.",
+  "description": "Async methods for looping over an iterable object with the familiar array api.",
   "main": "src",
   "scripts": {
     "test": "./node_modules/.bin/mocha test",
