@@ -22,7 +22,7 @@ module.exports = async function asyncFilter(callback, thisArg = noParam) {
 			mapIterable(
 				this,
 				callback.bind(thisArg !== noParam ? thisArg : undefined),
-				{ useEmptyElements: false }
+				{ useEmptyElements: false, newlyAddedElements: false }
 			)
 		)
 	);
