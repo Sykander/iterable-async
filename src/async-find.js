@@ -18,7 +18,8 @@ module.exports = async function asyncFind(callback, thisArg = noParam) {
 
 	const tasks = mapIterable(
 		this,
-		callback.bind(thisArg !== noParam ? thisArg : undefined)
+		callback.bind(thisArg !== noParam ? thisArg : undefined),
+		{ useEmptyElements: true, newlyAddedElements: false }
 	);
 
 	return this[

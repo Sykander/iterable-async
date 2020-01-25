@@ -19,7 +19,7 @@ module.exports = async function asyncForEach(callback, thisArg = noParam) {
 		mapIterable(
 			this,
 			callback.bind(thisArg !== noParam ? thisArg : undefined),
-			{ useEmptyElements: false }
+			{ useEmptyElements: false, newlyAddedElements: false }
 		)
 	);
 };
