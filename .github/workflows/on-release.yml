@@ -1,10 +1,11 @@
-name: Node.js Package
+name: On Iterable Async new release
 
 on:
   release:
     types: [created]
 
 jobs:
+  # Test Build
   build:
     runs-on: ubuntu-latest
     steps:
@@ -15,7 +16,7 @@ jobs:
       - run: npm ci
       - run: npm test
 
-# Node Package Registry
+  # Publish to Node Package Registry
   publish-npm:
     needs: build
     runs-on: ubuntu-latest
@@ -31,7 +32,7 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{secrets.npm_token}}
 
-# Github Package Registry
+# Publish to Github Package Registry.
   publish-gpr:
     needs: build
     runs-on: ubuntu-latest
