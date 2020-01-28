@@ -4,11 +4,15 @@
   "description": "Async methods for looping over an iterable object with the familiar array api.",
   "main": "src",
   "scripts": {
-    "test": "./node_modules/.bin/mocha test",
+    "test:code-style": "npm run lint:check",
+    "test:unit-tests": "./node_modules/.bin/mocha test",
+    "test": "npm run test:unit-tests && npm run test:code-style",
     "lint:fix": "./node_modules/.bin/prettier --write 'src/**/*.{js,ts,css,html}' --write 'test/**/*.{js,ts,css,html}' --write 'docs/**/*.{js,ts,css,html}'",
     "lint:check": "./node_modules/.bin/eslint src test && ./node_modules/.bin/eslint --no-eslintrc --env es6,node --rule 'no-unused-var: off' docs",
-    "lint": "npm run lint:fix && npm run lint:check",
-    "prepublishOnly": "npm run lint:check && npm test"
+    "lint": "npm run lint:fix --silent && npm run lint:check",
+    "prepublishOnly": "npm ci && npm test",
+    "postlint": "echo \"No issues.\"",
+    "posttest":"echo \"No issues.\""
   },
   "author": {
     "name": "Sykander Gul",
