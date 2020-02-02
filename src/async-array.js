@@ -1,9 +1,12 @@
-const asyncMap = require('./async-map'),
-	asyncForEach = require('./async-for-each'),
-	asyncFilter = require('./async-filter'),
-	asyncFind = require('./async-find'),
-	asyncFindIndex = require('./async-find-index'),
-	asyncSort = require('./async-sort');
+const { asyncMap, asyncMapOverIterable } = require('./async-map'),
+	{ asyncForEach, asyncForEachOfIterable } = require('./async-for-each'),
+	{ asyncFilter, asyncFilterIterable } = require('./async-filter'),
+	{ asyncFind, asyncFindInIterable } = require('./async-find'),
+	{
+		asyncFindIndex,
+		asyncFindIndexOnIterable
+	} = require('./async-find-index'),
+	{ asyncSort, asyncSortIterable } = require('./async-sort');
 
 /**
  * Async Array
@@ -12,6 +15,14 @@ const asyncMap = require('./async-map'),
  * @type {AsyncArray}
  */
 class AsyncArray extends Array {}
+
+// Bind static async methods
+(AsyncArray.asyncFind = asyncFindInIterable),
+	(AsyncArray.asyncFindIndex = asyncFindIndexOnIterable),
+	(AsyncArray.asyncFilter = asyncFilterIterable),
+	(AsyncArray.asyncForEach = asyncForEachOfIterable),
+	(AsyncArray.asyncMap = asyncMapOverIterable),
+	(AsyncArray.asyncSort = asyncSortIterable);
 
 // Bind async methods
 (AsyncArray.prototype.asyncFind = asyncFind),
