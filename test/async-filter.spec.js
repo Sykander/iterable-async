@@ -7,20 +7,20 @@ const { expect } = require('./support/chai'),
 		hasAccessToCorrectArgumentsOnCallback
 	} = require('./support/spec-helpers'),
 	{ providedThisArg } = require('./support/constants'),
-	{ asyncFilter: asyncFilterFunction } = require('../src');
+	{ asyncFilter } = require('../src');
 
 context('Async Filter', () => {
-	let array, asyncFilter;
+	let array;
 
 	beforeEach(() => {
-		(array = getArray()), (asyncFilter = asyncFilterFunction.bind(array));
+		array = getArray();
 	});
 
 	describe('Given no arguments', () => {
-		it('Should reject with "TypeError: undefined is not a function"', () =>
+		it('Should reject with "TypeError: undefined is not iterable"', () =>
 			rejectsWithError(
 				asyncFilter(),
-				new TypeError('undefined is not a function')
+				new TypeError('undefined is not iterable')
 			));
 	});
 
@@ -30,7 +30,7 @@ context('Async Filter', () => {
 		beforeEach(async () => {
 			({ result, callback } = getCallback());
 
-			filteredArray = await asyncFilter(callback);
+			filteredArray = await asyncFilter(array, callback);
 		});
 
 		it('Should run each callback in order', () =>
@@ -56,7 +56,7 @@ context('Async Filter', () => {
 		beforeEach(async () => {
 			({ result, callback } = getCallback({ isAsync: true }));
 
-			filteredArray = await asyncFilter(callback, array);
+			filteredArray = await asyncFilter(array, callback);
 		});
 
 		it('Should run each callback in order', () =>
@@ -88,7 +88,7 @@ context('Async Filter', () => {
 		);
 
 		it('Should reject with that error', async () =>
-			rejectsWithError(asyncFilter(callback), error));
+			rejectsWithError(asyncFilter(array, callback), error));
 	});
 
 	describe('Given a callback that uses all arguments', () => {
@@ -97,7 +97,7 @@ context('Async Filter', () => {
 		beforeEach(async () => {
 			({ result, callback } = getCallback());
 
-			await asyncFilter(callback);
+			await asyncFilter(array, callback);
 		});
 
 		it('Should have access to currentValue, index and array on the callback', () =>
@@ -110,7 +110,7 @@ context('Async Filter', () => {
 		beforeEach(async () => {
 			({ result, callback } = getCallback());
 
-			await asyncFilter(callback, providedThisArg);
+			await asyncFilter(array, callback, providedThisArg);
 		});
 
 		it('Should have accesss to thisArg on callback', () =>
