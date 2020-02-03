@@ -2,20 +2,20 @@ const { expect } = require('./support/chai'),
 	{ getArray } = require('./support/data-factory'),
 	{ getCallback } = require('./support/helpers'),
 	{ rejectsWithError } = require('./support/spec-helpers'),
-	{ asyncSort: asyncSortFunction } = require('../src');
+	{ asyncSort } = require('../src');
 
 context('Async Sort', () => {
-	let array, asyncSort;
+	let array;
 
 	beforeEach(() => {
-		(array = getArray()), (asyncSort = asyncSortFunction.bind(array));
+		array = getArray();
 	});
 
-	describe('Given no arguments', () => {
+	describe('Given the array parameter', () => {
 		let sortedArray;
 
 		beforeEach(async () => {
-			sortedArray = await asyncSort();
+			sortedArray = await asyncSort(array);
 		});
 
 		it('Should sort elements by unicode value', () => {
@@ -33,7 +33,7 @@ context('Async Sort', () => {
 		beforeEach(async () => {
 			({ compareFunc } = getCallback({ isSort: true }));
 
-			sortedArray = await asyncSort(compareFunc);
+			sortedArray = await asyncSort(array, compareFunc);
 		});
 
 		it('Should sort each item by the compareFunc result', async () => {
@@ -52,7 +52,7 @@ context('Async Sort', () => {
 		beforeEach(async () => {
 			({ compareFunc } = getCallback({ isSort: true }));
 
-			sortedArray = await asyncSort(compareFunc, array);
+			sortedArray = await asyncSort(array, compareFunc, array);
 		});
 
 		it('Should sort each item by the compareFunc result', async () => {
@@ -77,7 +77,7 @@ context('Async Sort', () => {
 		);
 
 		it('Should reject with that error', async () =>
-			rejectsWithError(asyncSort(compareFunc), error));
+			rejectsWithError(asyncSort(array, compareFunc), error));
 	});
 
 	describe('Given a compareFunc that uses all arguments', () => {
@@ -86,7 +86,7 @@ context('Async Sort', () => {
 		beforeEach(async () => {
 			({ result, compareFunc } = getCallback({ isSort: true }));
 
-			await asyncSort(compareFunc);
+			await asyncSort(array, compareFunc);
 		});
 
 		it('Should have access to first and second elements', () =>

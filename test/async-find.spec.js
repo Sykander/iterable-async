@@ -7,20 +7,20 @@ const { expect } = require('./support/chai'),
 		hasAccessToCorrectArgumentsOnCallback
 	} = require('./support/spec-helpers'),
 	{ providedThisArg } = require('./support/constants'),
-	{ asyncFind: asyncFindFunction } = require('../src');
+	{ asyncFind } = require('../src');
 
 context('Async Find', () => {
-	let array, asyncFind;
+	let array;
 
 	beforeEach(() => {
-		(array = getArray()), (asyncFind = asyncFindFunction.bind(array));
+		array = getArray();
 	});
 
 	describe('Given no arguments', () => {
-		it('Should reject with "TypeError: undefined is not a function"', () =>
+		it('Should reject with "TypeError: undefined is not iterable"', () =>
 			rejectsWithError(
 				asyncFind(),
-				new TypeError('undefined is not a function')
+				new TypeError('undefined is not iterable')
 			));
 	});
 
@@ -35,7 +35,7 @@ context('Async Find', () => {
 				findIndex
 			}));
 
-			foundElement = await asyncFind(callback);
+			foundElement = await asyncFind(array, callback);
 		});
 
 		it('Should run each callback in order', () =>
@@ -57,7 +57,7 @@ context('Async Find', () => {
 				findIndex
 			}));
 
-			foundElement = await asyncFind(callback);
+			foundElement = await asyncFind(array, callback);
 		});
 
 		it('Should run each callback in order', () =>
@@ -80,7 +80,7 @@ context('Async Find', () => {
 		);
 
 		it('Should reject with that error', async () =>
-			rejectsWithError(asyncFind(callback), error));
+			rejectsWithError(asyncFind(array, callback), error));
 	});
 
 	describe('Given a callback that uses all arguments', () => {
@@ -89,7 +89,7 @@ context('Async Find', () => {
 		beforeEach(async () => {
 			({ result, callback } = getCallback());
 
-			await asyncFind(callback);
+			await asyncFind(array, callback);
 		});
 
 		it('Should have access to currentValue, index and array on the callback', () =>
@@ -102,7 +102,7 @@ context('Async Find', () => {
 		beforeEach(async () => {
 			({ result, callback } = getCallback());
 
-			await asyncFind(callback, providedThisArg);
+			await asyncFind(array, callback, providedThisArg);
 		});
 
 		it('Should have accesss to thisArg on callback', () =>

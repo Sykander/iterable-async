@@ -7,21 +7,20 @@ const { expect } = require('./support/chai'),
 		hasAccessToCorrectArgumentsOnCallback
 	} = require('./support/spec-helpers'),
 	{ providedThisArg } = require('./support/constants'),
-	{ asyncFindIndex: asyncFindIndexFunction } = require('../src');
+	{ asyncFindIndex } = require('../src');
 
 context('Async Find Index', () => {
-	let array, asyncFindIndex;
+	let array;
 
 	beforeEach(() => {
-		(array = getArray()),
-			(asyncFindIndex = asyncFindIndexFunction.bind(array));
+		array = getArray();
 	});
 
 	describe('Given no arguments', () => {
-		it('Should reject with "TypeError: undefined is not a function"', () =>
+		it('Should reject with "TypeError: undefined is not iterable"', () =>
 			rejectsWithError(
 				asyncFindIndex(),
-				new TypeError('undefined is not a function')
+				new TypeError('undefined is not iterable')
 			));
 	});
 
@@ -36,7 +35,7 @@ context('Async Find Index', () => {
 				findIndex
 			}));
 
-			foundIndex = await asyncFindIndex(callback);
+			foundIndex = await asyncFindIndex(array, callback);
 		});
 
 		it('Should run each callback in order', () =>
@@ -64,7 +63,7 @@ context('Async Find Index', () => {
 				findIndex
 			}));
 
-			foundIndex = await asyncFindIndex(callback);
+			foundIndex = await asyncFindIndex(array, callback);
 		});
 
 		it('Should run each callback in order', () =>
@@ -92,7 +91,7 @@ context('Async Find Index', () => {
 		);
 
 		it('Should reject with that error', async () =>
-			rejectsWithError(asyncFindIndex(callback), error));
+			rejectsWithError(asyncFindIndex(array, callback), error));
 	});
 
 	describe('Given a callback that uses all arguments', () => {
@@ -101,7 +100,7 @@ context('Async Find Index', () => {
 		beforeEach(async () => {
 			({ result, callback } = getCallback());
 
-			await asyncFindIndex(callback);
+			await asyncFindIndex(array, callback);
 		});
 
 		it('Should have access to currentValue, index and array on the callback', () =>
@@ -114,7 +113,7 @@ context('Async Find Index', () => {
 		beforeEach(async () => {
 			({ result, callback } = getCallback());
 
-			await asyncFindIndex(callback, providedThisArg);
+			await asyncFindIndex(array, callback, providedThisArg);
 		});
 
 		it('Should have accesss to thisArg on callback', () =>

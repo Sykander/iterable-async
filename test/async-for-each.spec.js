@@ -7,20 +7,20 @@ const { expect } = require('./support/chai'),
 		hasAccessToCorrectArgumentsOnCallback
 	} = require('./support/spec-helpers'),
 	{ providedThisArg } = require('./support/constants'),
-	{ asyncForEach: asyncForEachFunction } = require('../src');
+	{ asyncForEach } = require('../src');
 
 context('Async For Each', () => {
-	let array, asyncForEach;
+	let array;
 
 	beforeEach(() => {
-		(array = getArray()), (asyncForEach = asyncForEachFunction.bind(array));
+		array = getArray();
 	});
 
 	describe('Given no arguments', () => {
-		it('Should reject with "TypeError: undefined is not a function"', () =>
+		it('Should reject with "TypeError: undefined is not iterable"', () =>
 			rejectsWithError(
 				asyncForEach(),
-				new TypeError('undefined is not a function')
+				new TypeError('undefined is not iterable')
 			));
 	});
 
@@ -30,7 +30,7 @@ context('Async For Each', () => {
 		beforeEach(async () => {
 			({ result, callback } = getCallback());
 
-			await asyncForEach(callback);
+			await asyncForEach(array, callback);
 		});
 
 		it('Should run each callback in order', () =>
@@ -43,7 +43,7 @@ context('Async For Each', () => {
 		beforeEach(async () => {
 			({ result, callback } = getCallback({ isAsync: true }));
 
-			await asyncForEach(callback);
+			await asyncForEach(array, callback);
 		});
 
 		it('Should run each callback in order', () =>
@@ -62,7 +62,7 @@ context('Async For Each', () => {
 		);
 
 		it('Should reject with that error', async () =>
-			rejectsWithError(asyncForEach(callback), error));
+			rejectsWithError(asyncForEach(array, callback), error));
 	});
 
 	describe('Given a callback that uses all arguments', () => {
@@ -71,7 +71,7 @@ context('Async For Each', () => {
 		beforeEach(async () => {
 			({ result, callback } = getCallback());
 
-			await asyncForEach(callback);
+			await asyncForEach(array, callback);
 		});
 
 		it('Should have access to currentValue, index and array on the callback', () =>
@@ -84,7 +84,7 @@ context('Async For Each', () => {
 		beforeEach(async () => {
 			({ result, callback } = getCallback());
 
-			await asyncForEach(callback, providedThisArg);
+			await asyncForEach(array, callback, providedThisArg);
 		});
 
 		it('Should have accesss to thisArg on callback', () =>

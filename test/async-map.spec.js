@@ -7,20 +7,20 @@ const { expect } = require('./support/chai'),
 		hasAccessToCorrectArgumentsOnCallback
 	} = require('./support/spec-helpers'),
 	{ providedThisArg } = require('./support/constants'),
-	{ asyncMap: asyncMapFunction } = require('../src');
+	{ asyncMap } = require('../src');
 
 context('Async Map', () => {
-	let array, asyncMap;
+	let array;
 
 	beforeEach(() => {
-		(array = getArray()), (asyncMap = asyncMapFunction.bind(array));
+		array = getArray();
 	});
 
 	describe('Given no arguments', () => {
-		it('Should reject with "TypeError: undefined is not a function"', () =>
+		it('Should reject with "TypeError: undefined is not iterable"', () =>
 			rejectsWithError(
 				asyncMap(),
-				new TypeError('undefined is not a function')
+				new TypeError('undefined is not iterable')
 			));
 	});
 
@@ -30,7 +30,7 @@ context('Async Map', () => {
 		beforeEach(async () => {
 			({ result, callback } = getCallback());
 
-			mappedArray = await asyncMap(callback);
+			mappedArray = await asyncMap(array, callback);
 		});
 
 		it('Should run each callback in order', () =>
@@ -53,7 +53,7 @@ context('Async Map', () => {
 		beforeEach(async () => {
 			({ result, callback } = getCallback({ isAsync: true }));
 
-			mappedArray = await asyncMap(callback, array);
+			mappedArray = await asyncMap(array, callback, array);
 		});
 
 		it('Should run each callback in order', () =>
@@ -82,7 +82,7 @@ context('Async Map', () => {
 		);
 
 		it('Should reject with that error', async () =>
-			rejectsWithError(asyncMap(callback), error));
+			rejectsWithError(asyncMap(array, callback), error));
 	});
 
 	describe('Given a callback that uses all arguments', () => {
@@ -91,7 +91,7 @@ context('Async Map', () => {
 		beforeEach(async () => {
 			({ result, callback } = getCallback());
 
-			await asyncMap(callback);
+			await asyncMap(array, callback);
 		});
 
 		it('Should have access to currentValue, index and array on the callback', () =>
@@ -104,7 +104,7 @@ context('Async Map', () => {
 		beforeEach(async () => {
 			({ result, callback } = getCallback());
 
-			await asyncMap(callback, providedThisArg);
+			await asyncMap(array, callback, providedThisArg);
 		});
 
 		it('Should have accesss to thisArg on callback', () =>
