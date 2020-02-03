@@ -24,7 +24,7 @@ class AsyncArray extends Array {}
 	(AsyncArray.asyncMap = asyncMapOverIterable),
 	(AsyncArray.asyncSort = asyncSortIterable);
 
-// Bind async methods
+// Bind prototypical async methods
 (AsyncArray.prototype.asyncFind = asyncFind),
 	(AsyncArray.prototype.asyncFindIndex = asyncFindIndex),
 	(AsyncArray.prototype.asyncFilter = asyncFilter),

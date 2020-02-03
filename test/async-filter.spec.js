@@ -24,6 +24,14 @@ context('Async Filter', () => {
 			));
 	});
 
+	describe('Given no callback', () => {
+		it('Should reject with "TypeError: undefined is not a function"', () =>
+			rejectsWithError(
+				asyncFilter(array),
+				new TypeError('undefined is not a function')
+			));
+	});
+
 	describe('Given a synchronous callback', () => {
 		let result, callback, filteredArray;
 

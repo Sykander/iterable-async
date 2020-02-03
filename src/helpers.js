@@ -111,24 +111,4 @@ module.exports.asyncPartition = async function asyncPartition(
  * @param {any} b
  * @return {Number} -1, 0, 1
  */
-module.exports.compareByUnicode = (a, b) => {
-	const strA = String(a),
-		strB = String(b);
-
-	if (strA === strB) {
-		return 0;
-	}
-
-	for (let i = 0; i < strA.length; i++) {
-		const aCode = strA.charCodeAt(i),
-			bCode = strB.charCodeAt(i);
-
-		if (aCode === bCode) {
-			continue;
-		}
-
-		return isNaN(bCode) || aCode > bCode ? 1 : -1;
-	}
-
-	return strA.length < strB.length ? -1 : 1;
-};
+module.exports.compareByUnicode = (a, b) => String(a).localeCompare(String(b));

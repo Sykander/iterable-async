@@ -11,7 +11,15 @@ context('Async Sort', () => {
 		array = getArray();
 	});
 
-	describe('Given the array parameter', () => {
+	describe('Given no arguments', () => {
+		it('Should reject with "TypeError: undefined is not iterable"', () =>
+			rejectsWithError(
+				asyncSort(),
+				new TypeError('undefined is not iterable')
+			));
+	});
+
+	describe('Given no callback', () => {
 		let sortedArray;
 
 		beforeEach(async () => {
