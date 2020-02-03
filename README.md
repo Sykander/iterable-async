@@ -6,70 +6,37 @@ A collection of methods for looping iterable objects asynchronously using someth
 ## Installation
 
 ```
-$ npm install iterable-async
+ $ npm install iterable-async
 ```
 
-## Objects
+## Usage
 
-* Async Array
+***ES6 Format***
 
-### Async Array
+``` js
+const AsyncArray = require('iterable-async');
+```
+
+***TypeScript Format***
+
+``` ts
+import * as AsyncArray from "iterable-async";
+```
+
+## Async Array
 
 An Array class with additional async array methods.
-```
-class AsyncArray extends Array {...}
-```
 
-## Methods
+### Methods
 
-* Async Filter
-* Async Find
-* Async Find Index
-* Async For Each
-* Async Map
-* Async Sort
-
-### [Async Filter](https://github.com/Sykander/iterable-async/wiki/Async-Filter) 
-
-Filter an iterable object asynchronously
-```
-async function asyncFilter(callback, [thisArg]) {...}
-```
-
-### [Async Find](https://github.com/Sykander/iterable-async/wiki/Async-Find)
-
-Find an item in an iterable object asynchronously
-```
-async function asyncFind(callback, [thisArg]) {...}
-```
-
-### [Async Find Index](https://github.com/Sykander/iterable-async/wiki/Async-Find-Index)
-
-Find an item's index in an iterable object asynchronously
-```
-async function asyncFindIndex(callback, [thisArg]) {...}
-```
-
-### [Async For Each](https://github.com/Sykander/iterable-async/wiki/Async-For-Each)
-
-Loop over an iterable object asynchronously
-```
-async function asyncForEach(callback, [thisArg]) {...}
-```
-
-### [Async Map](https://github.com/Sykander/iterable-async/wiki/Async-Map)
-
-Map an iterable object asynchronously
-```
-async function asyncMap(callback, [thisArg]) {...}
-```
-
-### [Async Sort](https://github.com/Sykander/iterable-async/wiki/Async-Sort) 
-
-Sort an iterable object asynchronously
-```
-async function asyncSort(callback) {...}
-```
+| Method | Description | Wiki |
+| -- | -- | -- |
+| **asyncFilter** | Filter an iterable object asynchronously. | [wiki](https://github.com/Sykander/iterable-async/wiki/Async-Filter) |
+| **asyncFind** | Find an item in an iterable object asynchronously | [wiki](https://github.com/Sykander/iterable-async/wiki/Async-Filter) |
+| **asyncFindIndex** | Find an item's index in an iterable object asynchronously | [wiki](https://github.com/Sykander/iterable-async/wiki/Async-Find-Index) |
+| **asyncForEach** | Loop over an iterable object asynchronously | [wiki](https://github.com/Sykander/iterable-async/wiki/Async-For-Each) |
+| **asyncMap** | Map an iterable object asynchronously | [wiki](https://github.com/Sykander/iterable-async/wiki/Async-Map) |
+| **asyncSort** | Sort an iterable object asynchronously | [wiki](https://github.com/Sykander/iterable-async/wiki/Async-Sort) |
 
 ## Development
 
@@ -77,18 +44,19 @@ Development is open to contribution, check the project board "Development" for t
 
 ### Scripts
 
+| Script | Description |
+|--|--|
+| lint | Lints the project and returns a report |
+| lint:check | Returns a report on lint issues in the project |
+| lint:fix | Fixes lint issues in the project and returns a report on the ones which couldn't be fixed |
+| test | Runs all tests and returns a report on which pass/fail |
+| test:unit-tests | Runs only unit tests and returns a report on which pass/fail |
+| test:code-style | Runs only code checks and returns a report on which pass/fail |
+| test:type-definitions | Attempts to compile a script using this module and run it with node |
+
+Eg. to run all lint tests
 ```
-npm run lint
-# Lints the project and returns a report
-
-npm run lint:check
-# Returns a report on lint issues in the project
-
-npm run lint:fix
-# Fixes lint issues in the project and returns a report on the ones which couldn't be fixed
-
-npm test
-# Runs all tests
+ $ npm run lint
 ```
 
 ### Commit Rules

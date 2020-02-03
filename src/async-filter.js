@@ -4,15 +4,17 @@ const { mapIterable, filterIterable } = require('./helpers'),
 /**
  * Async Filter
  * ============
- * Filter an iterable object asynchronously and resolve when all callbacks are resolved
+ * Filter asynchronously and resolve when all callbacks are resolved
  * @async
  * @param {Function} callback - callback(currentValue, index, array)
  * @param {Object} [thisArg=undefined]
  * @return {Array}
  * @throws {TypeError}
  */
-module.exports = async function asyncFilter(callback, thisArg = undefined) {
-	validateIsIterable(this);
+const asyncFilter = (module.exports.asyncFilter = async function asyncFilter(
+	callback,
+	thisArg = undefined
+) {
 	validateIsFunction(callback);
 
 	return filterIterable(
@@ -24,4 +26,25 @@ module.exports = async function asyncFilter(callback, thisArg = undefined) {
 			})
 		)
 	);
+});
+
+/**
+ * Async Filter Iterable
+ * =====================
+ * Filter an iterable object asynchronously and resolve when all callbacks are resolved
+ * @async
+ * @param {Object} iterable
+ * @param {Function} callback - callback(currentValue, index, array)
+ * @param {Object} [thisArg=undefined]
+ * @return {Array}
+ * @throws {TypeError}
+ */
+module.exports.asyncFilterIterable = async function asyncFilterIterable(
+	iterable,
+	callback,
+	thisArg = undefined
+) {
+	validateIsIterable(iterable);
+
+	return asyncFilter.call(iterable, callback, thisArg);
 };

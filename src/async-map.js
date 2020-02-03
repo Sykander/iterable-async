@@ -4,15 +4,17 @@ const { mapIterable } = require('./helpers'),
 /**
  * Async Map
  * =========
- * Map an iterable object asynchronously and resolve when all callbacks are resolved
+ * Map asynchronously and resolve when all callbacks are resolved
  * @async
  * @param {Function} callback - callback(currentValue, index, array)
  * @param {Object} [thisArg=undefined]
  * @return {Array}
  * @throws {TypeError}
  */
-module.exports = async function asyncMap(callback, thisArg = undefined) {
-	validateIsIterable(this);
+const asyncMap = (module.exports.asyncMap = async function asyncMap(
+	callback,
+	thisArg = undefined
+) {
 	validateIsFunction(callback);
 
 	return Promise.all(
@@ -21,4 +23,25 @@ module.exports = async function asyncMap(callback, thisArg = undefined) {
 			newlyAddedElements: false
 		})
 	);
+});
+
+/**
+ * Async Map Over Iterable
+ * =======================
+ * Map over an iterable object asynchronously and resolve when all callbacks are resolved
+ * @async
+ * @param {Object} iterable
+ * @param {Function} callback - callback(currentValue, index, array)
+ * @param {Object} [thisArg=undefined]
+ * @return {Array}
+ * @throws {TypeError}
+ */
+module.exports.asyncMapOverIterable = async function asyncMapOverIterable(
+	iterable,
+	callback,
+	thisArg = undefined
+) {
+	validateIsIterable(iterable);
+
+	return asyncMap.call(iterable, callback, thisArg);
 };

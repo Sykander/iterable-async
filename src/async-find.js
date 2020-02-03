@@ -4,15 +4,17 @@ const { mapIterable } = require('./helpers'),
 /**
  * Async Find
  * ==========
- * Find an item in an iterable object asynchronously and resolve when found or all callbacks resolve
+ * Find an item asynchronously and resolve when found or all callbacks resolve
  * @async
  * @param {Function} callback - callback(currentValue, index, array)
  * @param {Object} [thisArg=undefined]
  * @return {any}
  * @throws {TypeError}
  */
-module.exports = async function asyncFind(callback, thisArg = undefined) {
-	validateIsIterable(this);
+const asyncFind = (module.exports.asyncFind = async function asyncFind(
+	callback,
+	thisArg = undefined
+) {
 	validateIsFunction(callback);
 
 	const tasks = mapIterable(this, callback.bind(thisArg), {
@@ -36,4 +38,25 @@ module.exports = async function asyncFind(callback, thisArg = undefined) {
 			)
 		])
 	];
+});
+
+/**
+ * Async Find In Iterable
+ * ======================
+ * Find an item in an iterable object asynchronously and resolve when found or all callbacks resolve
+ * @async
+ * @param {Object} iterable
+ * @param {Function} callback - callback(currentValue, index, array)
+ * @param {Object} [thisArg=undefined]
+ * @return {any}
+ * @throws {TypeError}
+ */
+module.exports.asyncFindInIterable = async function asyncFindInIterable(
+	iterable,
+	callback,
+	thisArg = undefined
+) {
+	validateIsIterable(iterable);
+
+	return asyncFind.call(iterable, callback, thisArg);
 };
