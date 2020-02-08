@@ -1,5 +1,7 @@
 # Iterable Async Methods 
 [![Try iterable-async on RunKit](https://badge.runkitcdn.com/iterable-async.svg)](https://npm.runkit.com/iterable-async)
+[![Documentation](http://inch-ci.org/github/dwyl/hapi-auth-jwt2.svg?branch=master)](https://github.com/Sykander/iterable-async/wiki)
+[![Known Vulnerabilities](https://snyk.io/test/github/Sykander/iterable-async/badge.svg?targetFile=package.json)](https://snyk.io/test/github/Sykander/iterable-async?targetFile=package.json)
 
 A collection of methods for looping iterable objects asynchronously using something similar to the Array api.
 
