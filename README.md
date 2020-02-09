@@ -54,7 +54,7 @@ Development is open to contribution, check the project board "Development" for t
 | test | Runs all tests and returns a report on which pass/fail |
 | test:unit-tests | Runs only unit tests and returns a report on which pass/fail |
 | test:code-style | Runs only code checks and returns a report on which pass/fail |
-| test:type-definitions | Attempts to compile a script using this module and run it with node |
+| test:type-definitions | Compiles a typescript file requiring this module and runs it with node |
 
 Eg. to run all lint tests
 ```
