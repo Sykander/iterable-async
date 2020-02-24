@@ -5,7 +5,7 @@ const { validateIsFunction, validateIsIterable } = require('./validation'),
 /**
  * Async Sort
  * ==========
- * Asynchronously sorts and an iterable object and resolves when fully sorted
+ * Asynchronously sorts and resolves when fully sorted
  * note that the object is sorted in place and no copy is made
  * @async
  * @param {Function} [compare=compareByUnicode] - default is sort by item's unicode value
@@ -25,7 +25,7 @@ const asyncSort = (module.exports.asyncSort = async function asyncSort(
 /**
  * Async Sort Iterable
  * ===================
- * Asynchronously sorts and an iterable object and resolves when fully sorted
+ * Asynchronously sorts an iterable object and resolves when fully sorted
  * note that the object is sorted in place and no copy is made
  * @async
  * @param {Object} iterable

@@ -20,6 +20,9 @@ context('Async Array', () => {
 		it('Should have access to the asyncMap method', () =>
 			expect(AsyncArray.prototype.asyncMap).to.be.a('function'));
 
+		it('Should have access to the asyncReduce method', () =>
+			expect(AsyncArray.prototype.asyncReduce).to.be.a('function'));
+
 		it('Should have access to the asyncSort method', () =>
 			expect(AsyncArray.prototype.asyncSort).to.be.a('function'));
 	});
@@ -36,6 +39,9 @@ context('Async Array', () => {
 
 		it('Should have access to the static asyncMap method', () =>
 			expect(AsyncArray.asyncMap).to.be.a('function'));
+
+		it('Should have access to the static asyncReduce method', () =>
+			expect(AsyncArray.asyncReduce).to.be.a('function'));
 
 		it('Should have access to the static asyncSort method', () =>
 			expect(AsyncArray.asyncSort).to.be.a('function'));

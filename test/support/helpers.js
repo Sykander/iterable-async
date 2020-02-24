@@ -9,6 +9,7 @@ const { getString } = require('./data-factory');
  * @param {Function} [options.sortRule=()=>0]
  * @param {Boolean} [options.isAsync=false]
  * @param {Boolean} [options.isError=false]
+ * @param {Boolean} [options.isReduce=false]
  * @return {Object} { result, callback, meta }
  */
 module.exports.getCallback = function getCallback(options = {}) {
@@ -18,7 +19,8 @@ module.exports.getCallback = function getCallback(options = {}) {
 			isSort = false,
 			sortRule = () => 0,
 			isAsync = false,
-			isError = false
+			isError = false,
+			isReduce = false
 		} = options,
 		result = [],
 		meta = { options };
@@ -55,6 +57,29 @@ module.exports.getCallback = function getCallback(options = {}) {
 			});
 
 			return sortResult;
+		};
+	}
+
+	if (isReduce) {
+		callback = function(accumulator, item, index, array) {
+			if (Array.isArray(accumulator)) {
+				accumulator.push({
+					item,
+					index,
+					array
+				});
+			}
+
+			result.push({
+				accumulator,
+				item,
+				index,
+				array,
+				thisArg: this,
+				result: accumulator
+			});
+
+			return accumulator;
 		};
 	}
 
