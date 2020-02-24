@@ -1,4 +1,5 @@
-const { getArray } = require('./support/data-factory'),
+const { expect } = require('./support/chai'),
+	{ getArray } = require('./support/data-factory'),
 	{ getCallback } = require('./support/helpers'),
 	{
 		rejectsWithError,
@@ -31,7 +32,6 @@ context('Async Reduce', () => {
 	});
 
 	describe('Given a synchronous callback', () => {
-		// eslint-disable-next-line no-unused-vars
 		let result, callback, reducedAccumulator;
 
 		beforeEach(async () => {
@@ -42,20 +42,34 @@ context('Async Reduce', () => {
 			reducedAccumulator = await asyncReduce(array, callback);
 		});
 
-		it('Should run each callback in order', () =>
-			ranCallbacksInOrder(result));
+		it('Should run each callback in order', () => {
+			ranCallbacksInOrder(result);
+
+			expect(result.length).to.be.greaterThan(
+				0,
+				'No callbacks were run.'
+			);
+		});
 
 		it('Should reduce each item in order', async () => {
-			throw 'pending';
+			array.every((element, index) => {
+				return expect(reducedAccumulator[index]).to.equal(element);
+			});
 		});
 
 		it('Should resolve to the completed value accumulator', async () => {
-			throw 'pending';
+			result.every(({ item }, index) => {
+				return expect(reducedAccumulator[index]).to.equal(item);
+			});
+
+			expect(result.length).to.be.greaterThan(
+				0,
+				'No callbacks were run.'
+			);
 		});
 	});
 
 	describe('Given an asynchronous callback', () => {
-		// eslint-disable-next-line no-unused-vars
 		let result, callback, reducedAccumulator;
 
 		beforeEach(async () => {
@@ -67,15 +81,30 @@ context('Async Reduce', () => {
 			reducedAccumulator = await asyncReduce(array, callback);
 		});
 
-		it('Should run each callback in order', () =>
-			ranCallbacksInOrder(result));
+		it('Should run each callback in order', () => {
+			ranCallbacksInOrder(result);
+
+			expect(result.length).to.be.greaterThan(
+				0,
+				'No callbacks were run.'
+			);
+		});
 
 		it('Should reduce each item in order', async () => {
-			throw 'pending';
+			array.every((element, index) => {
+				return expect(reducedAccumulator[index]).to.equal(element);
+			});
 		});
 
 		it('Should resolve to the completed value accumulator', async () => {
-			throw 'pending';
+			result.every(({ item }, index) => {
+				return expect(reducedAccumulator[index]).to.equal(item);
+			});
+
+			expect(result.length).to.be.greaterThan(
+				0,
+				'No callbacks were run.'
+			);
 		});
 	});
 
@@ -105,17 +134,22 @@ context('Async Reduce', () => {
 			await asyncReduce(array, callback);
 		});
 
-		it('Should have access to accumulator, currentValue, index and array on the callback', () =>
+		it('Should have access to accumulator, currentValue, index and array on the callback', () => {
 			hasAccessToCorrectArgumentsOnCallback(array, result, [
 				'accumulator',
 				'currentValue',
 				'index',
 				'array'
-			]));
+			]);
+
+			expect(result.length).to.be.greaterThan(
+				0,
+				'No callbacks were run.'
+			);
+		});
 	});
 
 	describe('Given the optional accumulator parameter', () => {
-		// eslint-disable-next-line no-unused-vars
 		let result, callback, accumulator;
 
 		beforeEach(async () => {
@@ -125,7 +159,17 @@ context('Async Reduce', () => {
 		});
 
 		it('Should have accesss to accumulator on all callback iterations', () => {
-			throw 'pending';
+			expect(
+				result.every(
+					({ accumulator: resultAccumulator }) =>
+						resultAccumulator === accumulator
+				)
+			).to.be.true;
+
+			expect(result.length).to.be.greaterThan(
+				0,
+				'No callbacks were run.'
+			);
 		});
 	});
 });
