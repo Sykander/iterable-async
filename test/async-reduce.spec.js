@@ -5,19 +5,27 @@ const { getArray } = require('./support/data-factory'),
 		ranCallbacksInOrder,
 		hasAccessToCorrectArgumentsOnCallback
 	} = require('./support/spec-helpers'),
-	{ asyncReduce: asyncReduceFunction } = require('../src');
+	{ asyncReduce } = require('../src');
 
 context('Async Reduce', () => {
-	let array, asyncReduce;
+	let array;
 
 	beforeEach(() => {
-		(array = getArray()), (asyncReduce = asyncReduceFunction.bind(array));
+		array = getArray();
 	});
 
 	describe('Given no arguments', () => {
-		it('Should reject with "TypeError: undefined is not a function"', () =>
+		it('Should reject with "TypeError: undefined is not iterable"', () =>
 			rejectsWithError(
 				asyncReduce(),
+				new TypeError('undefined is not iterable')
+			));
+	});
+
+	describe('Given no callback', () => {
+		it('Should reject with "TypeError: undefined is not a function"', () =>
+			rejectsWithError(
+				asyncReduce(array),
 				new TypeError('undefined is not a function')
 			));
 	});
@@ -31,16 +39,19 @@ context('Async Reduce', () => {
 				isReduce: true
 			}));
 
-			reducedAccumulator = await asyncReduce(callback);
+			reducedAccumulator = await asyncReduce(array, callback);
 		});
 
 		it('Should run each callback in order', () =>
 			ranCallbacksInOrder(result));
 
-		it('Should reduce each item in order', async () => 'pending');
+		it('Should reduce each item in order', async () => {
+			throw 'pending';
+		});
 
-		it('Should resolve to the completed value accumulator', async () =>
-			'pending');
+		it('Should resolve to the completed value accumulator', async () => {
+			throw 'pending';
+		});
 	});
 
 	describe('Given an asynchronous callback', () => {
@@ -53,16 +64,19 @@ context('Async Reduce', () => {
 				isReduce: true
 			}));
 
-			reducedAccumulator = await asyncReduce(callback, array);
+			reducedAccumulator = await asyncReduce(array, callback);
 		});
 
 		it('Should run each callback in order', () =>
 			ranCallbacksInOrder(result));
 
-		it('Should reduce each item in order', async () => 'pending');
+		it('Should reduce each item in order', async () => {
+			throw 'pending';
+		});
 
-		it('Should resolve to the completed value accumulator', async () =>
-			'pending');
+		it('Should resolve to the completed value accumulator', async () => {
+			throw 'pending';
+		});
 	});
 
 	describe('Given a callback that throws an error', () => {
@@ -73,20 +87,22 @@ context('Async Reduce', () => {
 				({
 					callback,
 					meta: { error }
-				} = getCallback({ isError: true }))
+				} = getCallback({ isReduce: true, isError: true }))
 		);
 
 		it('Should reject with that error', async () =>
-			rejectsWithError(asyncReduce(callback), error));
+			rejectsWithError(asyncReduce(array, callback), error));
 	});
 
 	describe('Given a callback that uses all arguments', () => {
 		let result, callback;
 
 		beforeEach(async () => {
-			({ result, callback } = getCallback());
+			({ result, callback } = getCallback({
+				isReduce: true
+			}));
 
-			await asyncReduce(callback);
+			await asyncReduce(array, callback);
 		});
 
 		it('Should have access to currentValue, index and array on the callback', () =>
@@ -100,10 +116,11 @@ context('Async Reduce', () => {
 		beforeEach(async () => {
 			({ result, callback } = getCallback()), (accumulator = {});
 
-			await asyncReduce(callback, accumulator);
+			await asyncReduce(array, callback, accumulator);
 		});
 
-		it('Should have accesss to accumulator on all callback iterations', () =>
-			'pending');
+		it('Should have accesss to accumulator on all callback iterations', () => {
+			throw 'pending';
+		});
 	});
 });

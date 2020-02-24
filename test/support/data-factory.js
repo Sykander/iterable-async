@@ -21,7 +21,7 @@ const getInt = (module.exports.getInt = function getInt({
  * @return {any[]}
  */
 module.exports.getArray = function({
-	length = getInt({ min: 0, max: 100 })
+	length = getInt({ min: 1, max: 100 })
 } = {}) {
 	const arr = [];
 
