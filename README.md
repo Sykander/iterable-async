@@ -1,6 +1,6 @@
 # Iterable Async Methods 
 [![Try iterable-async on RunKit](https://badge.runkitcdn.com/iterable-async.svg)](https://npm.runkit.com/iterable-async)
-[![Documentation](http://inch-ci.org/github/dwyl/hapi-auth-jwt2.svg?branch=master)](https://github.com/Sykander/iterable-async/wiki)
+[![Documentation](https://inch-ci.org/github/dwyl/hapi-auth-jwt2.svg?branch=master)](https://github.com/Sykander/iterable-async/wiki)
 [![Known Vulnerabilities](https://snyk.io/test/github/Sykander/iterable-async/badge.svg?targetFile=package.json)](https://snyk.io/test/github/Sykander/iterable-async?targetFile=package.json)
 
 A collection of methods for looping iterable objects asynchronously using something similar to the Array api.
@@ -54,7 +54,7 @@ Development is open to contribution, check the project board "Development" for t
 | test | Runs all tests and returns a report on which pass/fail |
 | test:unit-tests | Runs only unit tests and returns a report on which pass/fail |
 | test:code-style | Runs only code checks and returns a report on which pass/fail |
-| test:type-definitions | Compiles a typescript file requiring this module and runs it with node |
+| test:type-definitions | Attempts to compile and run a typescript file using this module |
 
 Eg. to run all lint tests
 ```
