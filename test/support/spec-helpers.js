@@ -22,23 +22,39 @@ module.exports.ranCallbacksInOrder = function ranCallbacksInOrder(result) {
 /**
  * Expects callback results to have had access to correct params from source array
  * @param {Object} source
- * @param {Array} result
+ * @param {Array} results
+ * @param {String[]} params
  */
 module.exports.hasAccessToCorrectArgumentsOnCallback = function hasAccessToCorrectArgumentsOnCallback(
 	source,
-	result
+	results,
+	params
 ) {
-	return result.every(
-		(
-			{ item: actualItem, array: actualArray, index: actualIndex },
-			index
-		) => {
-			expect(actualItem).to.equal(source[index]);
-			expect(actualIndex).to.equal(index);
-			expect(actualArray).to.equal(source);
+	if (params.includes('currentValue')) {
+		params[params.indexOf('currentValue')] = 'item';
+	}
 
-			// no further tests on this item
-			return true;
+	return results.every((result, index) => {
+		if (params.includes('item')) {
+			expect(result.item).to.equal(source[result.index]);
 		}
-	);
+
+		if (params.includes('accumulator')) {
+			expect(result.accumulator).to.not.be.undefined;
+		}
+
+		if (params.includes('index')) {
+			expect(result.index).to.equal(index);
+		}
+
+		if (params.includes('array')) {
+			expect(result.array).to.equal(source);
+		}
+
+		const hasProperties = params.every(param =>
+			expect(result).to.haveOwnProperty(param)
+		);
+
+		return expect(hasProperties).to.be.true;
+	});
 };

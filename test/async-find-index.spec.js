@@ -112,7 +112,11 @@ context('Async Find Index', () => {
 		});
 
 		it('Should have access to currentValue, index and array on the callback', () =>
-			hasAccessToCorrectArgumentsOnCallback(array, result));
+			hasAccessToCorrectArgumentsOnCallback(array, result, [
+				'currentValue',
+				'index',
+				'array'
+			]));
 	});
 
 	describe('Given the optional thisArg parameter', () => {

@@ -105,8 +105,13 @@ context('Async Reduce', () => {
 			await asyncReduce(array, callback);
 		});
 
-		it('Should have access to currentValue, index and array on the callback', () =>
-			hasAccessToCorrectArgumentsOnCallback(array, result));
+		it('Should have access to accumulator, currentValue, index and array on the callback', () =>
+			hasAccessToCorrectArgumentsOnCallback(array, result, [
+				'accumulator',
+				'currentValue',
+				'index',
+				'array'
+			]));
 	});
 
 	describe('Given the optional accumulator parameter', () => {

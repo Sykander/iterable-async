@@ -17,20 +17,26 @@ const { asyncMap, asyncMapOverIterable } = require('./async-map'),
  */
 class AsyncArray extends Array {}
 
-// Bind static async methods
-(AsyncArray.asyncFind = asyncFindInIterable),
-	(AsyncArray.asyncFindIndex = asyncFindIndexOnIterable),
-	(AsyncArray.asyncFilter = asyncFilterIterable),
-	(AsyncArray.asyncForEach = asyncForEachOfIterable),
-	(AsyncArray.asyncMap = asyncMapOverIterable),
-	(AsyncArray.asyncReduce = asyncReduceIterable),
-	(AsyncArray.asyncSort = asyncSortIterable);
+// Add static methods
+Object.assign(AsyncArray, {
+	asyncFind: asyncFindInIterable,
+	asyncFindIndex: asyncFindIndexOnIterable,
+	asyncFilter: asyncFilterIterable,
+	asyncForEach: asyncForEachOfIterable,
+	asyncMap: asyncMapOverIterable,
+	asyncReduce: asyncReduceIterable,
+	asyncSort: asyncSortIterable
+});
 
-// Bind prototypical async methods
-(AsyncArray.prototype.asyncFind = asyncFind),
-	(AsyncArray.prototype.asyncFindIndex = asyncFindIndex),
-	(AsyncArray.prototype.asyncFilter = asyncFilter),
-	(AsyncArray.prototype.asyncForEach = asyncForEach),
-	(AsyncArray.prototype.asyncMap = asyncMap),
-	(AsyncArray.prototype.asyncReduce = asyncReduce);
-(AsyncArray.prototype.asyncSort = asyncSort), (module.exports = AsyncArray);
+// Create prototype methods
+Object.assign(AsyncArray.prototype, {
+	asyncFind,
+	asyncFindIndex,
+	asyncFilter,
+	asyncForEach,
+	asyncMap,
+	asyncReduce,
+	asyncSort
+});
+
+module.exports = AsyncArray;
