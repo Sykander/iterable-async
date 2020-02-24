@@ -7,21 +7,26 @@
  * @param {Function} callback
  * @param {Object} [options]
  * @param {Boolean} [options.useEmptyElements=true] - use empty elements of the array ?
+ * @param {Boolean} [options.newlyAddedElements=false] - visit newly added elements ?
  * @return {Array}
  */
 module.exports.mapIterable = function mapIterable(
 	iterable,
 	callback,
-	{ useEmptyElements = true } = {}
+	{ useEmptyElements = true, newlyAddedElements = false } = {}
 ) {
 	const tasks = [];
 
-	for (let index = 0; index < iterable.length; index++) {
+	for (let index = 0, length = iterable.length; index < length; index++) {
 		if (!useEmptyElements && !(index in iterable)) {
 			continue;
 		}
 
 		tasks.push(callback(iterable[index], index, iterable));
+
+		if (newlyAddedElements) {
+			length = iterable.length;
+		}
 	}
 
 	return tasks;
@@ -106,24 +111,4 @@ module.exports.asyncPartition = async function asyncPartition(
  * @param {any} b
  * @return {Number} -1, 0, 1
  */
-module.exports.compareByUnicode = (a, b) => {
-	const strA = String(a),
-		strB = String(b);
-
-	if (strA === strB) {
-		return 0;
-	}
-
-	for (let i = 0; i < strA.length; i++) {
-		const aCode = strA.charCodeAt(i),
-			bCode = strB.charCodeAt(i);
-
-		if (aCode === bCode) {
-			continue;
-		}
-
-		return isNaN(bCode) || aCode > bCode ? 1 : -1;
-	}
-
-	return strA.length < strB.length ? -1 : 1;
-};
+module.exports.compareByUnicode = (a, b) => String(a).localeCompare(String(b));
