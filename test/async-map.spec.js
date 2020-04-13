@@ -61,7 +61,7 @@ context('Async Map', () => {
 		beforeEach(async () => {
 			({ result, callback } = getCallback({ isAsync: true }));
 
-			mappedArray = await asyncMap(array, callback, array);
+			mappedArray = await asyncMap(array, callback);
 		});
 
 		it('Should run each callback in order', () =>
