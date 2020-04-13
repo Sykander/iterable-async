@@ -8,10 +8,11 @@ const users = [1, 2, 3, 4, 5].map(() => ({
 }));
 
 // Async Sort
-await AsyncArray.asyncSort(
+const sortedUsers = await AsyncArray.asyncSort(
 	users,
-	async ({ email: emailA }, { email: emailB }) => await emailA.localeCompare(emailB)
-).then(sortedUsers => {
-	console.log('Asynchronously sorted users');
-	console.table(sortedUsers);
-});
+	async ({ email: emailA }, { email: emailB }) =>
+		await emailA.localeCompare(emailB)
+);
+
+console.log('Asynchronously sorted users');
+console.table(sortedUsers);

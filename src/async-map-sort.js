@@ -21,9 +21,10 @@ const asyncMapSort = (module.exports.asyncMapSort = async function asyncMapSort(
 	validateIsFunction(mappingFunction);
 	validateIsFunction(comparisonFunction);
 
-	const mappedItems = await asyncMapOverIterable(this, mappingFunction);
-
-	return asyncSortIterable(mappedItems, comparisonFunction);
+	return asyncSortIterable(
+		await asyncMapOverIterable(this, mappingFunction),
+		comparisonFunction
+	);
 });
 
 /**

@@ -31,10 +31,6 @@ context('Async Map Sort', () => {
 			));
 	});
 
-	describe('Given no comparisonFunction', () => {
-		// It should map and then sort by unicode
-	});
-
 	describe('Given a synchronous mappingFunction', () => {
 		let result, mappingFunction, mapSortedArray;
 
@@ -47,18 +43,16 @@ context('Async Map Sort', () => {
 		it('Should run each mappingFunction in order', () =>
 			ranCallbacksInOrder(result));
 
-		it('Should map each item in order', async () => {
-			mapSortedArray.every((item, index) =>
-				expect(item).to.equal(array[index])
-			);
-		});
-
 		it('Should resolve to a new array', async () => {
 			expect(mapSortedArray).to.not.equal(array);
 		});
 
 		it('Should sort by unicode after mapping', async () => {
-			// should sort by unicode
+			const expectedResult = mapSortedArray.slice().sort();
+
+			expectedResult.every((item, index) =>
+				expect(mapSortedArray[index]).to.equal(item)
+			);
 		});
 	});
 
@@ -76,18 +70,16 @@ context('Async Map Sort', () => {
 		it('Should run each mappingFunction in order', () =>
 			ranCallbacksInOrder(result));
 
-		it('Should map each item in order', async () => {
-			mapSortedArray.every((item, index) =>
-				expect(item).to.equal(array[index])
-			);
-		});
-
 		it('Should resolve to a new array', async () => {
 			expect(mapSortedArray).to.not.equal(array);
 		});
 
 		it('Should sort by unicode after mapping', async () => {
-			// should sort by unicode
+			const expectedResult = mapSortedArray.slice().sort();
+
+			expectedResult.every((item, index) =>
+				expect(mapSortedArray[index]).to.equal(item)
+			);
 		});
 	});
 
@@ -123,8 +115,8 @@ context('Async Map Sort', () => {
 			]));
 	});
 
-	describe('Given the optional comparisonFunction parameter', () => {
-		let result, mappingFunction, mapSortedArray, comparisonFunction;
+	describe('Given an optional comparisonFunction that uses all arguments', () => {
+		let result, mappingFunction, comparisonFunction;
 
 		beforeEach(async () => {
 			({ callback: mappingFunction } = getCallback());
@@ -132,17 +124,14 @@ context('Async Map Sort', () => {
 				isSort: true
 			}));
 
-			mapSortedArray = await asyncMapSort(
-				array,
-				mappingFunction,
-				comparisonFunction
-			);
+			await asyncMapSort(array, mappingFunction, comparisonFunction);
 		});
 
-		it('Should sort by the given comparisonFunction after mapping', async () => {
-			expect(mapSortedArray);
-			expect(result);
-			// returned array should have correct ordering given the comparison
-		});
+		it('Should have access to first and second elements', () =>
+			result.every(({ firstEl, secondEl }) =>
+				expect(array)
+					.to.contain(firstEl)
+					.and.contain(secondEl)
+			));
 	});
 });

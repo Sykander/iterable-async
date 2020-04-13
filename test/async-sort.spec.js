@@ -39,7 +39,7 @@ context('Async Sort', () => {
 		let compareFunc, sortedArray;
 
 		beforeEach(async () => {
-			({ compareFunc } = getCallback({ isSort: true }));
+			({ callback: compareFunc } = getCallback({ isSort: true }));
 
 			sortedArray = await asyncSort(array, compareFunc);
 		});
@@ -58,7 +58,7 @@ context('Async Sort', () => {
 		let compareFunc, sortedArray;
 
 		beforeEach(async () => {
-			({ compareFunc } = getCallback({ isSort: true }));
+			({ callback: compareFunc } = getCallback({ isSort: true }));
 
 			sortedArray = await asyncSort(array, compareFunc, array);
 		});
@@ -92,7 +92,7 @@ context('Async Sort', () => {
 		let compareFunc, result;
 
 		beforeEach(async () => {
-			({ result, compareFunc } = getCallback({ isSort: true }));
+			({ result, callback: compareFunc } = getCallback({ isSort: true }));
 
 			await asyncSort(array, compareFunc);
 		});
