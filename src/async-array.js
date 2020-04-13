@@ -1,11 +1,12 @@
-const { asyncMap, asyncMapOverIterable } = require('./async-map'),
-	{ asyncForEach, asyncForEachOfIterable } = require('./async-for-each'),
-	{ asyncFilter, asyncFilterIterable } = require('./async-filter'),
-	{ asyncFind, asyncFindInIterable } = require('./async-find'),
+const { asyncFind, asyncFindInIterable } = require('./async-find'),
 	{
 		asyncFindIndex,
 		asyncFindIndexOnIterable
 	} = require('./async-find-index'),
+	{ asyncFilter, asyncFilterIterable } = require('./async-filter'),
+	{ asyncForEach, asyncForEachOfIterable } = require('./async-for-each'),
+	{ asyncMap, asyncMapOverIterable } = require('./async-map'),
+	{ asyncMapSort, asyncMapSortIterable } = require('./async-map-sort'),
 	{ asyncReduce, asyncReduceIterable } = require('./async-reduce'),
 	{ asyncSort, asyncSortIterable } = require('./async-sort');
 
@@ -24,6 +25,7 @@ Object.assign(AsyncArray, {
 	asyncFilter: asyncFilterIterable,
 	asyncForEach: asyncForEachOfIterable,
 	asyncMap: asyncMapOverIterable,
+	asyncMapSort: asyncMapSortIterable,
 	asyncReduce: asyncReduceIterable,
 	asyncSort: asyncSortIterable
 });
@@ -35,6 +37,7 @@ Object.assign(AsyncArray.prototype, {
 	asyncFilter,
 	asyncForEach,
 	asyncMap,
+	asyncMapSort,
 	asyncReduce,
 	asyncSort
 });
