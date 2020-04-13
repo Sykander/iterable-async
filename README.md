@@ -38,6 +38,7 @@ An Array class with additional async array methods.
 | **asyncFindIndex** | Find an item's index in an iterable object asynchronously | [wiki](https://github.com/Sykander/iterable-async/wiki/Async-Find-Index) |
 | **asyncForEach** | Loop over an iterable object asynchronously | [wiki](https://github.com/Sykander/iterable-async/wiki/Async-For-Each) |
 | **asyncMap** | Map an iterable object asynchronously | [wiki](https://github.com/Sykander/iterable-async/wiki/Async-Map) |
+| **asyncMapSort** | Map an iterable object asynchronously and then resolve when it's sorted, this method is much more efficient than running a regular `asyncSort` when done with a synchronous comparison function | [wiki](https://github.com/Sykander/iterable-async/wiki/Async-Map-Sort) |
 | **asyncSort** | Sort an iterable object asynchronously | [wiki](https://github.com/Sykander/iterable-async/wiki/Async-Sort) |
 
 ## Development
