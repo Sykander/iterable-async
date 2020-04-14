@@ -1,3 +1,10 @@
+const {
+		validateIsIterable,
+		validateIsFunction,
+		validateNonZeroLength
+	} = require('./validation'),
+	{ noParam } = require('./constants');
+
 /**
  * Async Reduce
  * ============
@@ -5,11 +12,31 @@
  * all items have been transduced.
  * @async
  * @param {Function} callback - callback(currentValue, index, array)
- * @param {any} [accumulator]
+ * @param {any} [accumulator=noParam]
  * @return {any}
  * @throws {TypeError}
  */
-const asyncReduce = (module.exports.asyncReduce = async function asyncReduce() {});
+const asyncReduce = (module.exports.asyncReduce = async function asyncReduce(
+	transducer,
+	accumulator = noParam
+) {
+	validateIsFunction(transducer);
+	const length = this.length;
+	let i = 0;
+
+	if (accumulator === noParam) {
+		validateNonZeroLength(this);
+		accumulator = this[0];
+		i = 1;
+	}
+
+	for (; i < length; i++) {
+		// eslint-disable-next-line no-await-in-loop
+		accumulator = await transducer(accumulator, this[i], i, this);
+	}
+
+	return accumulator;
+});
 
 /**
  * Async Reduce
@@ -19,14 +46,16 @@ const asyncReduce = (module.exports.asyncReduce = async function asyncReduce() {
  * @async
  * @param {Object} iterable
  * @param {Function} callback - callback(currentValue, index, array)
- * @param {any} [accumulator]
+ * @param {any} [accumulator=noParam]
  * @return {any}
  * @throws {TypeError}
  */
 module.exports.asyncReduceIterable = async function asyncReduceIterable(
 	iterable,
 	callback,
-	accumulator
+	accumulator = noParam
 ) {
+	validateIsIterable(iterable);
+
 	return asyncReduce.call(iterable, callback, accumulator);
 };
