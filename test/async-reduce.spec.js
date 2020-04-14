@@ -53,7 +53,7 @@ context('Async Reduce', () => {
 		});
 
 		it('Should run each callback in order', () => {
-			ranCallbacksInOrder(result);
+			ranCallbacksInOrder(result, { skipFirst: true });
 
 			expect(result.length).to.be.greaterThan(
 				0,
@@ -92,7 +92,7 @@ context('Async Reduce', () => {
 		});
 
 		it('Should run each callback in order', () => {
-			ranCallbacksInOrder(result);
+			ranCallbacksInOrder(result, { skipFirst: true });
 
 			expect(result.length).to.be.greaterThan(
 				0,

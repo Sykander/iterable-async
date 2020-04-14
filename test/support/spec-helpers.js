@@ -12,10 +12,15 @@ module.exports.rejectsWithError = function rejectsWithError(promise, error) {
 /**
  * Expect callbacks to have been run in order
  * @param {Array} result
+ * @param {Object} [options={}]
+ * @param {Boolean} [skipFirst=false]
  */
-module.exports.ranCallbacksInOrder = function ranCallbacksInOrder(result) {
+module.exports.ranCallbacksInOrder = function ranCallbacksInOrder(
+	result,
+	{ skipFirst = false } = {}
+) {
 	return result.every(({ index: expectedIndex }, actualIndex) =>
-		expect(actualIndex).to.equal(expectedIndex)
+		expect(actualIndex + (skipFirst ? 1 : 0)).to.equal(expectedIndex)
 	);
 };
 
