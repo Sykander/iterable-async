@@ -25,7 +25,14 @@ const asyncReduce = (module.exports.asyncReduce = async function asyncReduce(
 	let i = 0;
 
 	if (accumulator === noParam) {
-		validateNonZeroLength(this);
+		try {
+			validateNonZeroLength(this);
+		} catch (e) {
+			throw new TypeError(
+				'asyncReduce of empty array with no accumulator given'
+			);
+		}
+
 		accumulator = this[0];
 		i = 1;
 	}

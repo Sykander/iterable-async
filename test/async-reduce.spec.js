@@ -31,6 +31,16 @@ context('Async Reduce', () => {
 			));
 	});
 
+	describe('Given an empty array, a callback and no accumulator', () => {
+		it('Should reject with "TypeError: asyncReduce of empty array with no accumulator given', () =>
+			rejectsWithError(
+				asyncReduce([], () => 1),
+				new TypeError(
+					'asyncReduce of empty array with no accumulator given'
+				)
+			));
+	});
+
 	describe('Given a synchronous callback', () => {
 		let result, callback, reducedAccumulator;
 
