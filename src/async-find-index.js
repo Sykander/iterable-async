@@ -18,8 +18,7 @@ const asyncFindIndex = (module.exports.asyncFindIndex = async function asyncFind
 	validateIsFunction(callback);
 
 	const tasks = mapIterable(this, callback.bind(thisArg), {
-		useEmptyElements: true,
-		newlyAddedElements: false
+		useEmptyElements: true
 	});
 
 	return Promise.race([

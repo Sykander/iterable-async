@@ -18,8 +18,7 @@ const asyncForEach = (module.exports.asyncForEach = async function asyncForEach(
 
 	await Promise.all(
 		mapIterable(this, callback.bind(thisArg), {
-			useEmptyElements: false,
-			newlyAddedElements: false
+			useEmptyElements: false
 		})
 	);
 });

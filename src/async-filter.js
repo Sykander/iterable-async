@@ -21,8 +21,7 @@ const asyncFilter = (module.exports.asyncFilter = async function asyncFilter(
 		this,
 		await Promise.all(
 			mapIterable(this, callback.bind(thisArg), {
-				useEmptyElements: false,
-				newlyAddedElements: false
+				useEmptyElements: false
 			})
 		)
 	);

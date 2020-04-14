@@ -19,8 +19,7 @@ const asyncMap = (module.exports.asyncMap = async function asyncMap(
 
 	return Promise.all(
 		mapIterable(this, callback.bind(thisArg), {
-			useEmptyElements: false,
-			newlyAddedElements: false
+			useEmptyElements: false
 		})
 	);
 });
