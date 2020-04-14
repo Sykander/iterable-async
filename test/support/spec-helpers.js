@@ -24,11 +24,14 @@ module.exports.ranCallbacksInOrder = function ranCallbacksInOrder(result) {
  * @param {Object} source
  * @param {Array} results
  * @param {String[]} params
+ * @param {Object} [options={}]
+ * @param {Boolean} [options.skipFirst=false]
  */
 module.exports.hasAccessToCorrectArgumentsOnCallback = function hasAccessToCorrectArgumentsOnCallback(
 	source,
 	results,
-	params
+	params,
+	{ skipFirst = false } = {}
 ) {
 	if (params.includes('currentValue')) {
 		params[params.indexOf('currentValue')] = 'item';
@@ -44,7 +47,7 @@ module.exports.hasAccessToCorrectArgumentsOnCallback = function hasAccessToCorre
 		}
 
 		if (params.includes('index')) {
-			expect(result.index).to.equal(index);
+			expect(result.index).to.equal(index + (skipFirst ? 1 : 0));
 		}
 
 		if (params.includes('array')) {

@@ -135,12 +135,12 @@ context('Async Reduce', () => {
 		});
 
 		it('Should have access to accumulator, currentValue, index and array on the callback', () => {
-			hasAccessToCorrectArgumentsOnCallback(array, result, [
-				'accumulator',
-				'currentValue',
-				'index',
-				'array'
-			]);
+			hasAccessToCorrectArgumentsOnCallback(
+				array,
+				result,
+				['accumulator', 'currentValue', 'index', 'array'],
+				{ skipFirst: true }
+			);
 
 			expect(result.length).to.be.greaterThan(
 				0,
