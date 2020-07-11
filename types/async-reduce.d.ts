@@ -6,8 +6,8 @@
  * @async
  * @param {Object} iterable
  * @param {Function} callback - callback(currentValue, index, array)
- * @param {any} [accumulator]
+ * @param {any} [accumulator=noParam]
  * @return {any}
  * @throws {TypeError}
  */
-export function asyncReduce(): any;
+export function asyncReduce(iterable: any, transducer: any, accumulator?: any): any;

@@ -18,8 +18,7 @@ async function asyncMap(iterable, callback, thisArg = undefined) {
 
 	return Promise.all(
 		mapIterable(iterable, callback.bind(thisArg), {
-			useEmptyElements: false,
-			newlyAddedElements: false
+			useEmptyElements: false
 		})
 	);
 }

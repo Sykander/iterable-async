@@ -17,8 +17,7 @@ async function asyncFind(iterable, callback, thisArg = undefined) {
 	validateIsFunction(callback);
 
 	const tasks = mapIterable(iterable, callback.bind(thisArg), {
-		useEmptyElements: true,
-		newlyAddedElements: false
+		useEmptyElements: true
 	});
 
 	return iterable[

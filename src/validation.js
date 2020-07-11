@@ -1,11 +1,12 @@
 /**
  * Validate an item's iterability
  * @param {any} item
+ * @return {Boolean} validated?
  * @throws {TypeError}
  */
 function validateIsIterable(item) {
 	if (typeof item !== 'object' || !item || !item[Symbol.iterator]) {
-		throw TypeError(`${item} is not iterable`);
+		throw new TypeError(`${item} is not iterable`);
 	}
 
 	return true;
@@ -14,14 +15,33 @@ function validateIsIterable(item) {
 /**
  * Validate an item is a function
  * @param {any} item
+ * @return {Boolean} validated?
  * @throws {TypeError}
  */
 function validateIsFunction(item) {
 	if (typeof item !== 'function') {
-		throw TypeError(`${item} is not a function`);
+		throw new TypeError(`${item} is not a function`);
 	}
 
 	return true;
 }
 
-module.exports = { validateIsIterable, validateIsFunction };
+/**
+ * Validate if an item has length greater than 0
+ * @param {any} item
+ * @return {Boolean} validated?
+ * @throws {TypeError}
+ */
+function validateNonZeroLength(item) {
+	if (!item || typeof item !== 'object' || !item.length) {
+		throw new TypeError(`${item} has no iterable items`);
+	}
+
+	return true;
+}
+
+module.exports = {
+	validateIsIterable,
+	validateIsFunction,
+	validateNonZeroLength
+};

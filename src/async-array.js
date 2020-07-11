@@ -6,7 +6,8 @@ const { asyncFind } = require('./async-find'),
 	{ asyncMapSort } = require('./async-map-sort'),
 	{ asyncReduce } = require('./async-reduce'),
 	{ asyncSort } = require('./async-sort'),
-	{ compareByUnicode } = require('./helpers');
+	{ compareByUnicode } = require('./helpers'),
+	{ noParam } = require('./constants');
 
 /**
  * Async Array
@@ -68,11 +69,11 @@ class AsyncArray extends Array {
 		return asyncMapSort(iterable, mappingCallback, comparisonCallback);
 	}
 
-	asyncReduce(callback, accumulator = undefined) {
+	asyncReduce(callback, accumulator = noParam) {
 		return asyncReduce(this, callback, accumulator);
 	}
 
-	static asyncReduce(iterable, callback, accumulator = undefined) {
+	static asyncReduce(iterable, callback, accumulator = noParam) {
 		return asyncReduce(iterable, callback, accumulator);
 	}
 

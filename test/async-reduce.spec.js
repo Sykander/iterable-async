@@ -12,7 +12,7 @@ context('Async Reduce', () => {
 	let array;
 
 	beforeEach(() => {
-		array = getArray();
+		array = getArray({ min: 2 });
 	});
 
 	describe('Given no arguments', () => {
@@ -31,6 +31,16 @@ context('Async Reduce', () => {
 			));
 	});
 
+	describe('Given an empty array, a callback and no accumulator', () => {
+		it('Should reject with "TypeError: asyncReduce of empty array with no accumulator given', () =>
+			rejectsWithError(
+				asyncReduce([], () => 1),
+				new TypeError(
+					'asyncReduce of empty array with no accumulator given'
+				)
+			));
+	});
+
 	describe('Given a synchronous callback', () => {
 		let result, callback, reducedAccumulator;
 
@@ -38,12 +48,11 @@ context('Async Reduce', () => {
 			({ result, callback } = getCallback({
 				isReduce: true
 			}));
-
-			reducedAccumulator = await asyncReduce(array, callback);
+			reducedAccumulator = await asyncReduce(array, callback, []);
 		});
 
 		it('Should run each callback in order', () => {
-			ranCallbacksInOrder(result);
+			ranCallbacksInOrder(result, { skipFirst: false });
 
 			expect(result.length).to.be.greaterThan(
 				0,
@@ -53,13 +62,13 @@ context('Async Reduce', () => {
 
 		it('Should reduce each item in order', async () => {
 			array.every((element, index) => {
-				return expect(reducedAccumulator[index]).to.equal(element);
+				return expect(reducedAccumulator[index].item).to.equal(element);
 			});
 		});
 
 		it('Should resolve to the completed value accumulator', async () => {
 			result.every(({ item }, index) => {
-				return expect(reducedAccumulator[index]).to.equal(item);
+				return expect(reducedAccumulator[index].item).to.equal(item);
 			});
 
 			expect(result.length).to.be.greaterThan(
@@ -77,12 +86,11 @@ context('Async Reduce', () => {
 				isAsync: true,
 				isReduce: true
 			}));
-
-			reducedAccumulator = await asyncReduce(array, callback);
+			reducedAccumulator = await asyncReduce(array, callback, []);
 		});
 
 		it('Should run each callback in order', () => {
-			ranCallbacksInOrder(result);
+			ranCallbacksInOrder(result, { skipFirst: false });
 
 			expect(result.length).to.be.greaterThan(
 				0,
@@ -92,13 +100,13 @@ context('Async Reduce', () => {
 
 		it('Should reduce each item in order', async () => {
 			array.every((element, index) => {
-				return expect(reducedAccumulator[index]).to.equal(element);
+				return expect(reducedAccumulator[index].item).to.equal(element);
 			});
 		});
 
 		it('Should resolve to the completed value accumulator', async () => {
 			result.every(({ item }, index) => {
-				return expect(reducedAccumulator[index]).to.equal(item);
+				return expect(reducedAccumulator[index].item).to.equal(item);
 			});
 
 			expect(result.length).to.be.greaterThan(
@@ -135,12 +143,12 @@ context('Async Reduce', () => {
 		});
 
 		it('Should have access to accumulator, currentValue, index and array on the callback', () => {
-			hasAccessToCorrectArgumentsOnCallback(array, result, [
-				'accumulator',
-				'currentValue',
-				'index',
-				'array'
-			]);
+			hasAccessToCorrectArgumentsOnCallback(
+				array,
+				result,
+				['accumulator', 'currentValue', 'index', 'array'],
+				{ skipFirst: true }
+			);
 
 			expect(result.length).to.be.greaterThan(
 				0,
@@ -153,7 +161,8 @@ context('Async Reduce', () => {
 		let result, callback, accumulator;
 
 		beforeEach(async () => {
-			({ result, callback } = getCallback()), (accumulator = {});
+			({ result, callback } = getCallback({ isReduce: true })),
+				(accumulator = {});
 
 			await asyncReduce(array, callback, accumulator);
 		});

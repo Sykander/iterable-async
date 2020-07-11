@@ -5,30 +5,35 @@ const { expect } = require('./chai');
  * @param {Promise} promise
  * @param {Error} error
  */
-module.exports.rejectsWithError = function rejectsWithError(promise, error) {
+function rejectsWithError(promise, error) {
 	return expect(promise).to.rejectedWith(error.message);
-};
+}
 
 /**
  * Expect callbacks to have been run in order
  * @param {Array} result
+ * @param {Object} [options={}]
+ * @param {Boolean} [options.skipFirst=false]
  */
-module.exports.ranCallbacksInOrder = function ranCallbacksInOrder(result) {
+function ranCallbacksInOrder(result, { skipFirst = false } = {}) {
 	return result.every(({ index: expectedIndex }, actualIndex) =>
-		expect(actualIndex).to.equal(expectedIndex)
+		expect(actualIndex + (skipFirst ? 1 : 0)).to.equal(expectedIndex)
 	);
-};
+}
 
 /**
  * Expects callback results to have had access to correct params from source array
  * @param {Object} source
  * @param {Array} results
  * @param {String[]} params
+ * @param {Object} [options={}]
+ * @param {Boolean} [options.skipFirst=false]
  */
-module.exports.hasAccessToCorrectArgumentsOnCallback = function hasAccessToCorrectArgumentsOnCallback(
+function hasAccessToCorrectArgumentsOnCallback(
 	source,
 	results,
-	params
+	params,
+	{ skipFirst = false } = {}
 ) {
 	if (params.includes('currentValue')) {
 		params[params.indexOf('currentValue')] = 'item';
@@ -44,7 +49,7 @@ module.exports.hasAccessToCorrectArgumentsOnCallback = function hasAccessToCorre
 		}
 
 		if (params.includes('index')) {
-			expect(result.index).to.equal(index);
+			expect(result.index).to.equal(index + (skipFirst ? 1 : 0));
 		}
 
 		if (params.includes('array')) {
@@ -57,4 +62,10 @@ module.exports.hasAccessToCorrectArgumentsOnCallback = function hasAccessToCorre
 
 		return expect(hasProperties).to.be.true;
 	});
+}
+
+module.exports = {
+	ranCallbacksInOrder,
+	hasAccessToCorrectArgumentsOnCallback,
+	rejectsWithError
 };

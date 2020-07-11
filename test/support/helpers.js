@@ -12,7 +12,7 @@ const { getString } = require('./data-factory');
  * @param {Boolean} [options.isReduce=false]
  * @return {Object} { result, callback, meta }
  */
-module.exports.getCallback = function getCallback(options = {}) {
+function getCallback(options = {}) {
 	const {
 			isFind = false,
 			findIndex = 0,
@@ -108,4 +108,6 @@ module.exports.getCallback = function getCallback(options = {}) {
 		callback,
 		meta
 	};
-};
+}
+
+module.exports = { getCallback };

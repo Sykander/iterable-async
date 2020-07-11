@@ -1,6 +1,6 @@
 import * as AsyncArray from '../src/index.js';
 
-const arr = new AsyncArray(1, '2', 3);
+const arr = new AsyncArray(1, 2, 3);
 let sum: number = 0;
 
 // Test we can use array methods

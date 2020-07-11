@@ -17,8 +17,7 @@ async function asyncForEach(iterable, callback, thisArg = undefined) {
 
 	await Promise.all(
 		mapIterable(iterable, callback.bind(thisArg), {
-			useEmptyElements: false,
-			newlyAddedElements: false
+			useEmptyElements: false
 		})
 	);
 }

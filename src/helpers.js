@@ -7,26 +7,18 @@
  * @param {Function} callback
  * @param {Object} [options]
  * @param {Boolean} [options.useEmptyElements=true] - use empty elements of the array ?
- * @param {Boolean} [options.newlyAddedElements=false] - visit newly added elements ?
  * @return {Array}
  */
-function mapIterable(
-	iterable,
-	callback,
-	{ useEmptyElements = true, newlyAddedElements = false } = {}
-) {
-	const tasks = [];
+function mapIterable(iterable, callback, { useEmptyElements = true } = {}) {
+	const tasks = [],
+		length = iterable.length;
 
-	for (let index = 0, length = iterable.length; index < length; index++) {
+	for (let index = 0; index < length; index++) {
 		if (!useEmptyElements && !(index in iterable)) {
 			continue;
 		}
 
 		tasks.push(callback(iterable[index], index, iterable));
-
-		if (newlyAddedElements) {
-			length = iterable.length;
-		}
 	}
 
 	return tasks;
