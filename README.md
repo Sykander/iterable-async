@@ -53,9 +53,12 @@ Development is open to contribution, check the project board "Development" for t
 | lint:check | Returns a report on lint issues in the project |
 | lint:fix | Fixes lint issues in the project and returns a report on the ones which couldn't be fixed |
 | test | Runs all tests and returns a report on which pass/fail |
-| test:unit-tests | Runs only unit tests and returns a report on which pass/fail as well as overall testing coverage |
+| test:unit-tests | Runs only unit tests and returns a report on which pass/fail |
 | test:code-style | Runs only code checks and returns a report on which pass/fail |
 | test:type-definitions | Attempts to compile and run a typescript file using this module |
+| test:coverage | Creates a testing coverage report and checks that testing meets minimum requirements |
+| test:coverage-report | Creates a testing coverage report |
+| test:coverage-check | Checks the last test coverage report to see if testing coverage meets the minimum requirements |
 
 Eg. to run all lint tests
 ```

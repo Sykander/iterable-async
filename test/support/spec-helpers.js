@@ -5,24 +5,21 @@ const { expect } = require('./chai');
  * @param {Promise} promise
  * @param {Error} error
  */
-module.exports.rejectsWithError = function rejectsWithError(promise, error) {
+function rejectsWithError(promise, error) {
 	return expect(promise).to.rejectedWith(error.message);
-};
+}
 
 /**
  * Expect callbacks to have been run in order
  * @param {Array} result
  * @param {Object} [options={}]
- * @param {Boolean} [skipFirst=false]
+ * @param {Boolean} [options.skipFirst=false]
  */
-module.exports.ranCallbacksInOrder = function ranCallbacksInOrder(
-	result,
-	{ skipFirst = false } = {}
-) {
+function ranCallbacksInOrder(result, { skipFirst = false } = {}) {
 	return result.every(({ index: expectedIndex }, actualIndex) =>
 		expect(actualIndex + (skipFirst ? 1 : 0)).to.equal(expectedIndex)
 	);
-};
+}
 
 /**
  * Expects callback results to have had access to correct params from source array
@@ -32,7 +29,7 @@ module.exports.ranCallbacksInOrder = function ranCallbacksInOrder(
  * @param {Object} [options={}]
  * @param {Boolean} [options.skipFirst=false]
  */
-module.exports.hasAccessToCorrectArgumentsOnCallback = function hasAccessToCorrectArgumentsOnCallback(
+function hasAccessToCorrectArgumentsOnCallback(
 	source,
 	results,
 	params,
@@ -65,4 +62,10 @@ module.exports.hasAccessToCorrectArgumentsOnCallback = function hasAccessToCorre
 
 		return expect(hasProperties).to.be.true;
 	});
+}
+
+module.exports = {
+	ranCallbacksInOrder,
+	hasAccessToCorrectArgumentsOnCallback,
+	rejectsWithError
 };

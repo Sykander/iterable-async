@@ -7,12 +7,17 @@
   "scripts": {
     "test:type-definitions": "tsc test/typings.ts && node test/typings.js",
     "test:code-style": "npm run lint:check",
-    "test:unit-tests": "nyc mocha test/**/*.spec.js && nyc check-coverage",
-    "test": "npm run test:unit-tests && npm run test:code-style && npm run test:type-definitions && echo \"No issues.\"",
+    "test:unit-tests": "mocha test/**/*.spec.js",
+    "test:coverage-report": "nyc npm run test:unit-tests --silent",
+    "test:coverage-check": "nyc check-coverage",
+    "test:coverage": "npm run test:coverage-report; npm run test:coverage-check",
+    "test": "npm run test:unit-tests && npm run test:code-style && npm run test:type-definitions && npm run test:coverage",
     "lint:fix": "prettier --write 'src/**/*.{js,ts,css,html}' --write 'test/**/*.{js,ts,css,html}'",
     "lint:check": "eslint src test",
-    "lint": "npm run lint:fix --silent && npm run lint:check && echo \"No issues.\"",
-    "prepublishOnly": "npm ci && npm test"
+    "lint": "npm run lint:fix --silent && npm run lint:check",
+    "prepublishOnly": "npm ci && npm test",
+    "postlint": "echo \"No issues.\"",
+    "posttest": "echo \"No issues.\""
   },
   "author": {
     "name": "Sykander Gul",

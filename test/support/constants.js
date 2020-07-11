@@ -1,5 +1,7 @@
 /**
  * Passed in this argument.
- * @type {Symbol} providedThisArg
+ * @const {Symbol} providedThisArg
  */
-module.exports.providedThisArg = Symbol('Passed in this argument.');
+const providedThisArg = Symbol('Passed in this argument.');
+
+module.exports = { providedThisArg };
