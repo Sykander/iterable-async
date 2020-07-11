@@ -7,12 +7,10 @@
  * @param {Function} callback
  * @param {Object} [options]
  * @param {Boolean} [options.useEmptyElements=true] - use empty elements of the array ?
- * @param {Boolean} [options.newlyAddedElements=false] - visit newly added elements ?
  * @return {Array}
  */
-export function mapIterable(iterable: any, callback: Function, { useEmptyElements, newlyAddedElements }?: {
+export function mapIterable(iterable: any, callback: Function, { useEmptyElements }?: {
     useEmptyElements: boolean;
-    newlyAddedElements: boolean;
 }): any[];
 /**
  * Filter Iterable

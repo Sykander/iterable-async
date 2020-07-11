@@ -20,8 +20,7 @@ async function asyncFilter(iterable, callback, thisArg = undefined) {
 		iterable,
 		await Promise.all(
 			mapIterable(iterable, callback.bind(thisArg), {
-				useEmptyElements: false,
-				newlyAddedElements: false
+				useEmptyElements: false
 			})
 		)
 	);

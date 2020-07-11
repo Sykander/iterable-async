@@ -2,7 +2,7 @@
  * Async Array
  * ===========
  * Array like object with access to async array methods
- * @class AsyncArray
+ * @class
  * @extends Array
  */
 export class AsyncArray extends Array<any> {
