@@ -1,25 +1,29 @@
 const { mapIterable, filterIterable } = require('./helpers'),
-	{ noParam } = require('./constants'),
 	{ validateIsIterable, validateIsFunction } = require('./validation');
 
 /**
  * Async Filter
  * ============
- * Filter an iterable object asynchronously and resolve when all callbacks are resolved
+ * Filter asynchronously and resolve when all callbacks are resolved
  * @async
+ * @param {Object} iterable
  * @param {Function} callback - callback(currentValue, index, array)
- * @param {Object} [thisArg] - must be iterable
+ * @param {Object} [thisArg=undefined]
  * @return {Array}
  * @throws {TypeError}
  */
-module.exports = async function asyncFilter(callback, thisArg = noParam) {
-	const collection = thisArg !== noParam ? thisArg : this;
-
+async function asyncFilter(iterable, callback, thisArg = undefined) {
+	validateIsIterable(iterable);
 	validateIsFunction(callback);
-	validateIsIterable(collection);
 
 	return filterIterable(
-		collection,
-		await Promise.all(mapIterable(collection, callback))
+		iterable,
+		await Promise.all(
+			mapIterable(iterable, callback.bind(thisArg), {
+				useEmptyElements: false
+			})
+		)
 	);
-};
+}
+
+module.exports = { asyncFilter };

@@ -1,26 +1,26 @@
 const { mapIterable } = require('./helpers'),
-	{ noParam } = require('./constants'),
 	{ validateIsIterable, validateIsFunction } = require('./validation');
 
 /**
  * Async Find
  * ==========
- * Find an item in an iterable object asynchronously and resolve when found or all callbacks resolve
+ * Find an item asynchronously and resolve when found or all callbacks resolve
  * @async
+ * @param {Object} iterable
  * @param {Function} callback - callback(currentValue, index, array)
- * @param {Object} [thisArg] - must be iterable
+ * @param {Object} [thisArg=undefined]
  * @return {any}
  * @throws {TypeError}
  */
-module.exports = async function asyncFind(callback, thisArg = noParam) {
-	const collection = thisArg !== noParam ? thisArg : this;
-
+async function asyncFind(iterable, callback, thisArg = undefined) {
+	validateIsIterable(iterable);
 	validateIsFunction(callback);
-	validateIsIterable(collection);
 
-	const tasks = mapIterable(collection, callback);
+	const tasks = mapIterable(iterable, callback.bind(thisArg), {
+		useEmptyElements: true
+	});
 
-	return collection[
+	return iterable[
 		await Promise.race([
 			Promise.race(
 				tasks.map(async (task, index) => {
@@ -36,4 +36,6 @@ module.exports = async function asyncFind(callback, thisArg = noParam) {
 			)
 		])
 	];
-};
+}
+
+module.exports = { asyncFind };

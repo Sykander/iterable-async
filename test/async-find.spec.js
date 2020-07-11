@@ -6,19 +6,28 @@ const { expect } = require('./support/chai'),
 		ranCallbacksInOrder,
 		hasAccessToCorrectArgumentsOnCallback
 	} = require('./support/spec-helpers'),
-	{ asyncFind: asyncFindFunction } = require('../src');
+	{ providedThisArg } = require('./support/constants'),
+	{ asyncFind } = require('../src');
 
 context('Async Find', () => {
-	let array, asyncFind;
+	let array;
 
 	beforeEach(() => {
-		(array = getArray()), (asyncFind = asyncFindFunction.bind(array));
+		array = getArray();
 	});
 
 	describe('Given no arguments', () => {
-		it('Should reject with "TypeError: undefined is not a function"', () =>
+		it('Should reject with "TypeError: undefined is not iterable"', () =>
 			rejectsWithError(
 				asyncFind(),
+				new TypeError('undefined is not iterable')
+			));
+	});
+
+	describe('Given no callback', () => {
+		it('Should reject with "TypeError: undefined is not a function"', () =>
+			rejectsWithError(
+				asyncFind(array),
 				new TypeError('undefined is not a function')
 			));
 	});
@@ -34,7 +43,7 @@ context('Async Find', () => {
 				findIndex
 			}));
 
-			foundElement = await asyncFind(callback);
+			foundElement = await asyncFind(array, callback);
 		});
 
 		it('Should run each callback in order', () =>
@@ -56,7 +65,7 @@ context('Async Find', () => {
 				findIndex
 			}));
 
-			foundElement = await asyncFind(callback);
+			foundElement = await asyncFind(array, callback);
 		});
 
 		it('Should run each callback in order', () =>
@@ -79,7 +88,7 @@ context('Async Find', () => {
 		);
 
 		it('Should reject with that error', async () =>
-			rejectsWithError(asyncFind(callback), error));
+			rejectsWithError(asyncFind(array, callback), error));
 	});
 
 	describe('Given a callback that uses all arguments', () => {
@@ -88,28 +97,29 @@ context('Async Find', () => {
 		beforeEach(async () => {
 			({ result, callback } = getCallback());
 
-			await asyncFind(callback);
+			await asyncFind(array, callback);
 		});
 
 		it('Should have access to currentValue, index and array on the callback', () =>
-			hasAccessToCorrectArgumentsOnCallback(array, result));
+			hasAccessToCorrectArgumentsOnCallback(array, result, [
+				'currentValue',
+				'index',
+				'array'
+			]));
 	});
 
 	describe('Given the optional thisArg parameter', () => {
-		let result, callback, newArray;
+		let result, callback;
 
 		beforeEach(async () => {
-			newArray = getArray();
-
 			({ result, callback } = getCallback());
 
-			await asyncFind(callback, newArray);
+			await asyncFind(array, callback, providedThisArg);
 		});
 
-		it('Should loop over the given thisArg', () => {
-			return result.every(({ array }) =>
-				expect(array).to.equal(newArray)
-			);
-		});
+		it('Should have accesss to thisArg on callback', () =>
+			result.every(({ thisArg }) =>
+				expect(thisArg.toString()).to.equal(providedThisArg.toString())
+			));
 	});
 });

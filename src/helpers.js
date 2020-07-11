@@ -5,17 +5,24 @@
  * eg. callback(currentValue, index, sourceIterable)
  * @param {Object} iterable
  * @param {Function} callback
+ * @param {Object} [options]
+ * @param {Boolean} [options.useEmptyElements=true] - use empty elements of the array ?
  * @return {Array}
  */
-module.exports.mapIterable = function mapIterable(iterable, callback) {
-	const tasks = [];
+function mapIterable(iterable, callback, { useEmptyElements = true } = {}) {
+	const tasks = [],
+		length = iterable.length;
 
-	for (let currentValue of iterable) {
-		tasks.push(callback(currentValue, tasks.length, iterable));
+	for (let index = 0; index < length; index++) {
+		if (!useEmptyElements && !(index in iterable)) {
+			continue;
+		}
+
+		tasks.push(callback(iterable[index], index, iterable));
 	}
 
 	return tasks;
-};
+}
 
 /**
  * Filter Iterable
@@ -25,7 +32,7 @@ module.exports.mapIterable = function mapIterable(iterable, callback) {
  * @param {Array} checks
  * @return {Array}
  */
-module.exports.filterIterable = function filterIterable(iterable, checks) {
+function filterIterable(iterable, checks) {
 	const result = [];
 	let index = 0;
 
@@ -36,7 +43,7 @@ module.exports.filterIterable = function filterIterable(iterable, checks) {
 	}
 
 	return result;
-};
+}
 
 /**
  * Swap items in array
@@ -44,15 +51,11 @@ module.exports.filterIterable = function filterIterable(iterable, checks) {
  * @param {Number} leftIndex
  * @param {Number} rightIndex
  */
-const swapItems = (module.exports.swapItems = function swapItems(
-	items,
-	leftIndex,
-	rightIndex
-) {
+function swapItems(items, leftIndex, rightIndex) {
 	const leftItem = items[leftIndex];
 	items[leftIndex] = items[rightIndex];
 	items[rightIndex] = leftItem;
-});
+}
 
 /**
  * Async partition an array for quick sort
@@ -61,13 +64,9 @@ const swapItems = (module.exports.swapItems = function swapItems(
  * @param {Number} leftIndex
  * @param {Number} rightIndex
  * @param {Function} compare
+ * @return {Number} leftIndex after partition
  */
-module.exports.asyncPartition = async function asyncPartition(
-	items,
-	leftIndex,
-	rightIndex,
-	compare
-) {
+async function asyncPartition(items, leftIndex, rightIndex, compare) {
 	const pivot = items[Math.floor((leftIndex + rightIndex) / 2)];
 
 	while (leftIndex <= rightIndex) {
@@ -87,7 +86,7 @@ module.exports.asyncPartition = async function asyncPartition(
 	}
 
 	return leftIndex;
-};
+}
 
 /**
  * Compares two items by unicode
@@ -95,26 +94,12 @@ module.exports.asyncPartition = async function asyncPartition(
  * @param {any} b
  * @return {Number} -1, 0, 1
  */
-module.exports.compareByUnicode = (a, b) => {
-	const strA = String(a),
-		strB = String(b);
+const compareByUnicode = (a, b) => String(a).localeCompare(String(b));
 
-	if (strA === strB) {
-		return 0;
-	}
-
-	let aCode, bCode;
-
-	for (let i = 0; i < strA.length; i++) {
-		aCode = strA.charCodeAt(i);
-		bCode = strB.charCodeAt(i);
-
-		if (aCode === bCode) {
-			continue;
-		}
-
-		return isNaN(bCode) || aCode > bCode ? 1 : -1;
-	}
-
-	return strA.length < strB.length ? -1 : 1;
+module.exports = {
+	mapIterable,
+	filterIterable,
+	swapItems,
+	asyncPartition,
+	compareByUnicode
 };

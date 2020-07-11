@@ -1,14 +1,23 @@
 {
   "name": "iterable-async",
-  "version": "1.0.3",
-  "description": "A Collection of useful patterns.",
-  "main": "src",
+  "version": "1.0.4",
+  "description": "Async Array Class and methods. Use for asynchronous array looping methods.",
+  "main": "src/index.js",
+  "types": "types/index.d.ts",
   "scripts": {
-    "test": "./node_modules/.bin/mocha test",
-    "lint:fix": "./node_modules/.bin/prettier --write 'src/**/*.{js,ts,css,html}' --write 'test/**/*.{js,ts,css,html}' --write 'docs/**/*.{js,ts,css,html}'",
-    "lint:check": "./node_modules/.bin/eslint src test && ./node_modules/.bin/eslint --no-eslintrc --env es6,node --rule 'no-unused-var: off' docs",
-    "lint": "npm run lint:fix && npm run lint:check",
-    "prepublishOnly": "npm run lint:check && npm test"
+    "test:type-definitions": "tsc test/typings.ts && node test/typings.js",
+    "test:code-style": "npm run lint:check",
+    "test:unit-tests": "mocha test/**/*.spec.js",
+    "test:coverage-report": "nyc npm run test:unit-tests --silent",
+    "test:coverage-check": "nyc check-coverage",
+    "test:coverage": "npm run test:coverage-report; npm run test:coverage-check",
+    "test": "npm run test:unit-tests && npm run test:code-style && npm run test:type-definitions && npm run test:coverage",
+    "lint:fix": "prettier --write 'src/**/*.{js,ts,css,html}' --write 'test/**/*.{js,ts,css,html}'",
+    "lint:check": "eslint src test",
+    "lint": "npm run lint:fix --silent && npm run lint:check",
+    "prepublishOnly": "npm ci && npm test",
+    "postlint": "echo \"No issues.\"",
+    "posttest": "echo \"No issues.\""
   },
   "author": {
     "name": "Sykander Gul",
@@ -27,12 +36,14 @@
     "eslint-plugin-prettier": "^3.1.1",
     "faker": "^4.1.0",
     "husky": "^3.1.0",
-    "mocha": "^6.2.2",
-    "prettier": "^1.19.1"
+    "mocha": "^7.1.1",
+    "nyc": "^15.0.1",
+    "prettier": "^1.19.1",
+    "typescript": "^3.7.5"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run lint:check"
+      "pre-commit": "npm run test:code-style"
     }
   },
   "keywords": [

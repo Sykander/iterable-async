@@ -1,25 +1,25 @@
-const { noParam } = require('./constants'),
-	{ validateIsFunction, validateIsIterable } = require('./validation'),
-	asyncQuickSort = require('./async-quick-sort'),
+const { validateIsFunction, validateIsIterable } = require('./validation'),
+	{ asyncQuickSort } = require('./async-quick-sort'),
 	{ compareByUnicode } = require('./helpers');
 
 /**
  * Async Sort
  * ==========
- * Asynchronously sorts and an iterable object and resolves when fully sorted
+ * Asynchronously sorts and resolves when fully sorted
  * note that the object is sorted in place and no copy is made
  * @async
- * @param {Function} [compareFunc] - default is sort by item's unicode value
+ * @param {Object} iterable
+ * @param {Function} [compare=compareByUnicode] - default is sort by item's unicode value
  * @return {Object}
  * @throws {TypeError}
  */
-module.exports = async function asyncSort(compareFunc = noParam) {
-	const compare = compareFunc !== noParam ? compareFunc : compareByUnicode;
-
+async function asyncSort(iterable, compare = compareByUnicode) {
+	validateIsIterable(iterable);
 	validateIsFunction(compare);
-	validateIsIterable(this);
 
-	await asyncQuickSort(this, 0, this.length - 1, compare);
+	await asyncQuickSort(iterable, 0, iterable.length - 1, compare);
 
-	return this;
-};
+	return iterable;
+}
+
+module.exports = { asyncSort };

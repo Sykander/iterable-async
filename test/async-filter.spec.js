@@ -6,19 +6,28 @@ const { expect } = require('./support/chai'),
 		ranCallbacksInOrder,
 		hasAccessToCorrectArgumentsOnCallback
 	} = require('./support/spec-helpers'),
-	{ asyncFilter: asyncFilterFunction } = require('../src');
+	{ providedThisArg } = require('./support/constants'),
+	{ asyncFilter } = require('../src');
 
 context('Async Filter', () => {
-	let array, asyncFilter;
+	let array;
 
 	beforeEach(() => {
-		(array = getArray()), (asyncFilter = asyncFilterFunction.bind(array));
+		array = getArray();
 	});
 
 	describe('Given no arguments', () => {
-		it('Should reject with "TypeError: undefined is not a function"', () =>
+		it('Should reject with "TypeError: undefined is not iterable"', () =>
 			rejectsWithError(
 				asyncFilter(),
+				new TypeError('undefined is not iterable')
+			));
+	});
+
+	describe('Given no callback', () => {
+		it('Should reject with "TypeError: undefined is not a function"', () =>
+			rejectsWithError(
+				asyncFilter(array),
 				new TypeError('undefined is not a function')
 			));
 	});
@@ -29,7 +38,7 @@ context('Async Filter', () => {
 		beforeEach(async () => {
 			({ result, callback } = getCallback());
 
-			filteredArray = await asyncFilter(callback);
+			filteredArray = await asyncFilter(array, callback);
 		});
 
 		it('Should run each callback in order', () =>
@@ -55,7 +64,7 @@ context('Async Filter', () => {
 		beforeEach(async () => {
 			({ result, callback } = getCallback({ isAsync: true }));
 
-			filteredArray = await asyncFilter(callback, array);
+			filteredArray = await asyncFilter(array, callback);
 		});
 
 		it('Should run each callback in order', () =>
@@ -87,7 +96,7 @@ context('Async Filter', () => {
 		);
 
 		it('Should reject with that error', async () =>
-			rejectsWithError(asyncFilter(callback), error));
+			rejectsWithError(asyncFilter(array, callback), error));
 	});
 
 	describe('Given a callback that uses all arguments', () => {
@@ -96,28 +105,29 @@ context('Async Filter', () => {
 		beforeEach(async () => {
 			({ result, callback } = getCallback());
 
-			await asyncFilter(callback);
+			await asyncFilter(array, callback);
 		});
 
 		it('Should have access to currentValue, index and array on the callback', () =>
-			hasAccessToCorrectArgumentsOnCallback(array, result));
+			hasAccessToCorrectArgumentsOnCallback(array, result, [
+				'currentValue',
+				'index',
+				'array'
+			]));
 	});
 
 	describe('Given the optional thisArg parameter', () => {
-		let result, callback, newArray;
+		let result, callback;
 
 		beforeEach(async () => {
-			newArray = getArray();
-
 			({ result, callback } = getCallback());
 
-			await asyncFilter(callback, newArray);
+			await asyncFilter(array, callback, providedThisArg);
 		});
 
-		it('Should loop over the given thisArg', () => {
-			return result.every(({ array }) =>
-				expect(array).to.equal(newArray)
-			);
-		});
+		it('Should have accesss to thisArg on callback', () =>
+			result.every(({ thisArg }) =>
+				expect(thisArg.toString()).to.equal(providedThisArg.toString())
+			));
 	});
 });
