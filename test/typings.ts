@@ -1,11 +1,13 @@
-// Confirm module can be imported
 import * as AsyncArray from '../src/index.js';
 
-// Allow TypeScript to construct
-const RealAsyncArray: any = AsyncArray;
+const arr = new AsyncArray(1, '2', 3);
+let sum: number = 0;
 
-// Create an instance
-const asyncArray = new RealAsyncArray();
+// Test we can use array methods
+arr.asyncForEach((item: number) => {
+	sum += item;
+});
 
-// Use an async method and export
-export default asyncArray.asyncSort();
+if (sum !== 6) {
+	throw new Error('AsyncArray cannot be used properly with TypeScript.');
+}

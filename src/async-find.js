@@ -6,23 +6,22 @@ const { mapIterable } = require('./helpers'),
  * ==========
  * Find an item asynchronously and resolve when found or all callbacks resolve
  * @async
+ * @param {Object} iterable
  * @param {Function} callback - callback(currentValue, index, array)
  * @param {Object} [thisArg=undefined]
  * @return {any}
  * @throws {TypeError}
  */
-const asyncFind = (module.exports.asyncFind = async function asyncFind(
-	callback,
-	thisArg = undefined
-) {
+async function asyncFind(iterable, callback, thisArg = undefined) {
+	validateIsIterable(iterable);
 	validateIsFunction(callback);
 
-	const tasks = mapIterable(this, callback.bind(thisArg), {
+	const tasks = mapIterable(iterable, callback.bind(thisArg), {
 		useEmptyElements: true,
 		newlyAddedElements: false
 	});
 
-	return this[
+	return iterable[
 		await Promise.race([
 			Promise.race(
 				tasks.map(async (task, index) => {
@@ -38,25 +37,6 @@ const asyncFind = (module.exports.asyncFind = async function asyncFind(
 			)
 		])
 	];
-});
+}
 
-/**
- * Async Find In Iterable
- * ======================
- * Find an item in an iterable object asynchronously and resolve when found or all callbacks resolve
- * @async
- * @param {Object} iterable
- * @param {Function} callback - callback(currentValue, index, array)
- * @param {Object} [thisArg=undefined]
- * @return {any}
- * @throws {TypeError}
- */
-module.exports.asyncFindInIterable = async function asyncFindInIterable(
-	iterable,
-	callback,
-	thisArg = undefined
-) {
-	validateIsIterable(iterable);
-
-	return asyncFind.call(iterable, callback, thisArg);
-};
+module.exports = { asyncFind };

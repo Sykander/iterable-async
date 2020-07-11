@@ -10,6 +10,4 @@
  * @return {any}
  * @throws {TypeError}
  */
-async function asyncReduce() {}
-
-module.exports = { asyncReduce };
+export function asyncReduce(): any;
