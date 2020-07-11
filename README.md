@@ -34,11 +34,12 @@ An Array class with additional async array methods.
 | Method | Description | Wiki |
 | -- | -- | -- |
 | **asyncFilter** | Filter an iterable object asynchronously. | [wiki](https://github.com/Sykander/iterable-async/wiki/Async-Filter) |
-| **asyncFind** | Find an item in an iterable object asynchronously | [wiki](https://github.com/Sykander/iterable-async/wiki/Async-Filter) |
 | **asyncFindIndex** | Find an item's index in an iterable object asynchronously | [wiki](https://github.com/Sykander/iterable-async/wiki/Async-Find-Index) |
+| **asyncFind** | Find an item in an iterable object asynchronously | [wiki](https://github.com/Sykander/iterable-async/wiki/Async-Filter) |
 | **asyncForEach** | Loop over an iterable object asynchronously | [wiki](https://github.com/Sykander/iterable-async/wiki/Async-For-Each) |
-| **asyncMap** | Map an iterable object asynchronously | [wiki](https://github.com/Sykander/iterable-async/wiki/Async-Map) |
 | **asyncMapSort** | Map an iterable object asynchronously and then resolve when it's sorted, this method is much more efficient than running a regular `asyncSort` when done with a synchronous comparison function | [wiki](https://github.com/Sykander/iterable-async/wiki/Async-Map-Sort) |
+| **asyncMap** | Map an iterable object asynchronously | [wiki](https://github.com/Sykander/iterable-async/wiki/Async-Map) |
+| **asyncReduce** | Reduce an iterable object asynchronously | [wiki](https://github.com/Sykander/iterable-async/wiki/Async-Reduce) |
 | **asyncSort** | Sort an iterable object asynchronously | [wiki](https://github.com/Sykander/iterable-async/wiki/Async-Sort) |
 
 ## Development
