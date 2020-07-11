@@ -60,7 +60,7 @@ context('Async Sort', () => {
 		beforeEach(async () => {
 			({ callback: compareFunc } = getCallback({ isSort: true }));
 
-			sortedArray = await asyncSort(array, compareFunc, array);
+			sortedArray = await asyncSort(array, compareFunc);
 		});
 
 		it('Should sort each item by the compareFunc result', async () => {

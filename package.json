@@ -3,7 +3,7 @@
   "version": "1.0.4",
   "description": "Async Array Class and methods. Use for asynchronous array looping methods.",
   "main": "src/index.js",
-  "typings": "src/index.d.ts",
+  "types": "types/index.d.ts",
   "scripts": {
     "test:type-definitions": "tsc test/typings.ts && node test/typings.js",
     "test:code-style": "npm run lint:check",

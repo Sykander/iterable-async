@@ -9,11 +9,7 @@
  * @param {Boolean} [options.useEmptyElements=true] - use empty elements of the array ?
  * @return {Array}
  */
-module.exports.mapIterable = function mapIterable(
-	iterable,
-	callback,
-	{ useEmptyElements = true } = {}
-) {
+function mapIterable(iterable, callback, { useEmptyElements = true } = {}) {
 	const tasks = [],
 		length = iterable.length;
 
@@ -26,7 +22,7 @@ module.exports.mapIterable = function mapIterable(
 	}
 
 	return tasks;
-};
+}
 
 /**
  * Filter Iterable
@@ -36,7 +32,7 @@ module.exports.mapIterable = function mapIterable(
  * @param {Array} checks
  * @return {Array}
  */
-module.exports.filterIterable = function filterIterable(iterable, checks) {
+function filterIterable(iterable, checks) {
 	const result = [];
 	let index = 0;
 
@@ -47,7 +43,7 @@ module.exports.filterIterable = function filterIterable(iterable, checks) {
 	}
 
 	return result;
-};
+}
 
 /**
  * Swap items in array
@@ -55,15 +51,11 @@ module.exports.filterIterable = function filterIterable(iterable, checks) {
  * @param {Number} leftIndex
  * @param {Number} rightIndex
  */
-const swapItems = (module.exports.swapItems = function swapItems(
-	items,
-	leftIndex,
-	rightIndex
-) {
+function swapItems(items, leftIndex, rightIndex) {
 	const leftItem = items[leftIndex];
 	items[leftIndex] = items[rightIndex];
 	items[rightIndex] = leftItem;
-});
+}
 
 /**
  * Async partition an array for quick sort
@@ -74,12 +66,7 @@ const swapItems = (module.exports.swapItems = function swapItems(
  * @param {Function} compare
  * @return {Number} leftIndex after partition
  */
-module.exports.asyncPartition = async function asyncPartition(
-	items,
-	leftIndex,
-	rightIndex,
-	compare
-) {
+async function asyncPartition(items, leftIndex, rightIndex, compare) {
 	const pivot = items[Math.floor((leftIndex + rightIndex) / 2)];
 
 	while (leftIndex <= rightIndex) {
@@ -99,7 +86,7 @@ module.exports.asyncPartition = async function asyncPartition(
 	}
 
 	return leftIndex;
-};
+}
 
 /**
  * Compares two items by unicode
@@ -107,4 +94,12 @@ module.exports.asyncPartition = async function asyncPartition(
  * @param {any} b
  * @return {Number} -1, 0, 1
  */
-module.exports.compareByUnicode = (a, b) => String(a).localeCompare(String(b));
+const compareByUnicode = (a, b) => String(a).localeCompare(String(b));
+
+module.exports = {
+	mapIterable,
+	filterIterable,
+	swapItems,
+	asyncPartition,
+	compareByUnicode
+};

@@ -1,4 +1,4 @@
-const AsyncArray = require('./async-array');
+const { AsyncArray } = require('./async-array');
 
 /**
  * Async Array

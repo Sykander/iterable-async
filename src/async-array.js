@@ -1,45 +1,89 @@
-const { asyncFind, asyncFindInIterable } = require('./async-find'),
-	{
-		asyncFindIndex,
-		asyncFindIndexOnIterable
-	} = require('./async-find-index'),
-	{ asyncFilter, asyncFilterIterable } = require('./async-filter'),
-	{ asyncForEach, asyncForEachOfIterable } = require('./async-for-each'),
-	{ asyncMap, asyncMapOverIterable } = require('./async-map'),
-	{ asyncMapSort, asyncMapSortIterable } = require('./async-map-sort'),
-	{ asyncReduce, asyncReduceIterable } = require('./async-reduce'),
-	{ asyncSort, asyncSortIterable } = require('./async-sort');
+const { asyncFind } = require('./async-find'),
+	{ asyncFindIndex } = require('./async-find-index'),
+	{ asyncFilter } = require('./async-filter'),
+	{ asyncForEach } = require('./async-for-each'),
+	{ asyncMap } = require('./async-map'),
+	{ asyncMapSort } = require('./async-map-sort'),
+	{ asyncReduce } = require('./async-reduce'),
+	{ asyncSort } = require('./async-sort'),
+	{ compareByUnicode } = require('./helpers'),
+	{ noParam } = require('./constants');
 
 /**
  * Async Array
  * ===========
  * Array like object with access to async array methods
- * @type {AsyncArray}
+ * @class
+ * @extends Array
  */
-class AsyncArray extends Array {}
+class AsyncArray extends Array {
+	asyncFilter(callback, thisArg = undefined) {
+		return asyncFilter(this, callback, thisArg);
+	}
 
-// Add static methods
-Object.assign(AsyncArray, {
-	asyncFind: asyncFindInIterable,
-	asyncFindIndex: asyncFindIndexOnIterable,
-	asyncFilter: asyncFilterIterable,
-	asyncForEach: asyncForEachOfIterable,
-	asyncMap: asyncMapOverIterable,
-	asyncMapSort: asyncMapSortIterable,
-	asyncReduce: asyncReduceIterable,
-	asyncSort: asyncSortIterable
-});
+	static asyncFilter(iterable, callback, thisArg = undefined) {
+		return asyncFilter(iterable, callback, thisArg);
+	}
 
-// Create prototype methods
-Object.assign(AsyncArray.prototype, {
-	asyncFind,
-	asyncFindIndex,
-	asyncFilter,
-	asyncForEach,
-	asyncMap,
-	asyncMapSort,
-	asyncReduce,
-	asyncSort
-});
+	asyncFind(callback, thisArg = undefined) {
+		return asyncFind(this, callback, thisArg);
+	}
 
-module.exports = AsyncArray;
+	static asyncFind(iterable, callback, thisArg = undefined) {
+		return asyncFind(iterable, callback, thisArg);
+	}
+
+	asyncFindIndex(callback, thisArg = undefined) {
+		return asyncFindIndex(this, callback, thisArg);
+	}
+
+	static asyncFindIndex(iterable, callback, thisArg = undefined) {
+		return asyncFindIndex(iterable, callback, thisArg);
+	}
+
+	asyncForEach(callback, thisArg = undefined) {
+		return asyncForEach(this, callback, thisArg);
+	}
+
+	static asyncForEach(iterable, callback, thisArg = undefined) {
+		return asyncForEach(iterable, callback, thisArg);
+	}
+
+	asyncMap(callback, thisArg = undefined) {
+		return asyncMap(this, callback, thisArg);
+	}
+
+	static asyncMap(iterable, callback, thisArg = undefined) {
+		return asyncMap(iterable, callback, thisArg);
+	}
+
+	asyncMapSort(mappingCallback, comparisonCallback = compareByUnicode) {
+		return asyncMapSort(this, mappingCallback, comparisonCallback);
+	}
+
+	static asyncMapSort(
+		iterable,
+		mappingCallback,
+		comparisonCallback = compareByUnicode
+	) {
+		return asyncMapSort(iterable, mappingCallback, comparisonCallback);
+	}
+
+	asyncReduce(callback, accumulator = noParam) {
+		return asyncReduce(this, callback, accumulator);
+	}
+
+	static asyncReduce(iterable, callback, accumulator = noParam) {
+		return asyncReduce(iterable, callback, accumulator);
+	}
+
+	asyncSort(callback = compareByUnicode) {
+		return asyncSort(this, callback);
+	}
+
+	static asyncSort(iterable, callback = compareByUnicode) {
+		return asyncSort(iterable, callback);
+	}
+}
+
+module.exports = { AsyncArray };
