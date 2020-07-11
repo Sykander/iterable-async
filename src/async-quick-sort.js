@@ -9,12 +9,7 @@ const { asyncPartition } = require('./helpers');
  * @param {Number} rightIndex
  * @param {Function} compareFunc
  */
-module.exports = async function asyncQuickSort(
-	iterable,
-	leftIndex,
-	rightIndex,
-	compareFunc
-) {
+async function asyncQuickSort(iterable, leftIndex, rightIndex, compareFunc) {
 	let index;
 
 	if (iterable.length > 1) {
@@ -35,4 +30,6 @@ module.exports = async function asyncQuickSort(
 	}
 
 	return iterable;
-};
+}
+
+module.exports = { asyncQuickSort };
