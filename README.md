@@ -56,7 +56,7 @@ Development is open to contribution, check the project board "Development" for t
 | test | Runs all tests and returns a report on which pass/fail |
 | test:unit-tests | Runs only unit tests and returns a report on which pass/fail |
 | test:code-style | Runs only code checks and returns a report on which pass/fail |
-| test:type-definitions | Attempts to compile and run a typescript file using this module |
+| test:type-definitions | Attempt to compile and create type definitions for the project |
 | test:coverage | Creates a testing coverage report and checks that testing meets minimum requirements |
 | test:coverage-report | Creates a testing coverage report |
 | test:coverage-check | Checks the last test coverage report to see if testing coverage meets the minimum requirements |
