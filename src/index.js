@@ -1,2 +1,2 @@
-const { AsyncArray } = require('./async-array');
+const AsyncArray = require('./async-array');
 module.exports = AsyncArray;

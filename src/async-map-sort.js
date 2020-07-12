@@ -9,10 +9,10 @@ const { asyncMap } = require('./async-map'),
  * Map asynchronously, then sort asynchronously, then resolve
  * alternatively reject at the first error
  * @async
- * @param {Object} iterable
+ * @param {any[]} iterable
  * @param {Function} mappingFunction - mappingFunction(currentValue, index, array)
  * @param {Function} [comparisonFunction=compareByUnicode]
- * @return {Array}
+ * @return {Promise<any[]>}
  * @throws {TypeError}
  */
 async function asyncMapSort(

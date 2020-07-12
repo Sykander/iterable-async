@@ -11,10 +11,10 @@ const {
  * Reduce asynchronously and resolve when
  * all items have been transduced.
  * @async
- * @param {Object} iterable
+ * @param {any[]} iterable
  * @param {Function} callback - callback(currentValue, index, array)
  * @param {any} [accumulator=noParam]
- * @return {any}
+ * @return {Promise<any>}
  * @throws {TypeError}
  */
 async function asyncReduce(iterable, transducer, accumulator = noParam) {

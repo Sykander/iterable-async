@@ -6,9 +6,10 @@ const { mapIterable } = require('./helpers'),
  * ==============
  * Loop asynchronously and resolve when all callbacks are resolved
  * @async
- * @param {Object} iterable
+ * @param {any[]} iterable
  * @param {Function} callback - callback(currentValue, index, array)
- * @param {Object} [thisArg=undefined]
+ * @param {any} [thisArg=undefined]
+ * @return {Promise<void>}
  * @throws {TypeError}
  */
 async function asyncForEach(iterable, callback, thisArg = undefined) {
