@@ -6,10 +6,10 @@ const { mapIterable } = require('./helpers'),
  * =========
  * Map asynchronously and resolve when all callbacks are resolved
  * @async
- * @param {Object} iterable
+ * @param {any[]} iterable
  * @param {Function} callback - callback(currentValue, index, array)
- * @param {Object} [thisArg=undefined]
- * @return {Array}
+ * @param {any} [thisArg=undefined]
+ * @return {Promise<any[]>}
  * @throws {TypeError}
  */
 async function asyncMap(iterable, callback, thisArg = undefined) {

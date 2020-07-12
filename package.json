@@ -5,7 +5,7 @@
   "main": "src/index.js",
   "types": "types/index.d.ts",
   "scripts": {
-    "test:type-definitions": "tsc test/typings.ts && node test/typings.js",
+    "test:type-definitions": "npm run define:types",
     "test:code-style": "npm run lint:check",
     "test:unit-tests": "mocha test/**/*.spec.js",
     "test:coverage-report": "nyc npm run test:unit-tests --silent",
@@ -15,7 +15,8 @@
     "lint:fix": "prettier --write 'src/**/*.{js,ts,css,html}' --write 'test/**/*.{js,ts,css,html}'",
     "lint:check": "eslint src test",
     "lint": "npm run lint:fix --silent && npm run lint:check",
-    "prepublishOnly": "npm ci && npm test",
+    "define:types": "tsc",
+    "prepublishOnly": "npm ci && npm run lint && npm test",
     "postlint": "echo \"No issues.\"",
     "posttest": "echo \"No issues.\""
   },
@@ -39,7 +40,7 @@
     "mocha": "^7.1.1",
     "nyc": "^15.0.1",
     "prettier": "^1.19.1",
-    "typescript": "^3.7.5"
+    "typescript": "^3.9.6"
   },
   "husky": {
     "hooks": {
