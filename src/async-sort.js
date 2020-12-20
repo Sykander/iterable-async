@@ -4,7 +4,7 @@ const { validateIsFunction, validateIsIterable } = require('./validation'),
 
 /**
  * Async Sort
- * ==========
+ *
  * Asynchronously sorts and resolves when fully sorted
  * note that the object is sorted in place and no copy is made
  * @async

@@ -7,7 +7,7 @@ const {
 
 /**
  * Async Reduce
- * ============
+ *
  * Reduce asynchronously and resolve when
  * all items have been transduced.
  * @async

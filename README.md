@@ -60,6 +60,8 @@ Development is open to contribution, check the project board "Development" for t
 | test:code-style | Runs only code checks and returns a report on which pass/fail |
 | test:type-definitions | Attempt to compile and create type definitions for the project |
 | test:coverage | Generates coverage-summary.json in reports and confirms whether the coverage criteria is met |
+| docs:generate | Generates the JsDoc html files in the docs directory |
+| docs:show | Launches a http server to serve up the docs locally for viewing |
 
 Eg. to run all lint tests
 ```

@@ -5,6 +5,8 @@
   "main": "src/index.js",
   "types": "types/index.d.ts",
   "scripts": {
+    "docs:generate": "jsdoc -c jsdoc.json -d docs/ -t ./node_modules/ink-docstrap/template -R README.md src",
+    "docs:show": "npx http-server docs",
     "test:type-definitions": "tsc",
     "test:code-style": "npm run lint:check",
     "test:unit-tests-report": "mocha -R JSON -O test/**/*.spec.js | tee reports/unit-tests-summary.json",
@@ -37,6 +39,7 @@
     "eslint-plugin-prettier": "^3.3.0",
     "faker": "^4.1.0",
     "husky": "^3.1.0",
+    "ink-docstrap": "^1.3.2",
     "jsdoc": "^3.6.6",
     "mocha": "^8.2.1",
     "nyc": "^15.1.0",
@@ -55,5 +58,5 @@
     "array",
     "methods"
   ],
-  "runkitExampleFilename": "docs/playground.js"
+  "runkitExampleFilename": "playground/index.js"
 }

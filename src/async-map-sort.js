@@ -5,8 +5,10 @@ const { asyncMap } = require('./async-map'),
 
 /**
  * Async Map Sort
- * ==============
- * Map asynchronously, then sort asynchronously, then resolve
+ *
+ * Map asynchronously, then sort asynchronously
+ * (although you should use a synchronous function here if possible)
+ * then resolve
  * alternatively reject at the first error
  * @async
  * @param {any[]} iterable

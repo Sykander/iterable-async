@@ -41,6 +41,7 @@
         "jsdoc/check-tag-names": ["error", { "definedTags": ["category"] }],
         "jsdoc/newline-after-description": ["error", "never"],
         "jsdoc/require-param-description": "off",
+        "jsdoc/require-param-type": "error",
         "jsdoc/require-returns-description": "off",
         "jsdoc/require-returns": ["error", { "exemptedBy": [ "async" ], "forceReturnsWithAsync": false }],
         "jsdoc/no-undefined-types": "off",

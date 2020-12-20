@@ -2,8 +2,9 @@ const { asyncPartition } = require('./helpers');
 
 /**
  * Async Quick Sort
- * ================
+ *
  * Asynchronously sorts an iterable using quick-sort algorithm
+ * @ignore
  * @param {any[]} iterable
  * @param {Number} leftIndex
  * @param {Number} rightIndex

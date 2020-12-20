@@ -3,7 +3,7 @@ const { mapIterable } = require('./helpers'),
 
 /**
  * Async Find
- * ==========
+ *
  * Find an item asynchronously and resolve when found or all callbacks resolve
  * @async
  * @param {any[]} iterable

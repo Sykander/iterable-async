@@ -11,14 +11,15 @@ const { asyncFind } = require('./async-find'),
 
 /**
  * Async Array
- * ===========
- * Array like object with access to async array methods
  * @class
+ * @classdesc Array like object with access to async array methods
  * @augments Array
  */
 class AsyncArray extends Array {
 	/**
-	 * @async
+	 * Async Filter
+	 *
+	 * Filter asynchronously and resolve when all callbacks are resolved
 	 * @param {Function} callback
 	 * @param {any} [thisArg=undefined]
 	 * @return {Promise<any[]>}
@@ -29,7 +30,10 @@ class AsyncArray extends Array {
 	}
 
 	/**
-	 * @async
+	 * Async Filter
+	 *
+	 * Filter asynchronously and resolve when all callbacks are resolved
+	 * @static
 	 * @param {any[]} iterable
 	 * @param {Function} callback
 	 * @param {any} [thisArg=undefined]
@@ -41,30 +45,9 @@ class AsyncArray extends Array {
 	}
 
 	/**
-	 * @async
-	 * @param {Function} callback
-	 * @param {any} [thisArg=undefined]
-	 * @return {Promise<any>}
-	 * @throws {TypeError}
-	 */
-	asyncFind(callback, thisArg = undefined) {
-		return asyncFind(this, callback, thisArg);
-	}
-
-	/**
-	 * @async
-	 * @param {any[]} iterable
-	 * @param {Function} callback
-	 * @param {any} [thisArg=undefined]
-	 * @return {Promise<any>}
-	 * @throws {TypeError}
-	 */
-	static asyncFind(iterable, callback, thisArg = undefined) {
-		return asyncFind(iterable, callback, thisArg);
-	}
-
-	/**
-	 * @async
+	 * Async Find Index
+	 *
+	 * Find an item's index asynchronously and resolve when found or all callbacks resolve
 	 * @param {Function} callback
 	 * @param {any} [thisArg=undefined]
 	 * @return {Promise<Number>}
@@ -75,7 +58,10 @@ class AsyncArray extends Array {
 	}
 
 	/**
-	 * @async
+	 * Async Find Index
+	 *
+	 * Find an item's index asynchronously and resolve when found or all callbacks resolve
+	 * @static
 	 * @param {any[]} iterable
 	 * @param {Function} callback
 	 * @param {any} [thisArg=undefined]
@@ -87,9 +73,40 @@ class AsyncArray extends Array {
 	}
 
 	/**
-	 * @async
+	 * Async Find
+	 *
+	 * Find an item asynchronously and resolve when found or all callbacks resolve
 	 * @param {Function} callback
 	 * @param {any} [thisArg=undefined]
+	 * @return {Promise<any>}
+	 * @throws {TypeError}
+	 */
+	asyncFind(callback, thisArg = undefined) {
+		return asyncFind(this, callback, thisArg);
+	}
+
+	/**
+	 * Async Find
+	 *
+	 * Find an item asynchronously and resolve when found or all callbacks resolve
+	 * @static
+	 * @param {any[]} iterable
+	 * @param {Function} callback
+	 * @param {any} [thisArg=undefined]
+	 * @return {Promise<any>}
+	 * @throws {TypeError}
+	 */
+	static asyncFind(iterable, callback, thisArg = undefined) {
+		return asyncFind(iterable, callback, thisArg);
+	}
+
+	/**
+	 * Async For Each
+	 *
+	 * Loop asynchronously and resolve when all callbacks are resolved
+	 * @param {Function} callback
+	 * @param {any} [thisArg=undefined]
+	 * @return {Promise<undefined>}
 	 * @throws {TypeError}
 	 */
 	asyncForEach(callback, thisArg = undefined) {
@@ -97,10 +114,14 @@ class AsyncArray extends Array {
 	}
 
 	/**
-	 * @async
+	 * Async For Each
+	 *
+	 * Loop asynchronously and resolve when all callbacks are resolved
+	 * @static
 	 * @param {any[]} iterable
 	 * @param {Function} callback
 	 * @param {any} [thisArg=undefined]
+	 * @return {Promise<undefined>}
 	 * @throws {TypeError}
 	 */
 	static asyncForEach(iterable, callback, thisArg = undefined) {
@@ -108,30 +129,12 @@ class AsyncArray extends Array {
 	}
 
 	/**
-	 * @async
-	 * @param {Function} callback
-	 * @param {any} [thisArg=undefined]
-	 * @return {Promise<any[]>}
-	 * @throws {TypeError}
-	 */
-	asyncMap(callback, thisArg = undefined) {
-		return asyncMap(this, callback, thisArg);
-	}
-
-	/**
-	 * @async
-	 * @param {any[]} iterable
-	 * @param {Function} callback
-	 * @param {any} [thisArg=undefined]
-	 * @return {Promise<any[]>}
-	 * @throws {TypeError}
-	 */
-	static asyncMap(iterable, callback, thisArg = undefined) {
-		return asyncMap(iterable, callback, thisArg);
-	}
-
-	/**
-	 * @async
+	 * Async Map Sort
+	 *
+	 * Map asynchronously, then sort asynchronously
+	 * (although you should use a synchronous function here if possible)
+	 * then resolve
+	 * alternatively reject at the first error
 	 * @param {Function} mappingCallback
 	 * @param {Function} [comparisonCallback=compareByUnicode]
 	 * @return {Promise<any[]>}
@@ -142,7 +145,13 @@ class AsyncArray extends Array {
 	}
 
 	/**
-	 * @async
+	 * Async Map Sort
+	 *
+	 * Map asynchronously, then sort asynchronously
+	 * (although you should use a synchronous function here if possible)
+	 * then resolve
+	 * alternatively reject at the first error
+	 * @static
 	 * @param {any[]} iterable
 	 * @param {Function} mappingCallback
 	 * @param {Function} [comparisonCallback=compareByUnicode]
@@ -158,7 +167,37 @@ class AsyncArray extends Array {
 	}
 
 	/**
-	 * @async
+	 * Async Map
+	 *
+	 * Map asynchronously and resolve when all callbacks are resolved
+	 * @param {Function} callback
+	 * @param {any} [thisArg=undefined]
+	 * @return {Promise<any[]>}
+	 * @throws {TypeError}
+	 */
+	asyncMap(callback, thisArg = undefined) {
+		return asyncMap(this, callback, thisArg);
+	}
+
+	/**
+	 * Async Map
+	 *
+	 * Map asynchronously and resolve when all callbacks are resolved
+	 * @param {any[]} iterable
+	 * @param {Function} callback
+	 * @param {any} [thisArg=undefined]
+	 * @return {Promise<any[]>}
+	 * @throws {TypeError}
+	 */
+	static asyncMap(iterable, callback, thisArg = undefined) {
+		return asyncMap(iterable, callback, thisArg);
+	}
+
+	/**
+	 * Async Reduce
+	 *
+	 * Reduce asynchronously and resolve when
+	 * all items have been transduced.
 	 * @param {Function} callback
 	 * @param {any} [accumulator=noParam]
 	 * @return {Promise<any>}
@@ -169,7 +208,11 @@ class AsyncArray extends Array {
 	}
 
 	/**
-	 * @async
+	 * Async Reduce
+	 *
+	 * Reduce asynchronously and resolve when
+	 * all items have been transduced.
+	 * @static
 	 * @param {any[]} iterable
 	 * @param {Function} callback
 	 * @param {any} [accumulator=noParam]
@@ -181,7 +224,10 @@ class AsyncArray extends Array {
 	}
 
 	/**
-	 * @async
+	 * Async Sort
+	 *
+	 * Asynchronously sorts and resolves when fully sorted
+	 * note that the object is sorted in place and no copy is made
 	 * @param {Function} [callback=compareByUnicode]
 	 * @return {Promise<this>}
 	 * @throws {TypeError}
@@ -191,7 +237,11 @@ class AsyncArray extends Array {
 	}
 
 	/**
-	 * @async
+	 * Async Sort
+	 *
+	 * Asynchronously sorts and resolves when fully sorted
+	 * note that the object is sorted in place and no copy is made
+	 * @static
 	 * @param {any[]} iterable
 	 * @param {Function} [callback=compareByUnicode]
 	 * @return {Promise<any[]>}
