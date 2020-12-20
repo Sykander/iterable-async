@@ -7,7 +7,7 @@
   "scripts": {
     "test:type-definitions": "tsc",
     "test:code-style": "npm run lint:check",
-    "test:unit-tests-report": "mocha -R JSON -O test/**/*.spec.js > reports/unit-tests-summary.json",
+    "test:unit-tests-report": "mocha -R JSON -O test/**/*.spec.js | tee reports/unit-tests-summary.json",
     "test:unit-tests": "mocha test/**/*.spec.js",
     "test:coverage": "nyc npm run test:unit-tests-report",
     "test": "npm run test:unit-tests && npm run test:code-style && npm run test:type-definitions && npm run test:coverage",
@@ -15,7 +15,9 @@
     "lint:check": "eslint src test",
     "lint:report": "eslint --output-file reports/lint-summary.json --format json src test",
     "lint": "npm run lint:fix && npm run lint:check && npm run lint:report",
-    "prepublishOnly": "npm ci && npm run lint && npm test"
+    "prepublishOnly": "npm ci && npm run lint && npm test",
+    "posttest": "echo \"No issues.\"",
+    "postlint": "echo \"No issues.\""
   },
   "author": {
     "name": "Sykander Gul",

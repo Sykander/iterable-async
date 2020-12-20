@@ -53,13 +53,13 @@ Development is open to contribution, check the project board "Development" for t
 | lint | Lints the project and returns a report |
 | lint:check | Returns a report on lint issues in the project |
 | lint:fix | Fixes lint issues in the project and returns a report on the ones which couldn't be fixed |
+| lint:report | Generates lint-summary.json in the reports folder |
 | test | Runs all tests and returns a report on which pass/fail |
 | test:unit-tests | Runs only unit tests and returns a report on which pass/fail |
+| test:unit-tests-report | Generates unit-tests-summary.json in reports |
 | test:code-style | Runs only code checks and returns a report on which pass/fail |
 | test:type-definitions | Attempt to compile and create type definitions for the project |
-| test:coverage | Creates a testing coverage report and checks that testing meets minimum requirements |
-| test:coverage-report | Creates a testing coverage report |
-| test:coverage-check | Checks the last test coverage report to see if testing coverage meets the minimum requirements |
+| test:coverage | Generates coverage-summary.json in reports and confirms whether the coverage criteria is met |
 
 Eg. to run all lint tests
 ```
