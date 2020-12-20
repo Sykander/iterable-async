@@ -8,6 +8,7 @@ const { asyncPartition } = require('./helpers');
  * @param {Number} leftIndex
  * @param {Number} rightIndex
  * @param {Function} compareFunc
+ * @return {any[]}
  */
 async function asyncQuickSort(iterable, leftIndex, rightIndex, compareFunc) {
 	let index;

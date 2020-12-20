@@ -17,9 +17,9 @@ const {
  * @return {Promise<any>}
  * @throws {TypeError}
  */
-async function asyncReduce(iterable, transducer, accumulator = noParam) {
+async function asyncReduce(iterable, callback, accumulator = noParam) {
 	validateIsIterable(iterable);
-	validateIsFunction(transducer);
+	validateIsFunction(callback);
 	const length = iterable.length;
 	let i = 0;
 
@@ -38,7 +38,7 @@ async function asyncReduce(iterable, transducer, accumulator = noParam) {
 
 	for (; i < length; i++) {
 		// eslint-disable-next-line no-await-in-loop
-		accumulator = await transducer(accumulator, iterable[i], i, iterable);
+		accumulator = await callback(accumulator, iterable[i], i, iterable);
 	}
 
 	return accumulator;

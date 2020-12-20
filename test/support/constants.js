@@ -1,6 +1,6 @@
 /**
  * Passed in this argument.
- * @const {Symbol} providedThisArg
+ * @constant {Symbol} providedThisArg
  */
 const providedThisArg = Symbol('Passed in this argument.');
 

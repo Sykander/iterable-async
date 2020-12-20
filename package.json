@@ -7,17 +7,15 @@
   "scripts": {
     "test:type-definitions": "tsc",
     "test:code-style": "npm run lint:check",
+    "test:unit-tests-report": "mocha -R JSON -O test/**/*.spec.js > reports/unit-tests-summary.json",
     "test:unit-tests": "mocha test/**/*.spec.js",
-    "test:coverage-report": "nyc npm run test:unit-tests --silent",
-    "test:coverage-check": "nyc check-coverage",
-    "test:coverage": "npm run test:coverage-report; npm run test:coverage-check",
+    "test:coverage": "nyc npm run test:unit-tests-report",
     "test": "npm run test:unit-tests && npm run test:code-style && npm run test:type-definitions && npm run test:coverage",
-    "lint:fix": "prettier --write 'src/**/*.{js,ts,css,html}' --write 'test/**/*.{js,ts,css,html}'",
+    "lint:fix": "eslint --fix src test && prettier --write 'src/**/*.{js,ts,css,html}' --write 'test/**/*.{js,ts,css,html}'",
     "lint:check": "eslint src test",
-    "lint": "npm run lint:fix --silent && npm run lint:check",
-    "prepublishOnly": "npm ci && npm run lint && npm test",
-    "postlint": "echo \"No issues.\"",
-    "posttest": "echo \"No issues.\""
+    "lint:report": "eslint --output-file reports/lint-summary.json --format json src test",
+    "lint": "npm run lint:fix && npm run lint:check && npm run lint:report",
+    "prepublishOnly": "npm ci && npm run lint && npm test"
   },
   "author": {
     "name": "Sykander Gul",
@@ -31,15 +29,17 @@
   "devDependencies": {
     "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
-    "eslint": "^6.6.0",
-    "eslint-config-prettier": "^6.5.0",
-    "eslint-plugin-prettier": "^3.1.1",
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.15.0",
+    "eslint-plugin-jsdoc": "^30.7.9",
+    "eslint-plugin-prettier": "^3.3.0",
     "faker": "^4.1.0",
     "husky": "^3.1.0",
-    "mocha": "^7.1.1",
-    "nyc": "^15.0.1",
+    "jsdoc": "^3.6.6",
+    "mocha": "^8.2.1",
+    "nyc": "^15.1.0",
     "prettier": "^1.19.1",
-    "typescript": "^3.9.6"
+    "typescript": "^3.9.7"
   },
   "husky": {
     "hooks": {

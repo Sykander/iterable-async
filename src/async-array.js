@@ -14,7 +14,7 @@ const { asyncFind } = require('./async-find'),
  * ===========
  * Array like object with access to async array methods
  * @class
- * @extends Array
+ * @augments Array
  */
 class AsyncArray extends Array {
 	/**
