@@ -12,7 +12,7 @@ const {
  * all items have been transduced.
  * @async
  * @param {any[]} iterable
- * @param {Function} callback - callback(currentValue, index, array)
+ * @param {Function} callback - callback(accumulator, currentValue, index, array)
  * @param {any} [accumulator=noParam]
  * @return {Promise<any>}
  * @throws {TypeError}
@@ -20,6 +20,7 @@ const {
 async function asyncReduce(iterable, callback, accumulator = noParam) {
 	validateIsIterable(iterable);
 	validateIsFunction(callback);
+
 	const length = iterable.length;
 	let i = 0;
 
