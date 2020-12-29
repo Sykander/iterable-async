@@ -3,6 +3,7 @@
  * ==============
  * Allows any iterable object to be mapped with correct callback parameters
  * eg. callback(currentValue, index, sourceIterable)
+ * @ignore
  * @param {any[]} iterable
  * @param {Function} callback
  * @param {Object} [options]
@@ -28,6 +29,7 @@ function mapIterable(iterable, callback, { useEmptyElements = true } = {}) {
  * Filter Iterable
  * ===============
  * Allows any iterable object to be filtered using an array as a check list
+ * @ignore
  * @param {any[]} iterable
  * @param {any[]} checks
  * @return {any[]}
@@ -47,6 +49,7 @@ function filterIterable(iterable, checks) {
 
 /**
  * Swap items in array
+ * @ignore
  * @param {any[]} items
  * @param {Number} leftIndex
  * @param {Number} rightIndex
@@ -59,6 +62,7 @@ function swapItems(items, leftIndex, rightIndex) {
 
 /**
  * Async partition an array for quick sort
+ * @ignore
  * @async
  * @param {any[]} items
  * @param {Number} leftIndex
@@ -90,6 +94,7 @@ async function asyncPartition(items, leftIndex, rightIndex, compare) {
 
 /**
  * Compares two items by unicode
+ * @ignore
  * @param {any} a
  * @param {any} b
  * @return {Number} -1, 0, 1

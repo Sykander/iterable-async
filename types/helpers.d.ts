@@ -3,6 +3,7 @@
  * ==============
  * Allows any iterable object to be mapped with correct callback parameters
  * eg. callback(currentValue, index, sourceIterable)
+ * @ignore
  * @param {any[]} iterable
  * @param {Function} callback
  * @param {Object} [options]
@@ -16,6 +17,7 @@ export function mapIterable(iterable: any[], callback: Function, { useEmptyEleme
  * Filter Iterable
  * ===============
  * Allows any iterable object to be filtered using an array as a check list
+ * @ignore
  * @param {any[]} iterable
  * @param {any[]} checks
  * @return {any[]}
@@ -23,6 +25,7 @@ export function mapIterable(iterable: any[], callback: Function, { useEmptyEleme
 export function filterIterable(iterable: any[], checks: any[]): any[];
 /**
  * Swap items in array
+ * @ignore
  * @param {any[]} items
  * @param {Number} leftIndex
  * @param {Number} rightIndex
@@ -30,6 +33,7 @@ export function filterIterable(iterable: any[], checks: any[]): any[];
 export function swapItems(items: any[], leftIndex: number, rightIndex: number): void;
 /**
  * Async partition an array for quick sort
+ * @ignore
  * @async
  * @param {any[]} items
  * @param {Number} leftIndex
@@ -40,6 +44,7 @@ export function swapItems(items: any[], leftIndex: number, rightIndex: number): 
 export function asyncPartition(items: any[], leftIndex: number, rightIndex: number, compare: Function): Promise<number>;
 /**
  * Compares two items by unicode
+ * @ignore
  * @param {any} a
  * @param {any} b
  * @return {Number} -1, 0, 1
