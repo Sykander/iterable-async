@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
-	<title>Iterable Async Source: async-for-each.js</title>
+	<title>Iterable Async Source: validation.js</title>
 
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -65,37 +65,58 @@
 		<div id="main">
 			
 
-		<h1 class="page-title">Source: async-for-each.js</h1>
+		<h1 class="page-title">Source: validation.js</h1>
     
 <section>
     <article>
         <pre
-            class="sunlight-highlight-javascript ">const { mapIterable } = require('./helpers'),
-	{ validateIsIterable, validateIsFunction } = require('./validation');
-
-/**
- * Async For Each
- *
- * Loop asynchronously and resolve when all callbacks are resolved
- * @async
- * @param {any[]} iterable
- * @param {Function} callback - callback(currentValue, index, array)
- * @param {any} [thisArg=undefined]
- * @return {Promise&lt;void>}
+            class="sunlight-highlight-javascript ">/**
+ * Validate an item's iterability
+ * @param {any} item
+ * @return {Boolean} validated?
  * @throws {TypeError}
  */
-async function asyncForEach(iterable, callback, thisArg = undefined) {
-	validateIsIterable(iterable);
-	validateIsFunction(callback);
+function validateIsIterable(item) {
+	if (typeof item !== 'object' || !item || !item[Symbol.iterator]) {
+		throw new TypeError(`${item} is not iterable`);
+	}
 
-	await Promise.all(
-		mapIterable(iterable, callback.bind(thisArg), {
-			useEmptyElements: false
-		})
-	);
+	return true;
 }
 
-module.exports = { asyncForEach };
+/**
+ * Validate an item is a function
+ * @param {any} item
+ * @return {Boolean} validated?
+ * @throws {TypeError}
+ */
+function validateIsFunction(item) {
+	if (typeof item !== 'function') {
+		throw new TypeError(`${item} is not a function`);
+	}
+
+	return true;
+}
+
+/**
+ * Validate if an item has length greater than 0
+ * @param {any} item
+ * @return {Boolean} validated?
+ * @throws {TypeError}
+ */
+function validateNonZeroLength(item) {
+	if (!item || typeof item !== 'object' || !item.length) {
+		throw new TypeError(`${item} has no iterable items`);
+	}
+
+	return true;
+}
+
+module.exports = {
+	validateIsIterable,
+	validateIsFunction,
+	validateNonZeroLength
+};
 </pre>
     </article>
 </section>

@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
-	<title>Iterable Async Source: async-for-each.js</title>
+	<title>Iterable Async Source: constants.js</title>
 
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -65,37 +65,18 @@
 		<div id="main">
 			
 
-		<h1 class="page-title">Source: async-for-each.js</h1>
+		<h1 class="page-title">Source: constants.js</h1>
     
 <section>
     <article>
         <pre
-            class="sunlight-highlight-javascript ">const { mapIterable } = require('./helpers'),
-	{ validateIsIterable, validateIsFunction } = require('./validation');
-
-/**
- * Async For Each
- *
- * Loop asynchronously and resolve when all callbacks are resolved
- * @async
- * @param {any[]} iterable
- * @param {Function} callback - callback(currentValue, index, array)
- * @param {any} [thisArg=undefined]
- * @return {Promise&lt;void>}
- * @throws {TypeError}
+            class="sunlight-highlight-javascript ">/**
+ * @constant {Symbol} noParam
+ * For representing when no parameter was passed to a function
  */
-async function asyncForEach(iterable, callback, thisArg = undefined) {
-	validateIsIterable(iterable);
-	validateIsFunction(callback);
+const noParam = Symbol('No argument passed for this parameter');
 
-	await Promise.all(
-		mapIterable(iterable, callback.bind(thisArg), {
-			useEmptyElements: false
-		})
-	);
-}
-
-module.exports = { asyncForEach };
+module.exports = { noParam };
 </pre>
     </article>
 </section>

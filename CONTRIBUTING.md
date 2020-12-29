@@ -20,7 +20,7 @@ Development is open to contribution, check the project board "Development" for t
 | test | Runs all tests and returns a report on which pass/fail |
 | test:unit-tests | Runs only unit tests and returns a report on which pass/fail |
 | test:code-style | Runs only code checks and returns a report on which pass/fail |
-| test:build | Attempt to build the project |
+| test:build-types | Attempt to build the project type declarations |
 | test:coverage | Generates coverage-summary.json in reports and confirms whether the coverage criteria is met |
 
 ### Examples

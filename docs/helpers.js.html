@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
-	<title>Iterable Async Source: async-for-each.js</title>
+	<title>Iterable Async Source: helpers.js</title>
 
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -65,37 +65,116 @@
 		<div id="main">
 			
 
-		<h1 class="page-title">Source: async-for-each.js</h1>
+		<h1 class="page-title">Source: helpers.js</h1>
     
 <section>
     <article>
         <pre
-            class="sunlight-highlight-javascript ">const { mapIterable } = require('./helpers'),
-	{ validateIsIterable, validateIsFunction } = require('./validation');
-
-/**
- * Async For Each
- *
- * Loop asynchronously and resolve when all callbacks are resolved
- * @async
+            class="sunlight-highlight-javascript ">/**
+ * Map Iterable
+ * ==============
+ * Allows any iterable object to be mapped with correct callback parameters
+ * eg. callback(currentValue, index, sourceIterable)
  * @param {any[]} iterable
- * @param {Function} callback - callback(currentValue, index, array)
- * @param {any} [thisArg=undefined]
- * @return {Promise&lt;void>}
- * @throws {TypeError}
+ * @param {Function} callback
+ * @param {Object} [options]
+ * @param {Boolean} [options.useEmptyElements=true] - use empty elements of the array ?
+ * @return {any[]}
  */
-async function asyncForEach(iterable, callback, thisArg = undefined) {
-	validateIsIterable(iterable);
-	validateIsFunction(callback);
+function mapIterable(iterable, callback, { useEmptyElements = true } = {}) {
+	const tasks = [],
+		length = iterable.length;
 
-	await Promise.all(
-		mapIterable(iterable, callback.bind(thisArg), {
-			useEmptyElements: false
-		})
-	);
+	for (let index = 0; index &lt; length; index++) {
+		if (!useEmptyElements &amp;&amp; !(index in iterable)) {
+			continue;
+		}
+
+		tasks.push(callback(iterable[index], index, iterable));
+	}
+
+	return tasks;
 }
 
-module.exports = { asyncForEach };
+/**
+ * Filter Iterable
+ * ===============
+ * Allows any iterable object to be filtered using an array as a check list
+ * @param {any[]} iterable
+ * @param {any[]} checks
+ * @return {any[]}
+ */
+function filterIterable(iterable, checks) {
+	const result = [];
+	let index = 0;
+
+	for (let item of iterable) {
+		if (checks[index++]) {
+			result.push(item);
+		}
+	}
+
+	return result;
+}
+
+/**
+ * Swap items in array
+ * @param {any[]} items
+ * @param {Number} leftIndex
+ * @param {Number} rightIndex
+ */
+function swapItems(items, leftIndex, rightIndex) {
+	const leftItem = items[leftIndex];
+	items[leftIndex] = items[rightIndex];
+	items[rightIndex] = leftItem;
+}
+
+/**
+ * Async partition an array for quick sort
+ * @async
+ * @param {any[]} items
+ * @param {Number} leftIndex
+ * @param {Number} rightIndex
+ * @param {Function} compare
+ * @return {Promise&lt;Number>} leftIndex after partition
+ */
+async function asyncPartition(items, leftIndex, rightIndex, compare) {
+	const pivot = items[Math.floor((leftIndex + rightIndex) / 2)];
+
+	while (leftIndex &lt;= rightIndex) {
+		// eslint-disable-next-line no-await-in-loop
+		while ((await compare(items[leftIndex], pivot)) &lt; 0) {
+			leftIndex++;
+		}
+
+		// eslint-disable-next-line no-await-in-loop
+		while ((await compare(items[rightIndex], pivot)) > 0) {
+			rightIndex--;
+		}
+
+		if (leftIndex &lt;= rightIndex) {
+			swapItems(items, leftIndex++, rightIndex--);
+		}
+	}
+
+	return leftIndex;
+}
+
+/**
+ * Compares two items by unicode
+ * @param {any} a
+ * @param {any} b
+ * @return {Number} -1, 0, 1
+ */
+const compareByUnicode = (a, b) => String(a).localeCompare(String(b));
+
+module.exports = {
+	mapIterable,
+	filterIterable,
+	swapItems,
+	asyncPartition,
+	compareByUnicode
+};
 </pre>
     </article>
 </section>
