@@ -23,7 +23,6 @@ A collection of methods for looping iterable objects asynchronously using someth
 ## Usage
 
 ***ES6 Format***
-
 ``` js
 const {
 	asyncFind,
@@ -38,7 +37,6 @@ const {
 ```
 
 ***TypeScript Format***
-
 ``` ts
 import {
 	asyncFind,

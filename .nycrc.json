@@ -4,6 +4,6 @@
 	"functions": 99,
 	"statements": 99,
 	"check-coverage": true,
-	"reporter": "json-summary",
-	"report-dir": "reports"
+	"reporter": "html",
+	"report-dir": "docs/reports/coverage"
 }
