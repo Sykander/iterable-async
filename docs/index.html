@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+	<title>Iterable Async Index</title>
+
+	<!--[if lt IE 9]>
+	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	<link type="text/css" rel="stylesheet" href="styles/sunlight.default.css">
+
+	<link type="text/css" rel="stylesheet" href="styles/site.simplex.css">
+
+</head>
+
+<body>
+
+<div class="navbar navbar-default navbar-fixed-top ">
+<div class="container">
+	<div class="navbar-header">
+		<a class="navbar-brand" href="index.html">Iterable Async</a>
+		<button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#topNavigation">
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+        </button>
+	</div>
+	<div class="navbar-collapse collapse" id="topNavigation">
+		<ul class="nav navbar-nav">
+			
+			<li class="dropdown">
+				<a href="global.html" class="dropdown-toggle" data-toggle="dropdown">Global<b class="caret"></b></a>
+				<ul class="dropdown-menu ">
+					<li><a href="global.html#asyncFilter">asyncFilter</a></li><li><a href="global.html#asyncFind">asyncFind</a></li><li><a href="global.html#asyncFindIndex">asyncFindIndex</a></li><li><a href="global.html#asyncForEach">asyncForEach</a></li><li><a href="global.html#asyncMap">asyncMap</a></li><li><a href="global.html#asyncMapSort">asyncMapSort</a></li><li><a href="global.html#asyncReduce">asyncReduce</a></li><li><a href="global.html#asyncSort">asyncSort</a></li>
+				</ul>
+			</li>
+			
+		</ul>
+        
+            <div class="col-sm-3 col-md-3">
+                <form class="navbar-form" role="search">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Search" name="q" id="search-input">
+                        <div class="input-group-btn">
+                            <button class="btn btn-default" id="search-submit"><i class="glyphicon glyphicon-search"></i></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        
+	</div>
+
+</div>
+</div>
+
+
+<div class="container" id="toc-content">
+<div class="row">
+
+	
+	<div class="col-md-8">
+	
+		<div id="main">
+			
+
+	
+	
+
+
+
+
+
+
+
+
+
+
+
+	
+	
+
+
+
+
+
+    <section class="readme-section">
+        <article><h1>Iterable Async</h1>
+<p><a href="https://npm.runkit.com/iterable-async"><img src="https://badge.runkitcdn.com/iterable-async.svg" alt="Try iterable-async on RunKit"></a>
+<a href="https://github.com/Sykander/iterable-async/wiki"><img src="https://inch-ci.org/github/dwyl/hapi-auth-jwt2.svg?branch=master" alt="Documentation"></a>
+<a href="https://snyk.io/test/github/Sykander/iterable-async?targetFile=package.json"><img src="https://snyk.io/test/github/Sykander/iterable-async/badge.svg?targetFile=package.json" alt="Known Vulnerabilities"></a></p>
+<p>A collection of methods for looping iterable objects asynchronously using something similar to the Array api.</p>
+<h2>Installation</h2>
+<pre class="prettyprint source lang-sh"><code> $ npm install iterable-async
+</code></pre>
+<h2>Dependencies</h2>
+<ul>
+<li>None</li>
+</ul>
+<h2>Supports</h2>
+<ul>
+<li>JavaScript</li>
+<li>TypeScript</li>
+</ul>
+<h2>Usage</h2>
+<p><em><strong>ES6 Format</strong></em></p>
+<pre class="prettyprint source lang-js"><code>const {
+	asyncFind,
+	asyncFindIndex,
+	asyncFilter,
+	asyncForEach,
+	asyncMap,
+	asyncMapSort,
+	asyncReduce,
+	asyncSort
+} = require('iterable-async');
+</code></pre>
+<p><em><strong>TypeScript Format</strong></em></p>
+<pre class="prettyprint source lang-ts"><code>import {
+	asyncFind,
+	asyncFindIndex,
+	asyncFilter,
+	asyncForEach,
+	asyncMap,
+	asyncMapSort,
+	asyncReduce,
+	asyncSort
+} from &quot;iterable-async&quot;;
+</code></pre>
+<h3>Functions</h3>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Description</th>
+<th>Wiki</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>asyncFilter</strong></td>
+<td>Filter an iterable object asynchronously.</td>
+<td><a href="https://github.com/Sykander/iterable-async/wiki/Async-Filter">wiki</a></td>
+</tr>
+<tr>
+<td><strong>asyncFindIndex</strong></td>
+<td>Find an item's index in an iterable object asynchronously</td>
+<td><a href="https://github.com/Sykander/iterable-async/wiki/Async-Find-Index">wiki</a></td>
+</tr>
+<tr>
+<td><strong>asyncFind</strong></td>
+<td>Find an item in an iterable object asynchronously</td>
+<td><a href="https://github.com/Sykander/iterable-async/wiki/Async-Filter">wiki</a></td>
+</tr>
+<tr>
+<td><strong>asyncForEach</strong></td>
+<td>Loop over an iterable object asynchronously</td>
+<td><a href="https://github.com/Sykander/iterable-async/wiki/Async-For-Each">wiki</a></td>
+</tr>
+<tr>
+<td><strong>asyncMapSort</strong></td>
+<td>Map an iterable object asynchronously and then resolve when it's sorted, this method is much more efficient than running a regular <code>asyncSort</code> when done with a synchronous comparison function</td>
+<td><a href="https://github.com/Sykander/iterable-async/wiki/Async-Map-Sort">wiki</a></td>
+</tr>
+<tr>
+<td><strong>asyncMap</strong></td>
+<td>Map an iterable object asynchronously</td>
+<td><a href="https://github.com/Sykander/iterable-async/wiki/Async-Map">wiki</a></td>
+</tr>
+<tr>
+<td><strong>asyncReduce</strong></td>
+<td>Reduce an iterable object asynchronously</td>
+<td><a href="https://github.com/Sykander/iterable-async/wiki/Async-Reduce">wiki</a></td>
+</tr>
+<tr>
+<td><strong>asyncSort</strong></td>
+<td>Sort an iterable object asynchronously</td>
+<td><a href="https://github.com/Sykander/iterable-async/wiki/Async-Sort">wiki</a></td>
+</tr>
+</tbody>
+</table></article>
+    </section>
+
+
+
+
+
+
+
+		</div>
+	</div>
+
+	<div class="clearfix"></div>
+
+	
+		<div class="col-md-3">
+			<div id="toc" class="col-md-3 hidden-xs hidden-sm hidden-md"></div>
+		</div>
+	
+
+</div>
+</div>
+
+
+    <div class="modal fade" id="searchResults">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Search results</h4>
+          </div>
+          <div class="modal-body"></div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div>
+
+
+<footer>
+
+
+<span class="jsdoc-message">
+	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.6</a>
+	
+		on 2020-12-29T15:50:46+00:00
+	
+	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
+</span>
+</footer>
+
+<script src="scripts/docstrap.lib.js"></script>
+<script src="scripts/toc.js"></script>
+
+    <script type="text/javascript" src="scripts/fulltext-search-ui.js"></script>
+
+
+<script>
+$( function () {
+	$( "[id*='$']" ).each( function () {
+		var $this = $( this );
+
+		$this.attr( "id", $this.attr( "id" ).replace( "$", "__" ) );
+	} );
+
+	$( ".tutorial-section pre, .readme-section pre, pre.prettyprint.source" ).each( function () {
+		var $this = $( this );
+
+		var example = $this.find( "code" );
+		exampleText = example.html();
+		var lang = /{@lang (.*?)}/.exec( exampleText );
+		if ( lang && lang[1] ) {
+			exampleText = exampleText.replace( lang[0], "" );
+			example.html( exampleText );
+			lang = lang[1];
+		} else {
+			var langClassMatch = example.parent()[0].className.match(/lang\-(\S+)/);
+			lang = langClassMatch ? langClassMatch[1] : "javascript";
+		}
+
+		if ( lang ) {
+
+			$this
+			.addClass( "sunlight-highlight-" + lang )
+			.addClass( "linenums" )
+			.html( example.html() );
+
+		}
+	} );
+
+	Sunlight.highlightAll( {
+		lineNumbers : false,
+		showMenu : true,
+		enableDoclinks : true
+	} );
+
+	$.catchAnchorLinks( {
+        navbarOffset: 10
+	} );
+	$( "#toc" ).toc( {
+		anchorName  : function ( i, heading, prefix ) {
+			return $( heading ).attr( "id" ) || ( prefix + i );
+		},
+		selectors   : "#toc-content h1,#toc-content h2,#toc-content h3,#toc-content h4",
+		showAndHide : false,
+		smoothScrolling: true
+	} );
+
+	$( "#main span[id^='toc']" ).addClass( "toc-shim" );
+	$( '.dropdown-toggle' ).dropdown();
+
+    $( "table" ).each( function () {
+      var $this = $( this );
+      $this.addClass('table');
+    } );
+
+} );
+</script>
+
+
+
+<!--Navigation and Symbol Display-->
+
+
+<!--Google Analytics-->
+
+
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            SearcherDisplay.init();
+        });
+    </script>
+
+
+</body>
+</html>

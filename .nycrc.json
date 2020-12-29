@@ -1,8 +1,8 @@
 {
 	"branches": 80,
-	"lines": 80,
-	"functions": 80,
-	"statements": 80,
+	"lines": 99,
+	"functions": 99,
+	"statements": 99,
 	"check-coverage": true,
 	"reporter": "json-summary",
 	"report-dir": "reports"
