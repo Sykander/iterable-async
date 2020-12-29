@@ -50,7 +50,7 @@ import {
 } from "iterable-async";
 ```
 
-### Functions
+## Functions
 
 | Function | Description | Wiki |
 | -- | -- | -- |
