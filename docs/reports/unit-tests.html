@@ -6,8 +6,74 @@
         <style type="text/css">
         @charset "utf-8";
 
+:root {
+  --mocha-color: #000;
+  --mocha-bg-color: #fff;
+  --mocha-pass-icon-color: #00d6b2;
+  --mocha-pass-color: #fff;
+  --mocha-pass-shadow-color: rgba(0,0,0,.2);
+  --mocha-pass-mediump-color: #c09853;
+  --mocha-pass-slow-color: #b94a48;
+  --mocha-test-pending-color: #0b97c4;
+  --mocha-test-pending-icon-color: #0b97c4;
+  --mocha-test-fail-color: #c00;
+  --mocha-test-fail-icon-color: #c00;
+  --mocha-test-fail-pre-color: #000;
+  --mocha-test-fail-pre-error-color: #c00;
+  --mocha-test-html-error-color: #000;
+  --mocha-box-shadow-color: #eee;
+  --mocha-box-bottom-color: #ddd;
+  --mocha-test-replay-color: #000;
+  --mocha-test-replay-bg-color: #eee;
+  --mocha-stats-color: #888;
+  --mocha-stats-em-color: #000;
+  --mocha-stats-hover-color: #eee;
+  --mocha-error-color: #c00;
+
+  --mocha-code-comment:  #ddd;
+  --mocha-code-init: #2f6fad;
+  --mocha-code-string: #5890ad;
+  --mocha-code-keyword: #8a6343;
+  --mocha-code-number: #2f6fad;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+     --mocha-color: #fff;
+     --mocha-bg-color: #222;
+     --mocha-pass-icon-color: #00d6b2;
+     --mocha-pass-color: #222;
+     --mocha-pass-shadow-color: rgba(255,255,255,.2);
+     --mocha-pass-mediump-color: #f1be67;
+     --mocha-pass-slow-color: #f49896;
+     --mocha-test-pending-color: #0b97c4;
+     --mocha-test-pending-icon-color: #0b97c4;
+     --mocha-test-fail-color: #f44;
+     --mocha-test-fail-icon-color: #f44;
+     --mocha-test-fail-pre-color: #fff;
+     --mocha-test-fail-pre-error-color: #f44;
+     --mocha-test-html-error-color: #fff;
+     --mocha-box-shadow-color: #444;
+     --mocha-box-bottom-color: #555;
+     --mocha-test-replay-color: #fff;
+     --mocha-test-replay-bg-color: #444;
+     --mocha-stats-color: #aaa;
+     --mocha-stats-em-color: #fff;
+     --mocha-stats-hover-color: #444;
+     --mocha-error-color: #f44;
+
+     --mocha-code-comment: #ddd;
+     --mocha-code-init: #9cc7f1;
+     --mocha-code-string: #80d4ff;
+     --mocha-code-keyword: #e3a470;
+     --mocha-code-number: #4ca7ff;
+  }
+}
+
 body {
   margin:0;
+  background-color: var(--mocha-bg-color);
+  color: var(--mocha-color);
 }
 
 #mocha {
@@ -75,11 +141,11 @@ body {
 }
 
 #mocha .test.pass.medium .duration {
-  background: #c09853;
+  background: var(--mocha-pass-mediump-color);
 }
 
 #mocha .test.pass.slow .duration {
-  background: #b94a48;
+  background: var(--mocha-pass-slow-color);
 }
 
 #mocha .test.pass::before {
@@ -88,17 +154,17 @@ body {
   display: block;
   float: left;
   margin-right: 5px;
-  color: #00d6b2;
+  color: var(--mocha-pass-icon-color);
 }
 
 #mocha .test.pass .duration {
   font-size: 9px;
   margin-left: 5px;
   padding: 2px 5px;
-  color: #fff;
-  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.2);
-  -moz-box-shadow: inset 0 1px 1px rgba(0,0,0,.2);
-  box-shadow: inset 0 1px 1px rgba(0,0,0,.2);
+  color: var(--mocha-pass-color);
+  -webkit-box-shadow: inset 0 1px 1px var(--mocha-pass-shadow-color);
+  -moz-box-shadow: inset 0 1px 1px var(--mocha-pass-shadow-color);
+  box-shadow: inset 0 1px 1px var(--mocha-pass-shadow-color);
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   -ms-border-radius: 5px;
@@ -111,20 +177,20 @@ body {
 }
 
 #mocha .test.pending {
-  color: #0b97c4;
+  color: var(--mocha-test-pending-color);
 }
 
 #mocha .test.pending::before {
   content: '◦';
-  color: #0b97c4;
+  color: var(--mocha-test-pending-icon-color);
 }
 
 #mocha .test.fail {
-  color: #c00;
+  color: var(--mocha-test-fail-color);
 }
 
 #mocha .test.fail pre {
-  color: black;
+  color: var(--mocha-test-fail-pre-color);
 }
 
 #mocha .test.fail::before {
@@ -133,35 +199,35 @@ body {
   display: block;
   float: left;
   margin-right: 5px;
-  color: #c00;
+  color: var(--mocha-test-fail-icon-color);
 }
 
 #mocha .test pre.error {
-  color: #c00;
+  color: var(--mocha-test-fail-pre-error-color);
   max-height: 300px;
   overflow: auto;
 }
 
 #mocha .test .html-error {
   overflow: auto;
-  color: black;
+  color: var(--mocha-test-html-error-color);
   display: block;
   float: left;
   clear: left;
   font: 12px/1.5 monaco, monospace;
   margin: 5px;
   padding: 15px;
-  border: 1px solid #eee;
+  border: 1px solid var(--mocha-box-shadow-color);
   max-width: 85%; /*(1)*/
   max-width: -webkit-calc(100% - 42px);
   max-width: -moz-calc(100% - 42px);
   max-width: calc(100% - 42px); /*(2)*/
   max-height: 300px;
   word-wrap: break-word;
-  border-bottom-color: #ddd;
-  -webkit-box-shadow: 0 1px 3px #eee;
-  -moz-box-shadow: 0 1px 3px #eee;
-  box-shadow: 0 1px 3px #eee;
+  border-bottom-color: var(--mocha-box-bottom-color);
+  -webkit-box-shadow: 0 1px 3px var(--mocha-box-shadow-color);
+  -moz-box-shadow: 0 1px 3px var(--mocha-box-shadow-color);
+  box-shadow: 0 1px 3px var(--mocha-box-shadow-color);
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   border-radius: 3px;
@@ -193,16 +259,16 @@ body {
   font: 12px/1.5 monaco, monospace;
   margin: 5px;
   padding: 15px;
-  border: 1px solid #eee;
+  border: 1px solid var(--mocha-box-shadow-color);
   max-width: 85%; /*(1)*/
   max-width: -webkit-calc(100% - 42px);
   max-width: -moz-calc(100% - 42px);
   max-width: calc(100% - 42px); /*(2)*/
   word-wrap: break-word;
-  border-bottom-color: #ddd;
-  -webkit-box-shadow: 0 1px 3px #eee;
-  -moz-box-shadow: 0 1px 3px #eee;
-  box-shadow: 0 1px 3px #eee;
+  border-bottom-color: var(--mocha-box-bottom-color);
+  -webkit-box-shadow: 0 1px 3px var(--mocha-box-shadow-color);
+  -moz-box-shadow: 0 1px 3px var(--mocha-box-shadow-color);
+  box-shadow: 0 1px 3px var(--mocha-box-shadow-color);
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   border-radius: 3px;
@@ -223,7 +289,7 @@ body {
   height: 15px;
   line-height: 15px;
   text-align: center;
-  background: #eee;
+  background: var(--mocha-test-replay-bg-color);
   font-size: 15px;
   -webkit-border-radius: 15px;
   -moz-border-radius: 15px;
@@ -232,11 +298,12 @@ body {
   -moz-transition:opacity 200ms;
   -o-transition:opacity 200ms;
   transition: opacity 200ms;
-  opacity: 0.3;
-  color: #888;
+  opacity: 0.7;
+  color: var(--mocha-test-replay-color);
 }
 
 #mocha .test:hover a.replay {
+  box-shadow: 0 0 1px inset var(--mocha-test-replay-color);
   opacity: 1;
 }
 
@@ -257,7 +324,7 @@ body {
 }
 
 #mocha-error {
-  color: #c00;
+  color: var(--mocha-error-color);
   font-size: 1.5em;
   font-weight: 100;
   letter-spacing: 1px;
@@ -269,7 +336,7 @@ body {
   right: 10px;
   font-size: 12px;
   margin: 0;
-  color: #888;
+  color: var(--mocha-stats-color);
   z-index: 1;
 }
 
@@ -290,7 +357,7 @@ body {
 }
 
 #mocha-stats em {
-  color: black;
+  color: var(--mocha-stats-em-color);
 }
 
 #mocha-stats a {
@@ -299,7 +366,7 @@ body {
 }
 
 #mocha-stats a:hover {
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid var(--mocha-stats-hover-color);
 }
 
 #mocha-stats li {
@@ -314,11 +381,11 @@ body {
   height: 40px;
 }
 
-#mocha code .comment { color: #ddd; }
-#mocha code .init { color: #2f6fad; }
-#mocha code .string { color: #5890ad; }
-#mocha code .keyword { color: #8a6343; }
-#mocha code .number { color: #2f6fad; }
+#mocha code .comment { color: var(--mocha-code-comment); }
+#mocha code .init { color: var(--mocha-code-init); }
+#mocha code .string { color: var(--mocha-code-string); }
+#mocha code .keyword { color: var(--mocha-code-keyword); }
+#mocha code .number { color: var(--mocha-code-number); }
 
 @media screen and (max-device-width: 480px) {
   #mocha {
@@ -426,23 +493,23 @@ body {
                     <li class="passes">passes: <em>88</em></li>
                     <li class="pending">pending: <em>0</em></li>
                     <li class="failures">failures: <em>0</em></li>
-                    <li class="duration">duration: <em>156ms</em></li>
+                    <li class="duration">duration: <em>152ms</em></li>
                 </ul>
             </div>
-            <ul id="report"><li class="suite"><h1>Async Filter</h1><ul><li class="suite"><h1>Given no arguments</h1><ul><li class="test pass fast"><h2>Should reject with &#x22;TypeError: undefined is not iterable&#x22;<span class="duration">2ms</span></h2><pre><code>rejectsWithError(
+            <ul id="report"><li class="suite"><h1>Async Filter</h1><ul><li class="suite"><h1>Given no arguments</h1><ul><li class="test pass fast"><h2>Should reject with &#x22;TypeError: undefined is not iterable&#x22;<span class="duration">1ms</span></h2><pre><code>rejectsWithError(
 &#x9;&#x9;&#x9;&#x9;asyncFilter(),
 &#x9;&#x9;&#x9;&#x9;new TypeError(&#x27;undefined is not iterable&#x27;)
-&#x9;&#x9;&#x9;)</code></pre></li></ul></li><li class="suite"><h1>Given no callback</h1><ul><li class="test pass fast"><h2>Should reject with &#x22;TypeError: undefined is not a function&#x22;<span class="duration">1ms</span></h2><pre><code>rejectsWithError(
+&#x9;&#x9;&#x9;)</code></pre></li></ul></li><li class="suite"><h1>Given no callback</h1><ul><li class="test pass fast"><h2>Should reject with &#x22;TypeError: undefined is not a function&#x22;<span class="duration">0ms</span></h2><pre><code>rejectsWithError(
 &#x9;&#x9;&#x9;&#x9;asyncFilter(array),
 &#x9;&#x9;&#x9;&#x9;new TypeError(&#x27;undefined is not a function&#x27;)
-&#x9;&#x9;&#x9;)</code></pre></li></ul></li><li class="suite"><h1>Given a synchronous callback</h1><ul><li class="test pass fast"><h2>Should run each callback in order<span class="duration">3ms</span></h2><pre><code>ranCallbacksInOrder(result)</code></pre></li><li class="test pass fast"><h2>Should filter each item based on callback result<span class="duration">7ms</span></h2><pre><code>return array.every(item =&#x3E; {
+&#x9;&#x9;&#x9;)</code></pre></li></ul></li><li class="suite"><h1>Given a synchronous callback</h1><ul><li class="test pass fast"><h2>Should run each callback in order<span class="duration">2ms</span></h2><pre><code>ranCallbacksInOrder(result)</code></pre></li><li class="test pass fast"><h2>Should filter each item based on callback result<span class="duration">4ms</span></h2><pre><code>return array.every(item =&#x3E; {
 &#x9;if (item) {
 &#x9;&#x9;return expect(filteredArray).to.contain(item);
 &#x9;} else {
 &#x9;&#x9;return expect(filteredArray).to.not.contain(item);
 &#x9;}
 });</code></pre></li><li class="test pass fast"><h2>Should resolve to a new array<span class="duration">0ms</span></h2><pre><code>async () =&#x3E;
-&#x9;&#x9;&#x9;expect(filteredArray).to.not.equal(array)</code></pre></li></ul></li><li class="suite"><h1>Given an asynchronous callback</h1><ul><li class="test pass fast"><h2>Should run each callback in order<span class="duration">0ms</span></h2><pre><code>ranCallbacksInOrder(result)</code></pre></li><li class="test pass fast"><h2>Should filter each item based on callback result<span class="duration">1ms</span></h2><pre><code>async () =&#x3E; {
+&#x9;&#x9;&#x9;expect(filteredArray).to.not.equal(array)</code></pre></li></ul></li><li class="suite"><h1>Given an asynchronous callback</h1><ul><li class="test pass fast"><h2>Should run each callback in order<span class="duration">1ms</span></h2><pre><code>ranCallbacksInOrder(result)</code></pre></li><li class="test pass fast"><h2>Should filter each item based on callback result<span class="duration">2ms</span></h2><pre><code>async () =&#x3E; {
 &#x9;&#x9;&#x9;return array.every(item =&#x3E; {
 &#x9;&#x9;&#x9;&#x9;if (item) {
 &#x9;&#x9;&#x9;&#x9;&#x9;return expect(filteredArray).to.contain(item);
@@ -452,26 +519,26 @@ body {
 &#x9;&#x9;&#x9;});
 &#x9;&#x9;}</code></pre></li><li class="test pass fast"><h2>Should resolve to a new array<span class="duration">0ms</span></h2><pre><code>async () =&#x3E;
 &#x9;&#x9;&#x9;expect(filteredArray).to.not.equal(array)</code></pre></li></ul></li><li class="suite"><h1>Given a callback that throws an error</h1><ul><li class="test pass fast"><h2>Should reject with that error<span class="duration">0ms</span></h2><pre><code>async () =&#x3E;
-&#x9;&#x9;&#x9;rejectsWithError(asyncFilter(array, callback), error)</code></pre></li></ul></li><li class="suite"><h1>Given a callback that uses all arguments</h1><ul><li class="test pass fast"><h2>Should have access to currentValue, index and array on the callback<span class="duration">1ms</span></h2><pre><code>hasAccessToCorrectArgumentsOnCallback(array, result, [
+&#x9;&#x9;&#x9;rejectsWithError(asyncFilter(array, callback), error)</code></pre></li></ul></li><li class="suite"><h1>Given a callback that uses all arguments</h1><ul><li class="test pass fast"><h2>Should have access to currentValue, index and array on the callback<span class="duration">5ms</span></h2><pre><code>hasAccessToCorrectArgumentsOnCallback(array, result, [
 &#x9;&#x9;&#x9;&#x9;&#x27;currentValue&#x27;,
 &#x9;&#x9;&#x9;&#x9;&#x27;index&#x27;,
 &#x9;&#x9;&#x9;&#x9;&#x27;array&#x27;
 &#x9;&#x9;&#x9;])</code></pre></li></ul></li><li class="suite"><h1>Given the optional thisArg parameter</h1><ul><li class="test pass fast"><h2>Should have accesss to thisArg on callback<span class="duration">1ms</span></h2><pre><code>result.every(({ thisArg }) =&#x3E;
 &#x9;&#x9;&#x9;&#x9;expect(thisArg.toString()).to.equal(providedThisArg.toString())
-&#x9;&#x9;&#x9;)</code></pre></li></ul></li></ul></li><li class="suite"><h1>Async Find Index</h1><ul><li class="suite"><h1>Given no arguments</h1><ul><li class="test pass fast"><h2>Should reject with &#x22;TypeError: undefined is not iterable&#x22;<span class="duration">0ms</span></h2><pre><code>rejectsWithError(
+&#x9;&#x9;&#x9;)</code></pre></li></ul></li></ul></li><li class="suite"><h1>Async Find Index</h1><ul><li class="suite"><h1>Given no arguments</h1><ul><li class="test pass fast"><h2>Should reject with &#x22;TypeError: undefined is not iterable&#x22;<span class="duration">1ms</span></h2><pre><code>rejectsWithError(
 &#x9;&#x9;&#x9;&#x9;asyncFindIndex(),
 &#x9;&#x9;&#x9;&#x9;new TypeError(&#x27;undefined is not iterable&#x27;)
 &#x9;&#x9;&#x9;)</code></pre></li></ul></li><li class="suite"><h1>Given no callback</h1><ul><li class="test pass fast"><h2>Should reject with &#x22;TypeError: undefined is not a function&#x22;<span class="duration">0ms</span></h2><pre><code>rejectsWithError(
 &#x9;&#x9;&#x9;&#x9;asyncFindIndex(array),
 &#x9;&#x9;&#x9;&#x9;new TypeError(&#x27;undefined is not a function&#x27;)
-&#x9;&#x9;&#x9;)</code></pre></li></ul></li><li class="suite"><h1>Given a synchronous callback</h1><ul><li class="test pass fast"><h2>Should run each callback in order<span class="duration">0ms</span></h2><pre><code>ranCallbacksInOrder(result)</code></pre></li><li class="test pass fast"><h2>Should find the correct index<span class="duration">0ms</span></h2><pre><code>expect(foundIndex).to.equal(findIndex)</code></pre></li><li class="test pass fast"><h2>Should always resolve to an integer<span class="duration">1ms</span></h2><pre><code>expect(
+&#x9;&#x9;&#x9;)</code></pre></li></ul></li><li class="suite"><h1>Given a synchronous callback</h1><ul><li class="test pass fast"><h2>Should run each callback in order<span class="duration">0ms</span></h2><pre><code>ranCallbacksInOrder(result)</code></pre></li><li class="test pass fast"><h2>Should find the correct index<span class="duration">0ms</span></h2><pre><code>expect(foundIndex).to.equal(findIndex)</code></pre></li><li class="test pass fast"><h2>Should always resolve to an integer<span class="duration">0ms</span></h2><pre><code>expect(
 &#x9;&#x9;&#x9;&#x9;typeof foundIndex === &#x27;number&#x27; &#x26;&#x26;
 &#x9;&#x9;&#x9;&#x9;&#x9;foundIndex === Math.floor(foundIndex)
 &#x9;&#x9;&#x9;).to.equal(true)</code></pre></li></ul></li><li class="suite"><h1>Given an asynchronous callback</h1><ul><li class="test pass fast"><h2>Should run each callback in order<span class="duration">0ms</span></h2><pre><code>ranCallbacksInOrder(result)</code></pre></li><li class="test pass fast"><h2>Should find the correct index<span class="duration">0ms</span></h2><pre><code>expect(foundIndex).to.equal(findIndex)</code></pre></li><li class="test pass fast"><h2>Should always resolve to an integer<span class="duration">0ms</span></h2><pre><code>expect(
 &#x9;&#x9;&#x9;&#x9;typeof foundIndex === &#x27;number&#x27; &#x26;&#x26;
 &#x9;&#x9;&#x9;&#x9;&#x9;foundIndex === Math.floor(foundIndex)
 &#x9;&#x9;&#x9;).to.equal(true)</code></pre></li></ul></li><li class="suite"><h1>Given a callback that throws an error</h1><ul><li class="test pass fast"><h2>Should reject with that error<span class="duration">0ms</span></h2><pre><code>async () =&#x3E;
-&#x9;&#x9;&#x9;rejectsWithError(asyncFindIndex(array, callback), error)</code></pre></li></ul></li><li class="suite"><h1>Given a callback that uses all arguments</h1><ul><li class="test pass fast"><h2>Should have access to currentValue, index and array on the callback<span class="duration">2ms</span></h2><pre><code>hasAccessToCorrectArgumentsOnCallback(array, result, [
+&#x9;&#x9;&#x9;rejectsWithError(asyncFindIndex(array, callback), error)</code></pre></li></ul></li><li class="suite"><h1>Given a callback that uses all arguments</h1><ul><li class="test pass fast"><h2>Should have access to currentValue, index and array on the callback<span class="duration">4ms</span></h2><pre><code>hasAccessToCorrectArgumentsOnCallback(array, result, [
 &#x9;&#x9;&#x9;&#x9;&#x27;currentValue&#x27;,
 &#x9;&#x9;&#x9;&#x9;&#x27;index&#x27;,
 &#x9;&#x9;&#x9;&#x9;&#x27;array&#x27;
@@ -483,14 +550,14 @@ body {
 &#x9;&#x9;&#x9;)</code></pre></li></ul></li><li class="suite"><h1>Given no callback</h1><ul><li class="test pass fast"><h2>Should reject with &#x22;TypeError: undefined is not a function&#x22;<span class="duration">0ms</span></h2><pre><code>rejectsWithError(
 &#x9;&#x9;&#x9;&#x9;asyncFind(array),
 &#x9;&#x9;&#x9;&#x9;new TypeError(&#x27;undefined is not a function&#x27;)
-&#x9;&#x9;&#x9;)</code></pre></li></ul></li><li class="suite"><h1>Given a synchronous callback</h1><ul><li class="test pass fast"><h2>Should run each callback in order<span class="duration">0ms</span></h2><pre><code>ranCallbacksInOrder(result)</code></pre></li><li class="test pass fast"><h2>Should find the correct element<span class="duration">0ms</span></h2><pre><code>expect(foundElement).to.equal(array[findIndex])</code></pre></li></ul></li><li class="suite"><h1>Given an asynchronous callback</h1><ul><li class="test pass fast"><h2>Should run each callback in order<span class="duration">3ms</span></h2><pre><code>ranCallbacksInOrder(result)</code></pre></li><li class="test pass fast"><h2>Should find the correct element<span class="duration">0ms</span></h2><pre><code>async () =&#x3E; {
+&#x9;&#x9;&#x9;)</code></pre></li></ul></li><li class="suite"><h1>Given a synchronous callback</h1><ul><li class="test pass fast"><h2>Should run each callback in order<span class="duration">0ms</span></h2><pre><code>ranCallbacksInOrder(result)</code></pre></li><li class="test pass fast"><h2>Should find the correct element<span class="duration">0ms</span></h2><pre><code>expect(foundElement).to.equal(array[findIndex])</code></pre></li></ul></li><li class="suite"><h1>Given an asynchronous callback</h1><ul><li class="test pass fast"><h2>Should run each callback in order<span class="duration">1ms</span></h2><pre><code>ranCallbacksInOrder(result)</code></pre></li><li class="test pass fast"><h2>Should find the correct element<span class="duration">0ms</span></h2><pre><code>async () =&#x3E; {
 &#x9;&#x9;&#x9;expect(foundElement).to.equal(array[findIndex]);
 &#x9;&#x9;}</code></pre></li></ul></li><li class="suite"><h1>Given a callback that throws an error</h1><ul><li class="test pass fast"><h2>Should reject with that error<span class="duration">0ms</span></h2><pre><code>async () =&#x3E;
-&#x9;&#x9;&#x9;rejectsWithError(asyncFind(array, callback), error)</code></pre></li></ul></li><li class="suite"><h1>Given a callback that uses all arguments</h1><ul><li class="test pass fast"><h2>Should have access to currentValue, index and array on the callback<span class="duration">2ms</span></h2><pre><code>hasAccessToCorrectArgumentsOnCallback(array, result, [
+&#x9;&#x9;&#x9;rejectsWithError(asyncFind(array, callback), error)</code></pre></li></ul></li><li class="suite"><h1>Given a callback that uses all arguments</h1><ul><li class="test pass fast"><h2>Should have access to currentValue, index and array on the callback<span class="duration">4ms</span></h2><pre><code>hasAccessToCorrectArgumentsOnCallback(array, result, [
 &#x9;&#x9;&#x9;&#x9;&#x27;currentValue&#x27;,
 &#x9;&#x9;&#x9;&#x9;&#x27;index&#x27;,
 &#x9;&#x9;&#x9;&#x9;&#x27;array&#x27;
-&#x9;&#x9;&#x9;])</code></pre></li></ul></li><li class="suite"><h1>Given the optional thisArg parameter</h1><ul><li class="test pass fast"><h2>Should have accesss to thisArg on callback<span class="duration">1ms</span></h2><pre><code>result.every(({ thisArg }) =&#x3E;
+&#x9;&#x9;&#x9;])</code></pre></li></ul></li><li class="suite"><h1>Given the optional thisArg parameter</h1><ul><li class="test pass fast"><h2>Should have accesss to thisArg on callback<span class="duration">0ms</span></h2><pre><code>result.every(({ thisArg }) =&#x3E;
 &#x9;&#x9;&#x9;&#x9;expect(thisArg.toString()).to.equal(providedThisArg.toString())
 &#x9;&#x9;&#x9;)</code></pre></li></ul></li></ul></li><li class="suite"><h1>Async For Each</h1><ul><li class="suite"><h1>Given no arguments</h1><ul><li class="test pass fast"><h2>Should reject with &#x22;TypeError: undefined is not iterable&#x22;<span class="duration">0ms</span></h2><pre><code>rejectsWithError(
 &#x9;&#x9;&#x9;&#x9;asyncForEach(),
@@ -498,12 +565,12 @@ body {
 &#x9;&#x9;&#x9;)</code></pre></li></ul></li><li class="suite"><h1>Given no callback</h1><ul><li class="test pass fast"><h2>Should reject with &#x22;TypeError: undefined is not a function&#x22;<span class="duration">0ms</span></h2><pre><code>rejectsWithError(
 &#x9;&#x9;&#x9;&#x9;asyncForEach(array),
 &#x9;&#x9;&#x9;&#x9;new TypeError(&#x27;undefined is not a function&#x27;)
-&#x9;&#x9;&#x9;)</code></pre></li></ul></li><li class="suite"><h1>Given a synchronous callback</h1><ul><li class="test pass fast"><h2>Should run each callback in order<span class="duration">0ms</span></h2><pre><code>ranCallbacksInOrder(result)</code></pre></li></ul></li><li class="suite"><h1>Given an asynchronous callback</h1><ul><li class="test pass fast"><h2>Should run each callback in order<span class="duration">0ms</span></h2><pre><code>ranCallbacksInOrder(result)</code></pre></li></ul></li><li class="suite"><h1>Given a callback that throws an error</h1><ul><li class="test pass fast"><h2>Should reject with that error<span class="duration">0ms</span></h2><pre><code>async () =&#x3E;
-&#x9;&#x9;&#x9;rejectsWithError(asyncForEach(array, callback), error)</code></pre></li></ul></li><li class="suite"><h1>Given a callback that uses all arguments</h1><ul><li class="test pass fast"><h2>Should have access to currentValue, index and array on the callback<span class="duration">8ms</span></h2><pre><code>hasAccessToCorrectArgumentsOnCallback(array, result, [
+&#x9;&#x9;&#x9;)</code></pre></li></ul></li><li class="suite"><h1>Given a synchronous callback</h1><ul><li class="test pass fast"><h2>Should run each callback in order<span class="duration">0ms</span></h2><pre><code>ranCallbacksInOrder(result)</code></pre></li></ul></li><li class="suite"><h1>Given an asynchronous callback</h1><ul><li class="test pass fast"><h2>Should run each callback in order<span class="duration">1ms</span></h2><pre><code>ranCallbacksInOrder(result)</code></pre></li></ul></li><li class="suite"><h1>Given a callback that throws an error</h1><ul><li class="test pass fast"><h2>Should reject with that error<span class="duration">1ms</span></h2><pre><code>async () =&#x3E;
+&#x9;&#x9;&#x9;rejectsWithError(asyncForEach(array, callback), error)</code></pre></li></ul></li><li class="suite"><h1>Given a callback that uses all arguments</h1><ul><li class="test pass fast"><h2>Should have access to currentValue, index and array on the callback<span class="duration">0ms</span></h2><pre><code>hasAccessToCorrectArgumentsOnCallback(array, result, [
 &#x9;&#x9;&#x9;&#x9;&#x27;currentValue&#x27;,
 &#x9;&#x9;&#x9;&#x9;&#x27;index&#x27;,
 &#x9;&#x9;&#x9;&#x9;&#x27;array&#x27;
-&#x9;&#x9;&#x9;])</code></pre></li></ul></li><li class="suite"><h1>Given the optional thisArg parameter</h1><ul><li class="test pass fast"><h2>Should have accesss to thisArg on callback<span class="duration">0ms</span></h2><pre><code>result.every(({ thisArg }) =&#x3E;
+&#x9;&#x9;&#x9;])</code></pre></li></ul></li><li class="suite"><h1>Given the optional thisArg parameter</h1><ul><li class="test pass fast"><h2>Should have accesss to thisArg on callback<span class="duration">1ms</span></h2><pre><code>result.every(({ thisArg }) =&#x3E;
 &#x9;&#x9;&#x9;&#x9;expect(thisArg.toString()).to.equal(providedThisArg.toString())
 &#x9;&#x9;&#x9;)</code></pre></li></ul></li></ul></li><li class="suite"><h1>Async Map Sort</h1><ul><li class="suite"><h1>Given no arguments</h1><ul><li class="test pass fast"><h2>Should reject with &#x22;TypeError: undefined is not iterable&#x22;<span class="duration">0ms</span></h2><pre><code>rejectsWithError(
 &#x9;&#x9;&#x9;&#x9;asyncMapSort(),
@@ -511,26 +578,26 @@ body {
 &#x9;&#x9;&#x9;)</code></pre></li></ul></li><li class="suite"><h1>Given no mappingFunction</h1><ul><li class="test pass fast"><h2>Should reject with &#x22;TypeError: undefined is not a function&#x22;<span class="duration">0ms</span></h2><pre><code>rejectsWithError(
 &#x9;&#x9;&#x9;&#x9;asyncMapSort(array),
 &#x9;&#x9;&#x9;&#x9;new TypeError(&#x27;undefined is not a function&#x27;)
-&#x9;&#x9;&#x9;)</code></pre></li></ul></li><li class="suite"><h1>Given a synchronous mappingFunction</h1><ul><li class="test pass fast"><h2>Should run each mappingFunction in order<span class="duration">1ms</span></h2><pre><code>ranCallbacksInOrder(result)</code></pre></li><li class="test pass fast"><h2>Should resolve to a new array<span class="duration">0ms</span></h2><pre><code>async () =&#x3E; {
+&#x9;&#x9;&#x9;)</code></pre></li></ul></li><li class="suite"><h1>Given a synchronous mappingFunction</h1><ul><li class="test pass fast"><h2>Should run each mappingFunction in order<span class="duration">0ms</span></h2><pre><code>ranCallbacksInOrder(result)</code></pre></li><li class="test pass fast"><h2>Should resolve to a new array<span class="duration">1ms</span></h2><pre><code>async () =&#x3E; {
 &#x9;&#x9;&#x9;expect(mapSortedArray).to.not.equal(array);
 &#x9;&#x9;}</code></pre></li><li class="test pass fast"><h2>Should sort by unicode after mapping<span class="duration">1ms</span></h2><pre><code>async () =&#x3E; {
 &#x9;&#x9;&#x9;const expectedResult = mapSortedArray.slice().sort();
 &#x9;&#x9;&#x9;expectedResult.every((item, index) =&#x3E;
 &#x9;&#x9;&#x9;&#x9;expect(mapSortedArray[index]).to.equal(item)
 &#x9;&#x9;&#x9;);
-&#x9;&#x9;}</code></pre></li></ul></li><li class="suite"><h1>Given an asynchronous mappingFunction</h1><ul><li class="test pass fast"><h2>Should run each mappingFunction in order<span class="duration">0ms</span></h2><pre><code>ranCallbacksInOrder(result)</code></pre></li><li class="test pass fast"><h2>Should resolve to a new array<span class="duration">0ms</span></h2><pre><code>async () =&#x3E; {
+&#x9;&#x9;}</code></pre></li></ul></li><li class="suite"><h1>Given an asynchronous mappingFunction</h1><ul><li class="test pass fast"><h2>Should run each mappingFunction in order<span class="duration">1ms</span></h2><pre><code>ranCallbacksInOrder(result)</code></pre></li><li class="test pass fast"><h2>Should resolve to a new array<span class="duration">0ms</span></h2><pre><code>async () =&#x3E; {
 &#x9;&#x9;&#x9;expect(mapSortedArray).to.not.equal(array);
 &#x9;&#x9;}</code></pre></li><li class="test pass fast"><h2>Should sort by unicode after mapping<span class="duration">1ms</span></h2><pre><code>async () =&#x3E; {
 &#x9;&#x9;&#x9;const expectedResult = mapSortedArray.slice().sort();
 &#x9;&#x9;&#x9;expectedResult.every((item, index) =&#x3E;
 &#x9;&#x9;&#x9;&#x9;expect(mapSortedArray[index]).to.equal(item)
 &#x9;&#x9;&#x9;);
-&#x9;&#x9;}</code></pre></li></ul></li><li class="suite"><h1>Given a mappingFunction that throws an error</h1><ul><li class="test pass fast"><h2>Should reject with that error<span class="duration">1ms</span></h2><pre><code>async () =&#x3E;
-&#x9;&#x9;&#x9;rejectsWithError(asyncMapSort(array, mappingFunction), error)</code></pre></li></ul></li><li class="suite"><h1>Given a mappingFunction that uses all arguments</h1><ul><li class="test pass fast"><h2>Should have access to currentValue, index and array on the mappingFunction<span class="duration">0ms</span></h2><pre><code>hasAccessToCorrectArgumentsOnCallback(array, result, [
+&#x9;&#x9;}</code></pre></li></ul></li><li class="suite"><h1>Given a mappingFunction that throws an error</h1><ul><li class="test pass fast"><h2>Should reject with that error<span class="duration">0ms</span></h2><pre><code>async () =&#x3E;
+&#x9;&#x9;&#x9;rejectsWithError(asyncMapSort(array, mappingFunction), error)</code></pre></li></ul></li><li class="suite"><h1>Given a mappingFunction that uses all arguments</h1><ul><li class="test pass fast"><h2>Should have access to currentValue, index and array on the mappingFunction<span class="duration">10ms</span></h2><pre><code>hasAccessToCorrectArgumentsOnCallback(array, result, [
 &#x9;&#x9;&#x9;&#x9;&#x27;currentValue&#x27;,
 &#x9;&#x9;&#x9;&#x9;&#x27;index&#x27;,
 &#x9;&#x9;&#x9;&#x9;&#x27;array&#x27;
-&#x9;&#x9;&#x9;])</code></pre></li></ul></li><li class="suite"><h1>Given an optional comparisonFunction that uses all arguments</h1><ul><li class="test pass fast"><h2>Should have access to first and second elements<span class="duration">12ms</span></h2><pre><code>result.every(({ firstEl, secondEl }) =&#x3E;
+&#x9;&#x9;&#x9;])</code></pre></li></ul></li><li class="suite"><h1>Given an optional comparisonFunction that uses all arguments</h1><ul><li class="test pass fast"><h2>Should have access to first and second elements<span class="duration">23ms</span></h2><pre><code>result.every(({ firstEl, secondEl }) =&#x3E;
 &#x9;&#x9;&#x9;&#x9;expect(array)
 &#x9;&#x9;&#x9;&#x9;&#x9;.to.contain(firstEl)
 &#x9;&#x9;&#x9;&#x9;&#x9;.and.contain(secondEl)
@@ -540,20 +607,20 @@ body {
 &#x9;&#x9;&#x9;)</code></pre></li></ul></li><li class="suite"><h1>Given no callback</h1><ul><li class="test pass fast"><h2>Should reject with &#x22;TypeError: undefined is not a function&#x22;<span class="duration">0ms</span></h2><pre><code>rejectsWithError(
 &#x9;&#x9;&#x9;&#x9;asyncMap(array),
 &#x9;&#x9;&#x9;&#x9;new TypeError(&#x27;undefined is not a function&#x27;)
-&#x9;&#x9;&#x9;)</code></pre></li></ul></li><li class="suite"><h1>Given a synchronous callback</h1><ul><li class="test pass fast"><h2>Should run each callback in order<span class="duration">1ms</span></h2><pre><code>ranCallbacksInOrder(result)</code></pre></li><li class="test pass fast"><h2>Should map each item in order<span class="duration">1ms</span></h2><pre><code>async () =&#x3E; {
+&#x9;&#x9;&#x9;)</code></pre></li></ul></li><li class="suite"><h1>Given a synchronous callback</h1><ul><li class="test pass fast"><h2>Should run each callback in order<span class="duration">0ms</span></h2><pre><code>ranCallbacksInOrder(result)</code></pre></li><li class="test pass fast"><h2>Should map each item in order<span class="duration">1ms</span></h2><pre><code>async () =&#x3E; {
 &#x9;&#x9;&#x9;mappedArray.every((item, index) =&#x3E;
 &#x9;&#x9;&#x9;&#x9;expect(item).to.equal(array[index])
 &#x9;&#x9;&#x9;);
 &#x9;&#x9;}</code></pre></li><li class="test pass fast"><h2>Should resolve to a new array<span class="duration">0ms</span></h2><pre><code>async () =&#x3E; {
 &#x9;&#x9;&#x9;expect(mappedArray).to.not.equal(array);
-&#x9;&#x9;}</code></pre></li></ul></li><li class="suite"><h1>Given an asynchronous callback</h1><ul><li class="test pass fast"><h2>Should run each callback in order<span class="duration">2ms</span></h2><pre><code>ranCallbacksInOrder(result)</code></pre></li><li class="test pass fast"><h2>Should map each item in order<span class="duration">1ms</span></h2><pre><code>async () =&#x3E; {
+&#x9;&#x9;}</code></pre></li></ul></li><li class="suite"><h1>Given an asynchronous callback</h1><ul><li class="test pass fast"><h2>Should run each callback in order<span class="duration">1ms</span></h2><pre><code>ranCallbacksInOrder(result)</code></pre></li><li class="test pass fast"><h2>Should map each item in order<span class="duration">1ms</span></h2><pre><code>async () =&#x3E; {
 &#x9;&#x9;&#x9;mappedArray.every((item, index) =&#x3E;
 &#x9;&#x9;&#x9;&#x9;expect(item).to.equal(array[index])
 &#x9;&#x9;&#x9;);
 &#x9;&#x9;}</code></pre></li><li class="test pass fast"><h2>Should resolve to a new array<span class="duration">0ms</span></h2><pre><code>async () =&#x3E; {
 &#x9;&#x9;&#x9;expect(mappedArray).to.not.equal(array);
 &#x9;&#x9;}</code></pre></li></ul></li><li class="suite"><h1>Given a callback that throws an error</h1><ul><li class="test pass fast"><h2>Should reject with that error<span class="duration">0ms</span></h2><pre><code>async () =&#x3E;
-&#x9;&#x9;&#x9;rejectsWithError(asyncMap(array, callback), error)</code></pre></li></ul></li><li class="suite"><h1>Given a callback that uses all arguments</h1><ul><li class="test pass fast"><h2>Should have access to currentValue, index and array on the callback<span class="duration">2ms</span></h2><pre><code>hasAccessToCorrectArgumentsOnCallback(array, result, [
+&#x9;&#x9;&#x9;rejectsWithError(asyncMap(array, callback), error)</code></pre></li></ul></li><li class="suite"><h1>Given a callback that uses all arguments</h1><ul><li class="test pass fast"><h2>Should have access to currentValue, index and array on the callback<span class="duration">0ms</span></h2><pre><code>hasAccessToCorrectArgumentsOnCallback(array, result, [
 &#x9;&#x9;&#x9;&#x9;&#x27;currentValue&#x27;,
 &#x9;&#x9;&#x9;&#x9;&#x27;index&#x27;,
 &#x9;&#x9;&#x9;&#x9;&#x27;array&#x27;
@@ -574,7 +641,7 @@ body {
 expect(result.length).to.be.greaterThan(
 &#x9;0,
 &#x9;&#x27;No callbacks were run.&#x27;
-);</code></pre></li><li class="test pass fast"><h2>Should reduce each item in order<span class="duration">1ms</span></h2><pre><code>async () =&#x3E; {
+);</code></pre></li><li class="test pass fast"><h2>Should reduce each item in order<span class="duration">0ms</span></h2><pre><code>async () =&#x3E; {
 &#x9;&#x9;&#x9;array.every((element, index) =&#x3E; {
 &#x9;&#x9;&#x9;&#x9;return expect(reducedAccumulator[index].item).to.equal(element);
 &#x9;&#x9;&#x9;});
@@ -586,15 +653,15 @@ expect(result.length).to.be.greaterThan(
 &#x9;&#x9;&#x9;&#x9;0,
 &#x9;&#x9;&#x9;&#x9;&#x27;No callbacks were run.&#x27;
 &#x9;&#x9;&#x9;);
-&#x9;&#x9;}</code></pre></li></ul></li><li class="suite"><h1>Given an asynchronous callback</h1><ul><li class="test pass fast"><h2>Should run each callback in order<span class="duration">1ms</span></h2><pre><code>ranCallbacksInOrder(result, { skipFirst: false });
+&#x9;&#x9;}</code></pre></li></ul></li><li class="suite"><h1>Given an asynchronous callback</h1><ul><li class="test pass fast"><h2>Should run each callback in order<span class="duration">0ms</span></h2><pre><code>ranCallbacksInOrder(result, { skipFirst: false });
 expect(result.length).to.be.greaterThan(
 &#x9;0,
 &#x9;&#x27;No callbacks were run.&#x27;
-);</code></pre></li><li class="test pass fast"><h2>Should reduce each item in order<span class="duration">1ms</span></h2><pre><code>async () =&#x3E; {
+);</code></pre></li><li class="test pass fast"><h2>Should reduce each item in order<span class="duration">0ms</span></h2><pre><code>async () =&#x3E; {
 &#x9;&#x9;&#x9;array.every((element, index) =&#x3E; {
 &#x9;&#x9;&#x9;&#x9;return expect(reducedAccumulator[index].item).to.equal(element);
 &#x9;&#x9;&#x9;});
-&#x9;&#x9;}</code></pre></li><li class="test pass fast"><h2>Should resolve to the completed value accumulator<span class="duration">2ms</span></h2><pre><code>async () =&#x3E; {
+&#x9;&#x9;}</code></pre></li><li class="test pass fast"><h2>Should resolve to the completed value accumulator<span class="duration">1ms</span></h2><pre><code>async () =&#x3E; {
 &#x9;&#x9;&#x9;result.every(({ item }, index) =&#x3E; {
 &#x9;&#x9;&#x9;&#x9;return expect(reducedAccumulator[index].item).to.equal(item);
 &#x9;&#x9;&#x9;});
@@ -603,7 +670,7 @@ expect(result.length).to.be.greaterThan(
 &#x9;&#x9;&#x9;&#x9;&#x27;No callbacks were run.&#x27;
 &#x9;&#x9;&#x9;);
 &#x9;&#x9;}</code></pre></li></ul></li><li class="suite"><h1>Given a callback that throws an error</h1><ul><li class="test pass fast"><h2>Should reject with that error<span class="duration">0ms</span></h2><pre><code>async () =&#x3E;
-&#x9;&#x9;&#x9;rejectsWithError(asyncReduce(array, callback), error)</code></pre></li></ul></li><li class="suite"><h1>Given a callback that uses all arguments</h1><ul><li class="test pass fast"><h2>Should have access to accumulator, currentValue, index and array on the callback<span class="duration">6ms</span></h2><pre><code>hasAccessToCorrectArgumentsOnCallback(
+&#x9;&#x9;&#x9;rejectsWithError(asyncReduce(array, callback), error)</code></pre></li></ul></li><li class="suite"><h1>Given a callback that uses all arguments</h1><ul><li class="test pass fast"><h2>Should have access to accumulator, currentValue, index and array on the callback<span class="duration">5ms</span></h2><pre><code>hasAccessToCorrectArgumentsOnCallback(
 &#x9;array,
 &#x9;result,
 &#x9;[&#x27;accumulator&#x27;, &#x27;currentValue&#x27;, &#x27;index&#x27;, &#x27;array&#x27;],
@@ -624,10 +691,10 @@ expect(result.length).to.be.greaterThan(
 );</code></pre></li></ul></li></ul></li><li class="suite"><h1>Async Sort</h1><ul><li class="suite"><h1>Given no arguments</h1><ul><li class="test pass fast"><h2>Should reject with &#x22;TypeError: undefined is not iterable&#x22;<span class="duration">0ms</span></h2><pre><code>rejectsWithError(
 &#x9;&#x9;&#x9;&#x9;asyncSort(),
 &#x9;&#x9;&#x9;&#x9;new TypeError(&#x27;undefined is not iterable&#x27;)
-&#x9;&#x9;&#x9;)</code></pre></li></ul></li><li class="suite"><h1>Given no callback</h1><ul><li class="test pass fast"><h2>Should sort elements by unicode value<span class="duration">1ms</span></h2><pre><code>const expectedResult = array.slice().sort();
+&#x9;&#x9;&#x9;)</code></pre></li></ul></li><li class="suite"><h1>Given no callback</h1><ul><li class="test pass fast"><h2>Should sort elements by unicode value<span class="duration">0ms</span></h2><pre><code>const expectedResult = array.slice().sort();
 expectedResult.every((item, index) =&#x3E;
 &#x9;expect(item).to.equal(sortedArray[index])
-);</code></pre></li></ul></li><li class="suite"><h1>Given a synchronous compareFunc</h1><ul><li class="test pass fast"><h2>Should sort each item by the compareFunc result<span class="duration">1ms</span></h2><pre><code>async () =&#x3E; {
+);</code></pre></li></ul></li><li class="suite"><h1>Given a synchronous compareFunc</h1><ul><li class="test pass fast"><h2>Should sort each item by the compareFunc result<span class="duration">0ms</span></h2><pre><code>async () =&#x3E; {
 &#x9;&#x9;&#x9;sortedArray.every((item, index) =&#x3E;
 &#x9;&#x9;&#x9;&#x9;expect(item).to.equal(array[index])
 &#x9;&#x9;&#x9;);
@@ -638,11 +705,11 @@ expectedResult.every((item, index) =&#x3E;
 &#x9;&#x9;&#x9;);
 &#x9;&#x9;}</code></pre></li><li class="test pass fast"><h2>Should resolve to the same array<span class="duration">0ms</span></h2><pre><code>async () =&#x3E;
 &#x9;&#x9;&#x9;expect(sortedArray).to.equal(array)</code></pre></li></ul></li><li class="suite"><h1>Given a compareFunc that throws an error</h1><ul><li class="test pass fast"><h2>Should reject with that error<span class="duration">0ms</span></h2><pre><code>async () =&#x3E;
-&#x9;&#x9;&#x9;rejectsWithError(asyncSort(array, compareFunc), error)</code></pre></li></ul></li><li class="suite"><h1>Given a compareFunc that uses all arguments</h1><ul><li class="test pass fast"><h2>Should have access to first and second elements<span class="duration">17ms</span></h2><pre><code>result.every(({ firstEl, secondEl }) =&#x3E;
+&#x9;&#x9;&#x9;rejectsWithError(asyncSort(array, compareFunc), error)</code></pre></li></ul></li><li class="suite"><h1>Given a compareFunc that uses all arguments</h1><ul><li class="test pass fast"><h2>Should have access to first and second elements<span class="duration">6ms</span></h2><pre><code>result.every(({ firstEl, secondEl }) =&#x3E;
 &#x9;&#x9;&#x9;&#x9;expect(array)
 &#x9;&#x9;&#x9;&#x9;&#x9;.to.contain(firstEl)
 &#x9;&#x9;&#x9;&#x9;&#x9;.and.contain(secondEl)
-&#x9;&#x9;&#x9;)</code></pre></li></ul></li></ul></li><li class="suite"><h1>Iterable Async module</h1><ul><li class="suite"><h1>Module properties</h1><ul><li class="test pass fast"><h2>Should have the asyncFilter function<span class="duration">1ms</span></h2><pre><code>expect(moduleImport.asyncFilter).to.be.a(&#x27;function&#x27;);</code></pre></li><li class="test pass fast"><h2>Should have the asyncFindIndex function<span class="duration">0ms</span></h2><pre><code>expect(moduleImport.asyncFindIndex).to.be.a(&#x27;function&#x27;);</code></pre></li><li class="test pass fast"><h2>Should have the asyncFind function<span class="duration">0ms</span></h2><pre><code>expect(moduleImport.asyncFind).to.be.a(&#x27;function&#x27;);</code></pre></li><li class="test pass fast"><h2>Should have the asyncForEach function<span class="duration">0ms</span></h2><pre><code>expect(moduleImport.asyncForEach).to.be.a(&#x27;function&#x27;);</code></pre></li><li class="test pass fast"><h2>Should have the asyncMapSort function<span class="duration">0ms</span></h2><pre><code>expect(moduleImport.asyncMapSort).to.be.a(&#x27;function&#x27;);</code></pre></li><li class="test pass fast"><h2>Should have the asyncMap function<span class="duration">0ms</span></h2><pre><code>expect(moduleImport.asyncMap).to.be.a(&#x27;function&#x27;);</code></pre></li><li class="test pass fast"><h2>Should have the asyncReduce function<span class="duration">0ms</span></h2><pre><code>expect(moduleImport.asyncReduce).to.be.a(&#x27;function&#x27;);</code></pre></li><li class="test pass fast"><h2>Should have the asyncSort function<span class="duration">0ms</span></h2><pre><code>expect(moduleImport.asyncSort).to.be.a(&#x27;function&#x27;);</code></pre></li></ul></li></ul></li></ul>
+&#x9;&#x9;&#x9;)</code></pre></li></ul></li></ul></li><li class="suite"><h1>Iterable Async module</h1><ul><li class="suite"><h1>Module properties</h1><ul><li class="test pass fast"><h2>Should have the asyncFilter function<span class="duration">0ms</span></h2><pre><code>expect(moduleImport.asyncFilter).to.be.a(&#x27;function&#x27;);</code></pre></li><li class="test pass fast"><h2>Should have the asyncFindIndex function<span class="duration">0ms</span></h2><pre><code>expect(moduleImport.asyncFindIndex).to.be.a(&#x27;function&#x27;);</code></pre></li><li class="test pass fast"><h2>Should have the asyncFind function<span class="duration">0ms</span></h2><pre><code>expect(moduleImport.asyncFind).to.be.a(&#x27;function&#x27;);</code></pre></li><li class="test pass fast"><h2>Should have the asyncForEach function<span class="duration">0ms</span></h2><pre><code>expect(moduleImport.asyncForEach).to.be.a(&#x27;function&#x27;);</code></pre></li><li class="test pass fast"><h2>Should have the asyncMapSort function<span class="duration">0ms</span></h2><pre><code>expect(moduleImport.asyncMapSort).to.be.a(&#x27;function&#x27;);</code></pre></li><li class="test pass fast"><h2>Should have the asyncMap function<span class="duration">0ms</span></h2><pre><code>expect(moduleImport.asyncMap).to.be.a(&#x27;function&#x27;);</code></pre></li><li class="test pass fast"><h2>Should have the asyncReduce function<span class="duration">0ms</span></h2><pre><code>expect(moduleImport.asyncReduce).to.be.a(&#x27;function&#x27;);</code></pre></li><li class="test pass fast"><h2>Should have the asyncSort function<span class="duration">0ms</span></h2><pre><code>expect(moduleImport.asyncSort).to.be.a(&#x27;function&#x27;);</code></pre></li></ul></li></ul></li></ul>
         </div>
         <script>
         function hideSuitesWithout(className) {

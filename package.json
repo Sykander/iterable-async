@@ -11,7 +11,7 @@
 	"scripts": {
 		"build": "npm run build:docs && npm run build:reports && npm run build:types",
 		"prebuild:docs": "rm -rf docs/*",
-		"build:docs": "jsdoc -c jsdoc.json -d docs/ -t ./node_modules/ink-docstrap/template -R README.md src",
+		"build:docs": "jsdoc -c jsdoc.json -R README.md src",
 		"prebuild:reports": "mkdir -p docs/reports",
 		"build:reports": "npm run build:reports:unit-tests && npm run build:reports:coverage && npm run build:reports:lint",
 		"prebuild:reports:unit-tests": "rm -f docs/reports/unit-tests.html && mkdir -p docs/reports",
@@ -63,6 +63,7 @@
 		"mocha-simple-html-reporter": "^1.1.0",
 		"nyc": "^15.1.0",
 		"prettier": "^1.19.1",
+		"taffydb": "^2.7.3",
 		"typescript": "^3.9.7"
 	},
 	"husky": {
