@@ -1,2 +1,11 @@
 node_modules
-test/typings.js
+.env
+.DS_Store
+.nyc_output
+logs
+docs
+types
+reports
+
+playground
+package-lock.json

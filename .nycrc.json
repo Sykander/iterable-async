@@ -1,0 +1,9 @@
+{
+	"branches": 80,
+	"lines": 99,
+	"functions": 99,
+	"statements": 99,
+	"check-coverage": true,
+	"reporter": "html",
+	"report-dir": "docs/reports/coverage"
+}

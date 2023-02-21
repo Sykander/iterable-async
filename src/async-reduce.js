@@ -7,19 +7,20 @@ const {
 
 /**
  * Async Reduce
- * ============
+ *
  * Reduce asynchronously and resolve when
  * all items have been transduced.
  * @async
- * @param {Object} iterable
- * @param {Function} callback - callback(currentValue, index, array)
+ * @param {any[]} iterable
+ * @param {Function} callback - callback(accumulator, currentValue, index, array)
  * @param {any} [accumulator=noParam]
- * @return {any}
+ * @return {Promise<any>}
  * @throws {TypeError}
  */
-async function asyncReduce(iterable, transducer, accumulator = noParam) {
+async function asyncReduce(iterable, callback, accumulator = noParam) {
 	validateIsIterable(iterable);
-	validateIsFunction(transducer);
+	validateIsFunction(callback);
+
 	const length = iterable.length;
 	let i = 0;
 
@@ -38,7 +39,7 @@ async function asyncReduce(iterable, transducer, accumulator = noParam) {
 
 	for (; i < length; i++) {
 		// eslint-disable-next-line no-await-in-loop
-		accumulator = await transducer(accumulator, iterable[i], i, iterable);
+		accumulator = await callback(accumulator, iterable[i], i, iterable);
 	}
 
 	return accumulator;

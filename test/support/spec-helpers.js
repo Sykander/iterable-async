@@ -6,7 +6,7 @@ const { expect } = require('./chai');
  * @param {Error} error
  */
 function rejectsWithError(promise, error) {
-	return expect(promise).to.rejectedWith(error.message);
+	expect(promise).to.rejectedWith(error.message);
 }
 
 /**
@@ -16,7 +16,7 @@ function rejectsWithError(promise, error) {
  * @param {Boolean} [options.skipFirst=false]
  */
 function ranCallbacksInOrder(result, { skipFirst = false } = {}) {
-	return result.every(({ index: expectedIndex }, actualIndex) =>
+	result.every(({ index: expectedIndex }, actualIndex) =>
 		expect(actualIndex + (skipFirst ? 1 : 0)).to.equal(expectedIndex)
 	);
 }
@@ -39,7 +39,7 @@ function hasAccessToCorrectArgumentsOnCallback(
 		params[params.indexOf('currentValue')] = 'item';
 	}
 
-	return results.every((result, index) => {
+	results.every((result, index) => {
 		if (params.includes('item')) {
 			expect(result.item).to.equal(source[result.index]);
 		}

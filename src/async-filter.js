@@ -3,13 +3,13 @@ const { mapIterable, filterIterable } = require('./helpers'),
 
 /**
  * Async Filter
- * ============
+ *
  * Filter asynchronously and resolve when all callbacks are resolved
  * @async
- * @param {Object} iterable
+ * @param {any[]} iterable
  * @param {Function} callback - callback(currentValue, index, array)
- * @param {Object} [thisArg=undefined]
- * @return {Array}
+ * @param {any} [thisArg=undefined]
+ * @return {Promise<any[]>}
  * @throws {TypeError}
  */
 async function asyncFilter(iterable, callback, thisArg = undefined) {

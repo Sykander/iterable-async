@@ -3,11 +3,12 @@
  * ==============
  * Allows any iterable object to be mapped with correct callback parameters
  * eg. callback(currentValue, index, sourceIterable)
- * @param {Object} iterable
+ * @ignore
+ * @param {any[]} iterable
  * @param {Function} callback
  * @param {Object} [options]
  * @param {Boolean} [options.useEmptyElements=true] - use empty elements of the array ?
- * @return {Array}
+ * @return {any[]}
  */
 function mapIterable(iterable, callback, { useEmptyElements = true } = {}) {
 	const tasks = [],
@@ -28,9 +29,10 @@ function mapIterable(iterable, callback, { useEmptyElements = true } = {}) {
  * Filter Iterable
  * ===============
  * Allows any iterable object to be filtered using an array as a check list
- * @param {Object} iterable
- * @param {Array} checks
- * @return {Array}
+ * @ignore
+ * @param {any[]} iterable
+ * @param {any[]} checks
+ * @return {any[]}
  */
 function filterIterable(iterable, checks) {
 	const result = [];
@@ -47,7 +49,8 @@ function filterIterable(iterable, checks) {
 
 /**
  * Swap items in array
- * @param {Object} items
+ * @ignore
+ * @param {any[]} items
  * @param {Number} leftIndex
  * @param {Number} rightIndex
  */
@@ -59,12 +62,13 @@ function swapItems(items, leftIndex, rightIndex) {
 
 /**
  * Async partition an array for quick sort
+ * @ignore
  * @async
- * @param {Object} items
+ * @param {any[]} items
  * @param {Number} leftIndex
  * @param {Number} rightIndex
  * @param {Function} compare
- * @return {Number} leftIndex after partition
+ * @return {Promise<Number>} leftIndex after partition
  */
 async function asyncPartition(items, leftIndex, rightIndex, compare) {
 	const pivot = items[Math.floor((leftIndex + rightIndex) / 2)];
@@ -90,6 +94,7 @@ async function asyncPartition(items, leftIndex, rightIndex, compare) {
 
 /**
  * Compares two items by unicode
+ * @ignore
  * @param {any} a
  * @param {any} b
  * @return {Number} -1, 0, 1
