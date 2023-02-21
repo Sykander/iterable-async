@@ -6,5 +6,9 @@
 		"includeDate": true,
 		"navType": "vertical",
 		"outputSourceFiles": true
+	},
+	"opts": {
+		"template": "./node_modules/ink-docstrap/template",
+		"destination": "./docs/"
 	}
 }
